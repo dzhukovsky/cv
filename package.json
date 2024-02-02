@@ -14,11 +14,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://dz-work@dev.azure.com/dz-work/CV/_git/CV"
+    "url": "https://github.com/dzhukovsky/cv.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "dzhukovsky",
+  "license": "MIT",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.11.0",
     "@types/react": "^18.2.51",
