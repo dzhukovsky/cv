@@ -8,6 +8,8 @@ parserOptions:
   jsx: true
   ecmaVersion: latest
   sourceType: module
+ignorePatterns:
+  - "dist/"
 plugins:
   - react
 settings:

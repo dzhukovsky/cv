@@ -112,7 +112,7 @@ const useStyles = makeStyles({
   footer: {
     fontSize: tokens.fontSizeBase200,
     color: tokens.colorNeutralForeground3,
-    ...shorthands.padding(tokens.spacingVerticalXL, 0, tokens.spacingVerticalXXXL, 0),
+    ...shorthands.padding(tokens.spacingVerticalXL, 0, tokens.spacingVerticalXL, 0),
     ...shorthands.gap(tokens.spacingVerticalXS),
     textAlign: 'center',
     flexWrap: 'wrap'
@@ -163,7 +163,6 @@ export const App = (): React.JSX.Element => {
 
                     </Column>
                 </Row>
-
                 <SectionFrame title="Summary">
                     <Card className={mergeClasses(styles.summaryCard, common.printCard)}>
                         <div className={mergeClasses(flex.column, styles.summary)}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Image, Link, Subtitle2, Text, makeStyles, mergeClasses, shorthands, tokens } from '@fluentui/react-components'
 import type * as t from '~/types'
-import { useCommonStyles } from '../cssinjs/Common'
+import { media, useCommonStyles } from '../cssinjs/Common'
 
 const useStyles = makeStyles({
   children: {
@@ -18,10 +18,14 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     width: '100%'
   },
-  description: {
+  content: {
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'start',
+    flexDirection: 'column',
+    [media.sm]: {
+      flexDirection: 'row',
+      justifyContent: 'space-between'
+    }
   }
 })
 
@@ -40,7 +44,7 @@ export const Education = (props: t.Education): React.JSX.Element => {
                 <Link className={styles.title} appearance="subtle" href={props.schoolUrl} target="_blank">
                     <Subtitle2>{props.school}</Subtitle2>
                 </Link>
-                <div className={styles.description}>
+                <div className={styles.content}>
                     <Text>
                         {[
                           props.degree,

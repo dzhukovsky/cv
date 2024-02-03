@@ -1,10 +1,9 @@
 import React from 'react'
 import { Card, Image, Link, Subtitle2, Text, makeStyles, mergeClasses, tokens } from '@fluentui/react-components'
 import type * as t from '~/types'
-import { Row } from '../Flex/Row'
 import { Column } from '../Flex/Column'
 import { useFlexStyles } from '../cssinjs/Flex'
-import { useCommonStyles } from '../cssinjs/Common'
+import { media, useCommonStyles } from '../cssinjs/Common'
 
 const useStyles = makeStyles({
   root: {
@@ -17,6 +16,15 @@ const useStyles = makeStyles({
   },
   container: {
     width: '100%'
+  },
+  content: {
+    display: 'flex',
+    justifyContent: 'start',
+    flexDirection: 'column',
+    [media.sm]: {
+      flexDirection: 'row',
+      justifyContent: 'space-between'
+    }
   }
 })
 
@@ -34,7 +42,7 @@ export const Certification = (props: t.Certification): React.JSX.Element => {
                         {props.name}
                     </Subtitle2>
                 </Link>
-                <Row className={flex.justifyBetween}>
+                <div className={styles.content}>
                     <Text>
                         {[
                           props.issuingOrganization,
@@ -47,7 +55,7 @@ export const Certification = (props: t.Certification): React.JSX.Element => {
                           props.expirationDate && ('Expires ' + props.expirationDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }))
                         ].filter(x => x).join(' · ')}
                     </Text>
-                </Row>
+                </div>
             </Column>
         </Card>
   )
