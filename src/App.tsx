@@ -104,7 +104,6 @@ const useStyles = makeStyles({
   },
   languages: {
     flexDirection: 'column',
-    ...shorthands.gap(tokens.spacingVerticalM, tokens.spacingHorizontalXS),
     [media.sm]: {
       flexDirection: 'row'
     }
