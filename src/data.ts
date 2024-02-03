@@ -239,7 +239,7 @@ export const data: t.Data = {
       companyUrl: 'https://caspel.com',
       companyIconUrl: caspelLogo,
       startDate: new Date('2019-02-01'),
-      endDate: new Date('2019-7-01'),
+      endDate: new Date('2019-07-01'),
       areasOfActivity: ['Manufacture', 'Reporting'],
       description: `
                 This project supports a furniture manufacturing organization, providing assembly services and material supplies to other dealers. Key features include a sophisticated system for calculating material cutting dimensions, managing material usage, work performance, and salary computations. The platform integrates various modules like a material cutting designer, CRM, cash register, reporting module, warehouse, and logistics to meet the comprehensive needs of the organization.
