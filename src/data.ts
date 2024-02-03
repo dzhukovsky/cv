@@ -97,11 +97,12 @@ export const data: t.Data = {
   ],
   technologies: [
     mapTechnology(groups.backend, expSources.selfTaught, 'Blazor', 1, date('2020')),
-    mapTechnology(groups.backend, expSources.selfTaught, 'WPF', 4, date('2022')),
-    mapTechnology(groups.backend, expSources.selfTaught, 'WINUI 3', 1, date('2024')),
     mapTechnology(groups.backend, expSources.selfTaught, 'C#', 4, date('2024')),
     mapTechnology(groups.backend, expSources.selfTaught, '.NET 7', 1, date('2024')),
     mapTechnology(groups.backend, expSources.selfTaught, '.NET 6', 2, date('2023')),
+    mapTechnology(groups.frontend, expSources.selfTaught, 'WPF', 4, date('2021')),
+    mapTechnology(groups.frontend, expSources.selfTaught, 'UWP', 1.5, date('2022')),
+    mapTechnology(groups.frontend, expSources.selfTaught, 'WinUI 3', 1, date('2024')),
     mapTechnology(groups.frontend, expSources.selfTaught, 'React', 2, date('2024')),
     mapTechnology(groups.frontend, expSources.selfTaught, 'SCSS', 1, date('2024')),
     mapTechnology(groups.frontend, expSources.selfTaught, 'TypeScript', 2, date('2024')),
@@ -120,7 +121,7 @@ export const data: t.Data = {
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
-      startDate: new Date('Nov 2022'),
+      startDate: new Date('2022-11-01'),
       endDate: 'Present',
       areasOfActivity: ['Fintech'],
       description: `
@@ -160,8 +161,8 @@ export const data: t.Data = {
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
-      startDate: new Date('Feb 2020'),
-      endDate: new Date('Oct 2022'),
+      startDate: new Date('2020-02-01'),
+      endDate: new Date('2022-10-01'),
       areasOfActivity: ['Publishing', 'Martech'],
       description: `
                 Designed for leading publishers like The New York Times, Chicago Tribune, and USA Today, this project introduced a customizable multi-module engagement platform. Each module is tailored to address distinct aspects of the business flow, ranging from initial user engagement and subscription conversion to unsubscription and analytics.
@@ -199,46 +200,13 @@ export const data: t.Data = {
       ]
     },
     {
-      name: 'Customer Manufacturing Platform',
-      position: 'Junior .NET Full-Stack Developer',
-      company: 'Caspel LLC',
-      companyUrl: 'https://caspel.com',
-      companyIconUrl: caspelLogo,
-      startDate: new Date('Feb 2019'),
-      endDate: new Date('Feb 2020'),
-      areasOfActivity: ['Manufacture', 'Reporting'],
-      description: `
-                This project supports a furniture manufacturing organization, providing assembly services and material supplies to other dealers. Key features include a sophisticated system for calculating material cutting dimensions, managing material usage, work performance, and salary computations. The platform integrates various modules like a material cutting designer, CRM, cash register, reporting module, warehouse, and logistics to meet the comprehensive needs of the organization.
-            `,
-      myRole: `
-                Personally developed the material cutting designer, a crucial component of the multifaceted system that includes CRM, cash register, reporting module, warehouse, and logistics.
-                Utilized strong analytical skills to solve complex business problems, implementing innovative solutions and strategic development practices.
-                Actively engaged in both backend and frontend development, ensuring seamless feature integration across the platform.
-                Created robust backend solutions for data processing and storage, while also focusing on an intuitive and user-friendly frontend design.
-                Regularly communicated directly with clients, gathering requirements and feedback to continuously refine and improve the platform's functionality.
-            `,
-      technologies: [
-        mapProjectTechnology(groups.backend, expSources.production, 'C#'),
-        mapProjectTechnology(groups.backend, expSources.production, 'ASP.NET MVC'),
-        mapProjectTechnology(groups.backend, expSources.production, '.NET Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, 'Entity Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, 'MySQL'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'JavaScript'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'HTML'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'CSS'),
-        mapProjectTechnology(groups.versionControl, expSources.production, 'Git'),
-        mapProjectTechnology(groups.devops, expSources.production, 'Azure DevOps'),
-        mapProjectTechnology(groups.testing, expSources.production, 'NUnit')
-      ]
-    },
-    {
       name: 'Rental Accounting System',
       position: 'Junior .NET Full-Stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
       companyIconUrl: caspelLogo,
-      startDate: new Date('Sep 2019'),
-      endDate: new Date('Feb 2020'),
+      startDate: new Date('2019-08-01'),
+      endDate: new Date('2020-01-01'),
       areasOfActivity: ['Rent', 'Management', 'Reporting'],
       description: `
                 The Rental Accounting System is tailored for the management and reporting of workspace rentals. It integrates a suite of tools including a designer for accounting rental space, CRM, cash register, reporting module, warehouse, and logistics. This system is designed to streamline rental management processes, enhance reporting accuracy, and improve overall operational efficiency.
@@ -263,6 +231,39 @@ export const data: t.Data = {
         mapProjectTechnology(groups.devops, expSources.production, 'Azure DevOps'),
         mapProjectTechnology(groups.testing, expSources.production, 'NUnit')
       ]
+    },
+    {
+      name: 'Customer Manufacturing Platform',
+      position: 'Junior .NET Full-Stack Developer',
+      company: 'Caspel LLC',
+      companyUrl: 'https://caspel.com',
+      companyIconUrl: caspelLogo,
+      startDate: new Date('2019-02-01'),
+      endDate: new Date('2019-7-01'),
+      areasOfActivity: ['Manufacture', 'Reporting'],
+      description: `
+                This project supports a furniture manufacturing organization, providing assembly services and material supplies to other dealers. Key features include a sophisticated system for calculating material cutting dimensions, managing material usage, work performance, and salary computations. The platform integrates various modules like a material cutting designer, CRM, cash register, reporting module, warehouse, and logistics to meet the comprehensive needs of the organization.
+            `,
+      myRole: `
+                Personally developed the material cutting designer, a crucial component of the multifaceted system that includes CRM, cash register, reporting module, warehouse, and logistics.
+                Utilized strong analytical skills to solve complex business problems, implementing innovative solutions and strategic development practices.
+                Actively engaged in both backend and frontend development, ensuring seamless feature integration across the platform.
+                Created robust backend solutions for data processing and storage, while also focusing on an intuitive and user-friendly frontend design.
+                Regularly communicated directly with clients, gathering requirements and feedback to continuously refine and improve the platform's functionality.
+            `,
+      technologies: [
+        mapProjectTechnology(groups.backend, expSources.production, 'C#'),
+        mapProjectTechnology(groups.backend, expSources.production, 'ASP.NET MVC'),
+        mapProjectTechnology(groups.backend, expSources.production, '.NET Framework'),
+        mapProjectTechnology(groups.backend, expSources.production, 'Entity Framework'),
+        mapProjectTechnology(groups.backend, expSources.production, 'MySQL'),
+        mapProjectTechnology(groups.frontend, expSources.production, 'JavaScript'),
+        mapProjectTechnology(groups.frontend, expSources.production, 'HTML'),
+        mapProjectTechnology(groups.frontend, expSources.production, 'CSS'),
+        mapProjectTechnology(groups.versionControl, expSources.production, 'Git'),
+        mapProjectTechnology(groups.devops, expSources.production, 'Azure DevOps'),
+        mapProjectTechnology(groups.testing, expSources.production, 'NUnit')
+      ]
     }
   ],
   certifications: [
@@ -270,7 +271,7 @@ export const data: t.Data = {
       name: 'Microsoft Certified: Azure Fundamentals',
       issuingOrganization: 'Microsoft',
       issuingOrganizationIconUrl: microsoftLogo,
-      issueDate: new Date('Nov 2023'),
+      issueDate: new Date('2023-11-01'),
       credentialId: 'C4BD0FCD8D69A8C1',
       credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1'
     },
@@ -278,7 +279,7 @@ export const data: t.Data = {
       name: 'Microsoft Certified: Azure AI Fundamentals',
       issuingOrganization: 'Microsoft',
       issuingOrganizationIconUrl: microsoftLogo,
-      issueDate: new Date('Sep 2023'),
+      issueDate: new Date('2023-09-01'),
       credentialId: 'E2CBCF6AEE7B238E',
       credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E'
     }
@@ -288,8 +289,8 @@ export const data: t.Data = {
       school: 'Belarusian National Technical University',
       degree: "Bachelor's degree",
       fieldOfStudy: 'Information Technology',
-      startDate: new Date('Sep 2017'),
-      endDate: new Date('Aug 2021'),
+      startDate: new Date('2017-09-01'),
+      endDate: new Date('2021-08-01'),
       schoolUrl: 'https://bntu.by/en',
       schoolIconUrl: bntuLogo
     }
@@ -298,7 +299,7 @@ export const data: t.Data = {
     {
       name: 'Critical Thinking',
       description: `
-                As a DevOps engineer, I anticipated a significant deployment challenge before it became apparent to the team. Understanding the potential future complexities, I proactively developed a custom extension for Azure DevOps to manage multiple release definitions simultaneously. This initiative was a result of my foresight and passion for the project. By the time the issue was recognized and discussed by senior members and leads, I already had a ready-made solution to offer.
+                Serving in the role of a DevOps engineer, I anticipated a significant deployment challenge before it became apparent to the team. Understanding the potential future complexities, I proactively developed a custom extension for Azure DevOps to manage multiple release definitions simultaneously. This initiative was a result of my foresight and passion for the project. By the time the issue was recognized and discussed by senior members and leads, I already had a ready-made solution to offer.
                 This solution proved to be so effective and user-friendly that it was subsequently applied to another project. There, it instantly solved a similar issue, significantly reducing the time and effort required for configuring release definitions and minimizing the human factor.
             `
     },

@@ -6,13 +6,22 @@ export const date = (date: string | number | Date): Date => new Date(date)
 export const dateDiff = (a: Date, b: Date): {
   years: number
   months: number
-  days: number
 } => {
-  const diff = new Date(a.getTime() - b.getTime())
+  let years = a.getFullYear() - b.getFullYear()
+  let months = a.getMonth() - b.getMonth()
+  // const days = a.getDate() - b.getDate()
 
-  return {
-    years: diff.getUTCFullYear() - 1970,
-    months: diff.getUTCMonth(),
-    days: diff.getUTCDate() - 1
+  // if (days > 0) {
+  months++
+  // }
+
+  if (months < 0) {
+    years--
+    months += 12
+  } else if (months >= 12) {
+    years += Math.floor(months / 12)
+    months = months % 12
   }
+
+  return { years, months }
 }

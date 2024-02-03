@@ -102,10 +102,17 @@ const useStyles = makeStyles({
   textCenter: {
     textAlign: 'center'
   },
-  languages: {
-    flexDirection: 'column',
+  languagesMd: {
+    ...shorthands.gap(tokens.spacingVerticalM),
+    display: 'none',
     [media.sm]: {
-      flexDirection: 'row'
+      display: 'flex'
+    }
+  },
+  languagesSm: {
+    display: 'flex',
+    [media.sm]: {
+      display: 'none'
     }
   },
   footer: {
@@ -175,11 +182,14 @@ export const App = (): React.JSX.Element => {
                 <SectionFrame title="Technologies">
                     <Technologies technologies={allTechnologies} />
                 </SectionFrame>
-                <SectionFrame title="Languages" className={styles.languages}>
+                <SectionFrame title="Languages" >
+                  <Row className={styles.languagesMd}>
                     {data.languages?.map((x, i) => <Card key={i} className={common.printCard}>
-                        <Text>{x.name} - {x.level}</Text>
-                    </Card>)}
-
+                        <Text>{x.name} - {x.level}</Text></Card>)}
+                  </Row>
+                  <Card className={mergeClasses(styles.languagesSm, common.printCard)}>
+                    {data.languages?.map((x, i) => <Text key={i}>{x.name} - {x.level}</Text>)}
+                  </Card>
                 </SectionFrame>
                 <SectionFrame title="Soft Skills">
                     {data.softSkills?.map((x, i) => <SoftSkill key={i} {...x} />)}
