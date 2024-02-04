@@ -7,6 +7,16 @@ export const useCommonStyles = makeStyles({
       boxShadow: 'none',
       ...shorthands.border('1px', 'solid', tokens.colorNeutralStroke2)
     }
+  },
+  noBreak: {
+    '@media print': {
+      pageBreakInside: 'avoid'
+    }
+  },
+  noBreakBefore: {
+    '@media print': {
+      pageBreakBefore: 'avoid'
+    }
   }
 })
 

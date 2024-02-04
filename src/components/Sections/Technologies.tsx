@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Card, tokens } from '@fluentui/react-components'
 import Highcharts, { type PointOptionsObject, type XAxisBreaksOptions } from 'highcharts'
 import BrokenAxis from 'highcharts/modules/broken-axis'
-import HighchartsReact from 'highcharts-react-official'
+import HighchartsReact, { type HighchartsReactRefObject } from 'highcharts-react-official'
 import type * as t from '~/types'
 import { useCommonStyles } from '../cssinjs/Common'
 import PatternFill from 'highcharts/modules/pattern-fill'
 import { groupBy } from '../../helpers/object'
 import { MIN_DATE, dateMax, toDateDiffWords, yearsToDateDiff } from '../../helpers/date'
+import Exporting from 'highcharts/modules/exporting'
+
 BrokenAxis(Highcharts)
 PatternFill(Highcharts)
+Exporting(Highcharts)
 
 interface IStackedTechnologyGroup {
   name: string
@@ -125,7 +128,33 @@ function buildDateDiffText (years: number): string {
   return result.trim()
 }
 
+export const renderSvg = (svg?: string): React.JSX.Element | undefined => {
+  return svg ? <div dangerouslySetInnerHTML={{ __html: svg }}></div> : undefined
+}
+
 export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
+  const highChartsRef = useRef<HighchartsReactRefObject>(null)
+  const [chartSvg, setChartSvg] = useState<string | undefined>()
+
+  useEffect(() => {
+    const handleBeforePrint = (): void => {
+      const svg = highChartsRef.current?.chart.getSVG()
+      setChartSvg(svg)
+    }
+
+    const handleAfterPrint = (): void => {
+      setChartSvg(undefined)
+    }
+
+    window.addEventListener('beforeprint', handleBeforePrint)
+    window.addEventListener('afterprint', handleAfterPrint)
+
+    return () => {
+      window.removeEventListener('beforeprint', handleBeforePrint)
+      window.removeEventListener('afterprint', handleAfterPrint)
+    }
+  }, [])
+
   const common = useCommonStyles()
   const groups = sortStackedTechnologies(mapStackedTechnologies(props.technologies ?? []))
   const items = groups.flatMap(group => group.technologies)
@@ -140,6 +169,7 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
     accessibility: { enabled: false },
     credits: { enabled: false },
     colors,
+    exporting: { enabled: false },
     chart: {
       type: 'bar',
       height: Math.max(items.length, groups.length) * 20 + 100,
@@ -252,9 +282,9 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
     }))
   }
   return (<Card className={common.printCard}>
-        <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-        />
+    {renderSvg(chartSvg) ?? <HighchartsReact ref={highChartsRef}
+        highcharts={Highcharts}
+        options={options}
+    />}
     </Card>)
 }

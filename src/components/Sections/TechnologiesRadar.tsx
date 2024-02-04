@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Highcharts, { type PointOptionsObject } from 'highcharts'
 import HighchartsMore from 'highcharts/highcharts-more'
-import HighchartsReact from 'highcharts-react-official'
+import HighchartsReact, { type HighchartsReactRefObject } from 'highcharts-react-official'
 import type * as t from '~/types'
 import { makeStyles, shorthands, tokens } from '@fluentui/react-components'
 import { type KeyValue, groupBy } from '../../helpers/object'
 import { toDateDiff } from '../../helpers/date'
+import Exporting from 'highcharts/modules/exporting'
+import { renderSvg } from './Technologies'
 
 HighchartsMore(Highcharts)
+Exporting(Highcharts)
 
 export interface ITechnologiesRadarProps {
   technologies?: t.Technology[]
@@ -46,6 +49,28 @@ const getGroupRates = (groups: Array<KeyValue<t.TechnologyGroup, t.Technology>>)
 }
 
 export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Element => {
+  const highChartsRef = useRef<HighchartsReactRefObject>(null)
+  const [chartSvg, setChartSvg] = useState<string | undefined>()
+
+  useEffect(() => {
+    const handleBeforePrint = (): void => {
+      const svg = highChartsRef.current?.chart.getSVG()
+      setChartSvg(svg)
+    }
+
+    const handleAfterPrint = (): void => {
+      setChartSvg(undefined)
+    }
+
+    window.addEventListener('beforeprint', handleBeforePrint)
+    window.addEventListener('afterprint', handleAfterPrint)
+
+    return () => {
+      window.removeEventListener('beforeprint', handleBeforePrint)
+      window.removeEventListener('afterprint', handleAfterPrint)
+    }
+  }, [])
+
   const styles = useStyles()
   const groups = groupBy(props.technologies ?? [], x => x.group)
   const rates = getGroupRates(groups)
@@ -62,6 +87,7 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Ele
         fontFamily: tokens.fontFamilyBase
       }
     },
+    exporting: { enabled: false },
     title: { text: undefined },
     credits: { enabled: false },
     accessibility: { enabled: false },
@@ -76,9 +102,6 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Ele
     },
     yAxis: {
       gridLineInterpolation: 'polygon',
-      // lineWidth: 0,
-      // min: 0,
-      // tickInterval: 1,
       max: maxRate,
       labels: {
         align: 'center',
@@ -143,10 +166,10 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Ele
 
   return (
         <div className={styles.root}>
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-            />
+            {renderSvg(chartSvg) ?? <HighchartsReact ref={highChartsRef}
+                        highcharts={Highcharts}
+                        options={options}
+              />}
         </div>
   )
 }
