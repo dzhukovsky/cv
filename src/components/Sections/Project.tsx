@@ -79,8 +79,8 @@ export const Project = (props: t.Project): React.JSX.Element => {
 
   return (
         <Card className={mergeClasses(styles.children, common.printCard)}>
-            <div className={styles.title}>
-                <div className={styles.column}>
+            <div className={mergeClasses(styles.title, common.noBreak)}>
+                <div className={mergeClasses(styles.column, common.noBreak)}>
                     <Subtitle2>{props.position} | {props.name}</Subtitle2>
                     <Text>
                         {[
@@ -98,7 +98,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
                     {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
                 </TagGroup>
             </div>
-            <Link appearance="subtle" className={styles.company} href={props.companyUrl} target="_blank">
+            <Link appearance="subtle" className={mergeClasses(styles.company, common.noBreakBefore)} href={props.companyUrl} target="_blank">
                 <Image
                     src={props.companyIconUrl}
                     height={24}
@@ -111,7 +111,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
             </Paragraph>
             {props.myRole?.length && <>
                 <Divider>My Role</Divider>
-                <Text>
+                <Text className={common.noBreakBefore}>
                     <ul className={styles.list}>
                         {(props.myRole ?? '').trim().split('\n').map(x => <li key={x}>{x.trim()}</li>)}
                     </ul>
@@ -119,7 +119,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
             </>}
             {!!props.technologies?.length && <>
                 <Divider>Skills</Divider>
-                <Text>{props.technologies.map(x => x.name).sort().join(' · ')}</Text>
+                <Text className={common.noBreakBefore}>{props.technologies.map(x => x.name).sort().join(' · ')}</Text>
             </>}
         </Card>
   )

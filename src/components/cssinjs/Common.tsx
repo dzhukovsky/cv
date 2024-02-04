@@ -10,11 +10,13 @@ export const useCommonStyles = makeStyles({
   },
   noBreak: {
     '@media print': {
+      breakInside: 'avoid',
       pageBreakInside: 'avoid'
     }
   },
   noBreakBefore: {
     '@media print': {
+      breakBefore: 'avoid',
       pageBreakBefore: 'avoid'
     }
   }
