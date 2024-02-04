@@ -3,7 +3,7 @@ import { Card, Divider, Image, Link, Subtitle2, Tag, TagGroup, Text, makeStyles,
 import type * as t from '~/types'
 import { Paragraph } from '../Paragraph'
 import { media, useCommonStyles } from '../cssinjs/Common'
-import { dateDiff } from '../../helpers/date'
+import { toDateDiff, toDateDiffWords } from '../../helpers/date'
 
 const useStyles = makeStyles({
   company: {
@@ -58,17 +58,13 @@ const useStyles = makeStyles({
   }
 })
 
-function calculateTotalExperience (startDate: Date, endDate: Date): string {
-  const diff = dateDiff(endDate, startDate)
-  const years = diff.years
-  const months = diff.months
-
-  const yearWord = years === 1 ? 'yr' : 'yrs'
-  const monthWord = months === 1 ? 'mo' : 'mos'
+function buildDateDiffText (startDate: Date, endDate: Date): string {
+  const diff = toDateDiff(endDate, startDate)
+  const words = toDateDiffWords(diff)
 
   let result = ''
-  if (years > 0) result += ` · ${years} ${yearWord}`
-  if (months > 0) result += ` · ${months} ${monthWord}`
+  if (diff.years > 0) result += ` · ${diff.years} ${words.years}`
+  if (diff.months > 0) result += ` · ${diff.months} ${words.months}`
 
   return result.trim()
 }
@@ -92,7 +88,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
                           typeof props.endDate === 'string'
                             ? props.endDate
                             : props.endDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-                        ].filter(x => x).join(' - ')} {calculateTotalExperience(props.startDate, endDate)}
+                        ].filter(x => x).join(' - ')} {buildDateDiffText(props.startDate, endDate)}
                     </Text>
                     <TagGroup className={styles.tagsSm}>
                         {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}

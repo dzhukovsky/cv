@@ -5,7 +5,7 @@ import HighchartsReact from 'highcharts-react-official'
 import type * as t from '~/types'
 import { makeStyles, shorthands, tokens } from '@fluentui/react-components'
 import { type KeyValue, groupBy } from '../../helpers/object'
-import { dateDiff } from '../../helpers/date'
+import { toDateDiff } from '../../helpers/date'
 
 HighchartsMore(Highcharts)
 
@@ -27,7 +27,7 @@ const getGroupRates = (groups: Array<KeyValue<t.TechnologyGroup, t.Technology>>)
 }> => {
   const exps = groups.map(({ key, values }) => {
     const rates = values.map(x => {
-      const diff = dateDiff(new Date(), x.lastDateUsed)
+      const diff = toDateDiff(new Date(), x.lastDateUsed)
       return x.expYears / (diff.years + (diff.months / 12) + 1)
     })
     return {

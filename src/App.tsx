@@ -125,6 +125,13 @@ const useStyles = makeStyles({
   }
 })
 
+const setTitle = (text: string): void => {
+  const title: HTMLTitleElement = document.querySelector('title') ?? document.createElement('title')
+  title.textContent = text
+  document.getElementsByTagName('head')[0].appendChild(title)
+}
+setTitle(`${data.fullName} • ${data.lookingForPosition}`)
+
 export const App = (): React.JSX.Element => {
   const styles = useStyles()
   const common = useCommonStyles()

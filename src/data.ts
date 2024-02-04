@@ -6,8 +6,8 @@ import type * as t from './types'
 import { date } from './helpers/date'
 
 export const mapTechnology = (
-  group: t.TechnologyGroup,
   expSource: string,
+  group: t.TechnologyGroup,
   name: string,
   expYears: number,
   lastDateUsed: Date): t.Technology => ({
@@ -20,8 +20,8 @@ export const mapTechnology = (
 })
 
 export const mapProjectTechnology = (
-  group: t.TechnologyGroup,
   expSource: string,
+  group: t.TechnologyGroup,
   name: string,
   expYears?: number,
   lastDateUsed?: Date): t.ProjectTechnology => ({
@@ -36,6 +36,10 @@ const groups = {
   backend: {
     name: 'Backend Development',
     shortName: 'Backend'
+  },
+  database: {
+    name: 'Database Management',
+    shortName: 'Database'
   },
   frontend: {
     name: 'Frontend Development',
@@ -96,23 +100,30 @@ export const data: t.Data = {
     }
   ],
   technologies: [
-    mapTechnology(groups.backend, expSources.selfTaught, 'Blazor', 1, date('2020')),
-    mapTechnology(groups.backend, expSources.selfTaught, 'C#', 4, date('2024')),
-    mapTechnology(groups.backend, expSources.selfTaught, '.NET 7', 1, date('2024')),
-    mapTechnology(groups.backend, expSources.selfTaught, '.NET 6', 2, date('2023')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'WPF', 4, date('2021')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'UWP', 1.5, date('2022')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'WinUI 3', 1, date('2024')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'React', 2, date('2024')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'SCSS', 1, date('2024')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'TypeScript', 2, date('2024')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'Azure DevOps SDK', 1, date('2023')),
-    mapTechnology(groups.frontend, expSources.selfTaught, 'Microsoft Fluent 2', 1, date('2024')),
-    mapTechnology(groups.devops, expSources.selfTaught, 'YAML', 1, date('2024')),
-    mapTechnology(groups.devops, expSources.selfTaught, 'YML', 1, date('2023')),
-    mapTechnology(groups.devops, expSources.selfTaught, 'Azure DevOps', 1, date('2024')),
-    mapTechnology(groups.devops, expSources.selfTaught, 'GitHub', 2, date('2024')),
-    mapTechnology(groups.cloud, expSources.selfTaught, 'Azure', 2, date('2024'))
+    mapTechnology(expSources.selfTaught, groups.frontend, 'Blazor', 1, date('2020')),
+    mapTechnology(expSources.selfTaught, groups.backend, 'C#', 4, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.backend, '.NET 7', 1, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.backend, '.NET 6', 2, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.backend, 'Roslyn Analyzers', 1, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'WPF', 4, date('2021')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'UWP', 1.5, date('2022')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'WinUI 3', 1, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'React', 2, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'SCSS', 1, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'TypeScript', 2, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'Azure DevOps SDK', 1, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.frontend, 'Microsoft Fluent 2', 1, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.devops, 'YAML', 1, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.devops, 'YML', 1, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.devops, 'Azure DevOps', 1, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.devops, 'GitHub', 2, date('2024')),
+    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure Graph API', 0.5, date('2020')),
+    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure SQL Databases', 0.5, date('2020')),
+    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure App Service', 1, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure Monitor', 1, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure Functions', 0.5, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure ML Studio', 0.5, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.versionControl, 'Git', 1, date('2024'))
   ],
   projects: [
     {
@@ -138,21 +149,23 @@ export const data: t.Data = {
                 Conducted comprehensive unit testing of backend components to validate functionality and identify areas for optimization.
             `,
       technologies: [
-        mapProjectTechnology(groups.backend, expSources.production, 'C#'),
-        mapProjectTechnology(groups.backend, expSources.production, '.NET Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, '.NET 6'),
-        mapProjectTechnology(groups.backend, expSources.production, 'Redis'),
-        mapProjectTechnology(groups.backend, expSources.production, 'MS-SQL'),
-        mapProjectTechnology(groups.backend, expSources.production, 'WCF'),
-        mapProjectTechnology(groups.backend, expSources.production, 'ASP .NET Core'),
-        mapProjectTechnology(groups.backend, expSources.production, 'Dapper'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'HTML'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'CSS'),
-        mapProjectTechnology(groups.versionControl, expSources.production, 'SVN'),
-        mapProjectTechnology(groups.testing, expSources.production, 'xUnit'),
-        mapProjectTechnology(groups.devops, expSources.production, 'IIS'),
-        mapProjectTechnology(groups.devops, expSources.production, 'Azure DevOps'),
-        mapProjectTechnology(groups.devops, expSources.production, 'PowerShell')
+        mapProjectTechnology(expSources.production, groups.backend, 'C#'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET 6'),
+        mapProjectTechnology(expSources.production, groups.database, 'Redis'),
+        mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
+        mapProjectTechnology(expSources.production, groups.backend, 'WCF'),
+        mapProjectTechnology(expSources.production, groups.backend, 'ASP .NET Core'),
+        mapProjectTechnology(expSources.production, groups.backend, 'Dapper'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
+        mapProjectTechnology(expSources.production, groups.versionControl, 'SVN'),
+        mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
+        mapProjectTechnology(expSources.production, groups.testing, 'JMeter', 1),
+        mapProjectTechnology(expSources.production, groups.testing, 'Sumo Logic', 1),
+        mapProjectTechnology(expSources.production, groups.devops, 'IIS'),
+        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
+        mapProjectTechnology(expSources.production, groups.devops, 'PowerShell')
       ]
     },
     {
@@ -178,25 +191,26 @@ export const data: t.Data = {
                 Adapted to client feedback and evolving market demands, effectively implementing timely enhancements and updates to the platform.
             `,
       technologies: [
-        mapProjectTechnology(groups.backend, expSources.production, 'C#'),
-        mapProjectTechnology(groups.backend, expSources.production, 'ASP .NET'),
-        mapProjectTechnology(groups.backend, expSources.production, 'ASP .NET Core'),
-        mapProjectTechnology(groups.backend, expSources.production, 'Entity Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, '.NET Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, '.NET Core 3'),
-        mapProjectTechnology(groups.backend, expSources.production, 'Redis'),
-        mapProjectTechnology(groups.backend, expSources.production, 'MS-SQL'),
-        mapProjectTechnology(groups.backend, expSources.production, 'SSAS'),
-        mapProjectTechnology(groups.backend, expSources.production, 'Dapper'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'React', 1),
-        mapProjectTechnology(groups.frontend, expSources.production, 'Angular', 1),
-        mapProjectTechnology(groups.frontend, expSources.production, 'TypeScript'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'HTML'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'SCSS'),
-        mapProjectTechnology(groups.versionControl, expSources.production, 'TfVC'),
-        mapProjectTechnology(groups.testing, expSources.production, 'xUnit'),
-        mapProjectTechnology(groups.devops, expSources.production, 'IIS'),
-        mapProjectTechnology(groups.devops, expSources.production, 'Azure DevOps')
+        mapProjectTechnology(expSources.production, groups.backend, 'C#'),
+        mapProjectTechnology(expSources.production, groups.backend, 'ASP .NET'),
+        mapProjectTechnology(expSources.production, groups.backend, 'ASP .NET Core'),
+        mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET Core 3'),
+        mapProjectTechnology(expSources.production, groups.database, 'Redis'),
+        mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
+        mapProjectTechnology(expSources.production, groups.database, 'SSAS', 2),
+        mapProjectTechnology(expSources.production, groups.backend, 'Dapper'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'React', 1),
+        mapProjectTechnology(expSources.production, groups.frontend, 'Angular', 1),
+        mapProjectTechnology(expSources.production, groups.frontend, 'TypeScript'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'SCSS'),
+        mapProjectTechnology(expSources.production, groups.versionControl, 'TfVC'),
+        mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
+        mapProjectTechnology(expSources.production, groups.cloud, 'Google BigQuery', 0.5),
+        mapProjectTechnology(expSources.production, groups.devops, 'IIS'),
+        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps')
       ]
     },
     {
@@ -220,16 +234,16 @@ export const data: t.Data = {
                 Played a key role in optimizing the system for rental space management, leading to enhanced operational efficiency and streamlined rental processes.
             `,
       technologies: [
-        mapProjectTechnology(groups.backend, expSources.production, 'C#'),
-        mapProjectTechnology(groups.backend, expSources.production, 'ASP.NET MVC'),
-        mapProjectTechnology(groups.backend, expSources.production, '.NET Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, 'MS-SQL'),
-        mapProjectTechnology(groups.backend, expSources.production, 'SSRS'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'HTML'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'CSS'),
-        mapProjectTechnology(groups.versionControl, expSources.production, 'Git'),
-        mapProjectTechnology(groups.devops, expSources.production, 'Azure DevOps'),
-        mapProjectTechnology(groups.testing, expSources.production, 'NUnit')
+        mapProjectTechnology(expSources.production, groups.backend, 'C#'),
+        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET MVC'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
+        mapProjectTechnology(expSources.production, groups.database, 'SSRS'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
+        mapProjectTechnology(expSources.production, groups.versionControl, 'Git'),
+        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
+        mapProjectTechnology(expSources.production, groups.testing, 'NUnit')
       ]
     },
     {
@@ -252,17 +266,17 @@ export const data: t.Data = {
                 Regularly communicated directly with clients, gathering requirements and feedback to continuously refine and improve the platform's functionality.
             `,
       technologies: [
-        mapProjectTechnology(groups.backend, expSources.production, 'C#'),
-        mapProjectTechnology(groups.backend, expSources.production, 'ASP.NET MVC'),
-        mapProjectTechnology(groups.backend, expSources.production, '.NET Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, 'Entity Framework'),
-        mapProjectTechnology(groups.backend, expSources.production, 'MySQL'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'JavaScript'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'HTML'),
-        mapProjectTechnology(groups.frontend, expSources.production, 'CSS'),
-        mapProjectTechnology(groups.versionControl, expSources.production, 'Git'),
-        mapProjectTechnology(groups.devops, expSources.production, 'Azure DevOps'),
-        mapProjectTechnology(groups.testing, expSources.production, 'NUnit')
+        mapProjectTechnology(expSources.production, groups.backend, 'C#'),
+        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET MVC'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
+        mapProjectTechnology(expSources.production, groups.database, 'MySQL'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'JavaScript'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
+        mapProjectTechnology(expSources.production, groups.versionControl, 'Git'),
+        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
+        mapProjectTechnology(expSources.production, groups.testing, 'NUnit')
       ]
     }
   ],

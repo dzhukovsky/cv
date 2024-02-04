@@ -7,7 +7,7 @@ import type * as t from '~/types'
 import { useCommonStyles } from '../cssinjs/Common'
 import PatternFill from 'highcharts/modules/pattern-fill'
 import { groupBy } from '../../helpers/object'
-import { MIN_DATE, dateMax } from '../../helpers/date'
+import { MIN_DATE, dateMax, toDateDiffWords, yearsToDateDiff } from '../../helpers/date'
 BrokenAxis(Highcharts)
 PatternFill(Highcharts)
 
@@ -101,16 +101,28 @@ const sortStackedTechnologies = (groups: IStackedTechnologyGroup[]): IStackedTec
     .map(group => {
       group.technologies = group.technologies
         .sort((a, b) => a.name.localeCompare(b.name))
-        .sort((a, b) => +b.lastDateUsed - +a.lastDateUsed)
         .sort((a, b) => b.totalExpYears - a.totalExpYears)
+        .sort((a, b) => +b.lastDateUsed - +a.lastDateUsed)
       return group
     })
     .sort((a, b) => b.technologies.length - a.technologies.length)
-    .sort((a, b) => b.technologies[0].totalExpYears - a.technologies[0].totalExpYears)
+    .sort((a, b) => b.maxExpYears - a.maxExpYears)
+    .sort((a, b) => +b.technologies[0].lastDateUsed - +a.technologies[0].lastDateUsed)
 }
 
 export interface ITechnologiesProps {
   technologies?: t.Technology[]
+}
+
+function buildDateDiffText (years: number): string {
+  const diff = yearsToDateDiff(years)
+  const words = toDateDiffWords(diff)
+
+  let result = ''
+  if (diff.years > 0) result += `<span style="font-weight:${tokens.fontWeightBold}">${diff.years} ${words.years}</span>`
+  if (diff.months > 0) result += ` <span style="font-weight:${tokens.fontWeightBold}">${diff.months} ${words.months}</span>`
+
+  return result.trim()
 }
 
 export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
@@ -158,14 +170,15 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
         tooltip: {
           headerFormat: undefined,
           pointFormatter () {
-            const s = this.y! > 1 ? 's' : ''
+            const dateDiffText = buildDateDiffText(this.y!)
+
             return `
-                            <span style="color:${this.color as string}">\u25CF</span>
-                            <span style="font-size: 0.9em;font-weight:${tokens.fontWeightBold}">${this.name} - ${this.series.name}</span>
-                            <br/>
-                            <span style="font-weight:${tokens.fontWeightBold}">${+this.y!.toFixed(1)}</span> year${s} of <span style="font-weight:${tokens.fontWeightBold}">${this.options.custom?.expSource}</span> experience, 
-                            last used in <span style="font-weight:${tokens.fontWeightBold}">${this.options.custom?.lastYearUsed}</span>
-                            <br/>`.trim()
+              <span style="font-size: 1.2em;color:${this.color as string}">\u25CF</span>
+              <span style="font-size: 0.9em;font-weight:${tokens.fontWeightBold}">${this.name} - ${this.series.name}</span>
+              <br/>
+              ${dateDiffText} of <span style="font-weight:${tokens.fontWeightBold}">${this.options.custom?.expSource}</span> experience, 
+              last used in <span style="font-weight:${tokens.fontWeightBold}">${this.options.custom?.lastYearUsed}</span>
+              <br/>`.trim()
           }
         },
         events: {
