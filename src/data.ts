@@ -331,19 +331,19 @@ export const data: t.Data = {
                 Realizing the complexity of the situation, we decided to create two detailed diagrams: one representing the algorithm's functioning as per the existing code, and the other depicting how it was intended to operate. The enormity of the project made this task particularly daunting. However, guided by the belief that persistence leads to success, we pressed on.
                 Our determination eventually bore fruit. Through teamwork and a steadfast belief in our capabilities, we overcame the challenges and successfully rectified the problem. This experience underscored the importance of never losing hope and the power of perseverance in overcoming even the most challenging obstacles.
             `
-    },
-    {
-      name: 'Motivation',
-      description: `
-            Since my school days, I have been captivated by programming. The moment I first delved into it, I realized it was a boundless world where I could be the creator. My journey as a programmer began with Unity, followed by system administration and coding in Visual Basic, and then C# for web development. After school, I expanded my expertise by mastering a multitude of new technologies, including Python, Java, Prolog, and Assembly, continually pushing the boundaries of my knowledge and skills.
-            I've always set lofty goals for myself, believed in my abilities, and remained true to my ambitions, persistently pursuing them to the end. My key rule is to perceive failures not as defeats, but as valuable experiences that pave the way for future success. It's crucial to not fear stumbling over obstacles but to boldly move forward, achieving all set goals.
-        `
-    },
-    {
-      name: 'Openness',
-      description: `
-            Understanding that those who never try, never achieve, I recognize the importance of experimentation. Making mistakes is not a crime; not everything new is necessarily better, but progress is constant and we must keep pace with the times. The ongoing efforts of innovators, like Microsoft with its myriad of business solutions, continue to simplify our lives and make work more enjoyable. In the same spirit, we too strive to create what will be useful for others in the future, possibly having an impact already. There's no need to fear trying new things; we should boldly forge ahead, leaving a trail of evolution in our wake.
-        `
     }
+    // {
+    //   name: 'Motivation',
+    //   description: `
+    //         Since my school days, I have been captivated by programming. The moment I first delved into it, I realized it was a boundless world where I could be the creator. My journey as a programmer began with Unity, followed by system administration and coding in Visual Basic, and then C# for web development. After school, I expanded my expertise by mastering a multitude of new technologies, including Python, Java, Prolog, and Assembly, continually pushing the boundaries of my knowledge and skills.
+    //         I've always set lofty goals for myself, believed in my abilities, and remained true to my ambitions, persistently pursuing them to the end. My key rule is to perceive failures not as defeats, but as valuable experiences that pave the way for future success. It's crucial to not fear stumbling over obstacles but to boldly move forward, achieving all set goals.
+    //     `
+    // },
+    // {
+    //   name: 'Openness',
+    //   description: `
+    //         Understanding that those who never try, never achieve, I recognize the importance of experimentation. Making mistakes is not a crime; not everything new is necessarily better, but progress is constant and we must keep pace with the times. The ongoing efforts of innovators, like Microsoft with its myriad of business solutions, continue to simplify our lives and make work more enjoyable. In the same spirit, we too strive to create what will be useful for others in the future, possibly having an impact already. There's no need to fear trying new things; we should boldly forge ahead, leaving a trail of evolution in our wake.
+    //     `
+    // }
   ]
 }
