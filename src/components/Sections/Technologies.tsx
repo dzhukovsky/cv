@@ -148,11 +148,13 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
 
   useEffect(() => {
     const handleBeforePrint = (): void => {
+      highChartsRef.current?.chart.setSize(680)
       const svg = highChartsRef.current?.chart.getSVG()
       setChartSvg(svg)
     }
 
     const handleAfterPrint = (): void => {
+      highChartsRef.current?.chart.setSize(null)
       setChartSvg(undefined)
     }
 
