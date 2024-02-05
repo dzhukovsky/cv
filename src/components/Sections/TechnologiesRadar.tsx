@@ -35,7 +35,7 @@ const getGroupRates = (groups: Array<KeyValue<t.TechnologyGroup, t.Technology>>)
     })
     return {
       name: key.shortName ?? key.name,
-      rating: Math.sqrt(sum(rates))
+      rating: sum(rates)
     }
   })
 
@@ -166,11 +166,11 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Ele
   }
 
   return (
-        <div className={styles.root}>
-            {renderSvg(chartSvg) ?? <HighchartsReact ref={highChartsRef}
-                        highcharts={Highcharts}
-                        options={options}
-              />}
-        </div>
+    <div className={styles.root}>
+      {renderSvg(chartSvg) ?? <HighchartsReact ref={highChartsRef}
+        highcharts={Highcharts}
+        options={options}
+      />}
+    </div>
   )
 }
