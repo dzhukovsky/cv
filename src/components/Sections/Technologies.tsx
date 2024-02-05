@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Card, tokens } from '@fluentui/react-components'
+import { Card, makeStyles, tokens } from '@fluentui/react-components'
 import Highcharts, { type PointOptionsObject, type XAxisBreaksOptions } from 'highcharts'
 import BrokenAxis from 'highcharts/modules/broken-axis'
 import HighchartsReact, { type HighchartsReactRefObject } from 'highcharts-react-official'
@@ -128,8 +128,18 @@ function buildDateDiffText (years: number): string {
   return result.trim()
 }
 
-export const renderSvg = (svg?: string): React.JSX.Element | undefined => {
-  return svg ? <div dangerouslySetInnerHTML={{ __html: svg }}></div> : undefined
+const useStyles = makeStyles({
+  chart: {
+    '@media print': {
+      '& svg': {
+        maxHeight: 'calc(100vh - 100px)'
+      }
+    }
+  }
+})
+
+export const renderSvg = (svg?: string, className?: string): React.JSX.Element | undefined => {
+  return svg ? <div className={className} dangerouslySetInnerHTML={{ __html: svg }}></div> : undefined
 }
 
 export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
@@ -154,7 +164,7 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
       window.removeEventListener('afterprint', handleAfterPrint)
     }
   }, [])
-
+  const styles = useStyles()
   const common = useCommonStyles()
   const groups = sortStackedTechnologies(mapStackedTechnologies(props.technologies ?? []))
   const items = groups.flatMap(group => group.technologies)
@@ -282,7 +292,7 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
     }))
   }
   return (<Card className={common.printCard}>
-    {renderSvg(chartSvg) ?? <HighchartsReact ref={highChartsRef}
+    {renderSvg(chartSvg, styles.chart) ?? <HighchartsReact ref={highChartsRef}
         highcharts={Highcharts}
         options={options}
     />}

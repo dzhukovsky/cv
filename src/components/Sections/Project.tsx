@@ -75,7 +75,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
     : new Date()
 
   return (
-        <Card className={mergeClasses(styles.children, common.printCard, common.noBreak)}>
+        <Card className={mergeClasses(styles.children, common.printCard)}>
             <div className={styles.title}>
                 <Column>
                     <Subtitle2>{props.position} | {props.name}</Subtitle2>
