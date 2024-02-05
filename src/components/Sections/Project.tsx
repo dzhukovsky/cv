@@ -75,49 +75,52 @@ export const Project = (props: t.Project): React.JSX.Element => {
     : new Date()
 
   return (
-        <Card className={mergeClasses(styles.children, common.printCard)}>
-            <div className={styles.title}>
-                <Column>
-                    <Subtitle2>{props.position} | {props.name}</Subtitle2>
-                    <Text>
-                        {[
-                          props.startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
-                          typeof props.endDate === 'string'
-                            ? props.endDate
-                            : props.endDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-                        ].filter(x => x).join(' - ')} {buildDateDiffText(props.startDate, endDate)}
-                    </Text>
-                    <TagGroup className={styles.tagsSm}>
-                        {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
-                    </TagGroup>
-                </Column>
-                <TagGroup className={styles.tagsMd}>
-                    {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
-                </TagGroup>
-            </div>
-            <Link appearance="subtle" className={mergeClasses(styles.company, common.noBreakBefore)} href={props.companyUrl} target="_blank">
-                <Image
-                    src={props.companyIconUrl}
-                    height={24}
-                    width={24}
-                />
-                <Text>{props.company}</Text>
-            </Link>
-            <Paragraph className={styles.multiLine}>
-                {props.description ?? ''}
-            </Paragraph>
-            {props.myRole?.length && <>
-                <Divider>My Role</Divider>
-                <Text className={common.noBreakBefore}>
-                    <ul className={styles.list}>
-                        {(props.myRole ?? '').trim().split('\n').map(x => <li key={x}>{x.trim()}</li>)}
-                    </ul>
-                </Text>
-            </>}
-            {!!props.technologies?.length && <>
-                <Divider>Skills</Divider>
-                <Text className={common.noBreakBefore}>{props.technologies.map(x => x.name).sort().join(' · ')}</Text>
-            </>}
-        </Card>
+    <div>
+      <div></div>
+      <Card className={mergeClasses(styles.children, common.printCard)}>
+        <div className={mergeClasses(styles.title, common.noBreakBefore, common.noBreak)}>
+          <Column>
+            <Subtitle2>{props.position} | {props.name}</Subtitle2>
+            <Text>
+              {[
+                props.startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
+                typeof props.endDate === 'string'
+                  ? props.endDate
+                  : props.endDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+              ].filter(x => x).join(' - ')} {buildDateDiffText(props.startDate, endDate)}
+            </Text>
+            <TagGroup className={styles.tagsSm}>
+              {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
+            </TagGroup>
+          </Column>
+          <TagGroup className={styles.tagsMd}>
+            {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
+          </TagGroup>
+        </div>
+        <Link appearance="subtle" className={mergeClasses(styles.company, common.noBreakBefore)} href={props.companyUrl} target="_blank">
+          <Image
+            src={props.companyIconUrl}
+            height={24}
+            width={24}
+          />
+          <Text>{props.company}</Text>
+        </Link>
+        <Paragraph className={styles.multiLine}>
+          {props.description ?? ''}
+        </Paragraph>
+        {props.myRole?.length && <>
+          <Divider>My Role</Divider>
+          <Text className={common.noBreakBefore}>
+            <ul className={styles.list}>
+              {(props.myRole ?? '').trim().split('\n').map(x => <li key={x}>{x.trim()}</li>)}
+            </ul>
+          </Text>
+        </>}
+        {!!props.technologies?.length && <>
+          <Divider>Skills</Divider>
+          <Text className={common.noBreakBefore}>{props.technologies.map(x => x.name).sort().join(' · ')}</Text>
+        </>}
+      </Card>
+    </div>
   )
 }
