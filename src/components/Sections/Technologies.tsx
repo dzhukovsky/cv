@@ -4,7 +4,7 @@ import Highcharts, { type PointOptionsObject, type XAxisBreaksOptions } from 'hi
 import BrokenAxis from 'highcharts/modules/broken-axis'
 import HighchartsReact, { type HighchartsReactRefObject } from 'highcharts-react-official'
 import type * as t from '~/types'
-import { useCommonStyles } from '../cssinjs/Common'
+import { media, useCommonStyles } from '../cssinjs/Common'
 import PatternFill from 'highcharts/modules/pattern-fill'
 import { groupBy } from '../../helpers/object'
 import { MIN_DATE, dateMax, toDateDiffWords, yearsToDateDiff } from '../../helpers/date'
@@ -130,9 +130,9 @@ function buildDateDiffText (years: number): string {
 
 const useStyles = makeStyles({
   chart: {
-    '@media print': {
+    [media.print]: {
       '& svg': {
-        maxHeight: 'calc(100vh - 100px)'
+        maxHeight: 'calc(100vh - 110px)'
       }
     }
   }

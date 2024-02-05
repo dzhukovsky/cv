@@ -36,7 +36,10 @@ import { type Technology } from './types'
 
 const useStyles = makeStyles({
   provider: {
-    backgroundColor: tokens.colorNeutralBackground2
+    backgroundColor: tokens.colorNeutralBackground2,
+    [media.print]: {
+      backgroundColor: 'transparent'
+    }
   },
   container: {
     ...shorthands.gap(tokens.spacingVerticalXXXL),
@@ -189,8 +192,8 @@ export const App = (): React.JSX.Element => {
                 <SectionFrame title="Technologies">
                     <Technologies technologies={allTechnologies} />
                 </SectionFrame>
-                <SectionFrame title="Soft Skills">
-                    {data.softSkills?.map((x, i) => <SoftSkill key={i} {...x} />)}
+                <SectionFrame title="Experience">
+                    {data.projects?.map((x, i) => <Project key={i} {...x} />)}
                 </SectionFrame>
                 <SectionFrame title="Languages" >
                   <Row className={styles.languagesMd}>
@@ -207,8 +210,8 @@ export const App = (): React.JSX.Element => {
                 <SectionFrame title="Education">
                     {data.educations?.map((x, i) => <Education key={i} {...x} />)}
                 </SectionFrame>
-                <SectionFrame title="Experience">
-                    {data.projects?.map((x, i) => <Project key={i} {...x} />)}
+                <SectionFrame title="Soft Skills">
+                    {data.softSkills?.map((x, i) => <SoftSkill key={i} {...x} />)}
                 </SectionFrame>
             </Column>
             <Column className={mergeClasses(styles.footer, common.printHidden)}>
