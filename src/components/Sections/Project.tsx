@@ -76,7 +76,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
 
   return (
     <div>
-      <div></div>
+      <div></div> {/* This div is necessary to avoid a bug in the print mode when card content breaks to new page without card border */}
       <Card className={mergeClasses(styles.children, common.printCard)}>
         <div className={mergeClasses(styles.title, common.noBreakBefore, common.noBreak)}>
           <Column>

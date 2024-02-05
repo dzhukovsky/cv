@@ -197,6 +197,7 @@ export const data: t.Data = {
         mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET Core 3'),
+        mapProjectTechnology(expSources.production, groups.backend, 'Node.js', 1),
         mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
         mapProjectTechnology(expSources.production, groups.database, 'SSAS', 2),
