@@ -102,6 +102,7 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Ele
     },
     yAxis: {
       gridLineInterpolation: 'polygon',
+      type: 'logarithmic',
       max: maxRate,
       labels: {
         align: 'center',

@@ -189,6 +189,9 @@ export const App = (): React.JSX.Element => {
                 <SectionFrame title="Technologies">
                     <Technologies technologies={allTechnologies} />
                 </SectionFrame>
+                <SectionFrame title="Soft Skills">
+                    {data.softSkills?.map((x, i) => <SoftSkill key={i} {...x} />)}
+                </SectionFrame>
                 <SectionFrame title="Languages" >
                   <Row className={styles.languagesMd}>
                     {data.languages?.map((x, i) => <Card key={i} className={common.printCard}>
@@ -197,9 +200,6 @@ export const App = (): React.JSX.Element => {
                   <Card className={mergeClasses(styles.languagesSm, common.printCard)}>
                     {data.languages?.map((x, i) => <Text key={i}>{x.name} - {x.level}</Text>)}
                   </Card>
-                </SectionFrame>
-                <SectionFrame title="Soft Skills">
-                    {data.softSkills?.map((x, i) => <SoftSkill key={i} {...x} />)}
                 </SectionFrame>
                 <SectionFrame title="Licenses & certifications">
                     {data.certifications?.map((x, i) => <Certification key={i} {...x} />)}
@@ -211,7 +211,7 @@ export const App = (): React.JSX.Element => {
                     {data.projects?.map((x, i) => <Project key={i} {...x} />)}
                 </SectionFrame>
             </Column>
-            <Column className={styles.footer}>
+            <Column className={mergeClasses(styles.footer, common.printHidden)}>
                 <span>Creation & design by <Link href="https://github.com/dzhukovsky" target="_blank">@dzhukovsky</Link></span>
                 <span>Text editing by <Link href="https://www.openai.com/chatgpt" target="_blank">@chatgpt</Link></span>
             </Column>

@@ -4,6 +4,7 @@ import type * as t from '~/types'
 import { Paragraph } from '../Paragraph'
 import { media, useCommonStyles } from '../cssinjs/Common'
 import { toDateDiff, toDateDiffWords } from '../../helpers/date'
+import { Column } from '../Flex/Column'
 
 const useStyles = makeStyles({
   company: {
@@ -30,10 +31,6 @@ const useStyles = makeStyles({
     ...shorthands.margin(0),
     paddingLeft: tokens.spacingHorizontalXL,
     listStyleType: 'disc'
-  },
-  column: {
-    display: 'flex',
-    flexDirection: 'column'
   },
   tagsMd: {
     display: 'none',
@@ -78,9 +75,9 @@ export const Project = (props: t.Project): React.JSX.Element => {
     : new Date()
 
   return (
-        <Card className={mergeClasses(styles.children, common.printCard)}>
-            <div className={mergeClasses(styles.title, common.noBreak)}>
-                <div className={mergeClasses(styles.column, common.noBreak)}>
+        <Card className={mergeClasses(styles.children, common.printCard, common.noBreak)}>
+            <div className={styles.title}>
+                <Column>
                     <Subtitle2>{props.position} | {props.name}</Subtitle2>
                     <Text>
                         {[
@@ -93,7 +90,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
                     <TagGroup className={styles.tagsSm}>
                         {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
                     </TagGroup>
-                </div>
+                </Column>
                 <TagGroup className={styles.tagsMd}>
                     {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
                 </TagGroup>

@@ -19,6 +19,11 @@ export const useCommonStyles = makeStyles({
       breakBefore: 'avoid',
       pageBreakBefore: 'avoid'
     }
+  },
+  printHidden: {
+    '@media print': {
+      display: 'none'
+    }
   }
 })
 
