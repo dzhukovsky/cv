@@ -7,7 +7,26 @@ export interface IParagraphProps {
 }
 
 export const Paragraph = (props: IParagraphProps): React.JSX.Element => {
+  const rows: string[] = [];
+  let buffer = '';
+
+  props.children
+    .trim()
+    .split('\n')
+    .forEach((item) => {
+      item = item.trim();
+      if (item.startsWith("-")) {
+        buffer += item + '\n';
+      }
+      else {
+        if (buffer.length > 0) {
+          rows.push(buffer.trim());
+          buffer = '';
+        }
+        rows.push(item);
+      }
+    });
   return (<>
-        {props.children.trim().split('\n').map((x, i) => <Text className={props.className} key={i}>{x.trim()}</Text>)}
-    </>)
+    {props.children.trim().split('\n').map((x, i) => <Text className={props.className} key={i}>{x.trim()}</Text>)}
+  </>)
 }

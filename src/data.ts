@@ -128,7 +128,7 @@ export const data: t.Data = {
   ],
   projects: [
     {
-      name: "Provider of multi-purpose software solutions for media and subscription-based businesses",
+      name: "Multi-purpose Software Solutions for Media and Subscription Businesses",
       position: 'Middle .NET/Full-stack Developer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
@@ -137,7 +137,7 @@ export const data: t.Data = {
       endDate: 'Present',
       areasOfActivity: ['Digital Publishing'],
       description: `
-                Provider of multi-purpose software solutions for media and subscription-based businesses. They provide publishers with versatile and customizable software for subscription management, audience analytics and monetization, self-service features implementation, selling ads, and more. 
+                They provide publishers with versatile and customizable software for subscription management, audience analytics and monetization, self-service features implementation, selling ads, and more. 
                 One of the major aims is to ensure seamless integration of their solutions to the client's IT ecosystem. To achieve that: 
                 - they have pre-built integrations with the most used CRMs, marketing tools, payment solutions, etc, like Salesforce, HubSpot, Verifone, Google Ad Manager, and so on; 
                 - they provide a complete pack of APIs for clients to build their own custom integrations; 
