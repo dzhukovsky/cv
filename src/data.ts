@@ -11,13 +11,13 @@ export const mapTechnology = (
   name: string,
   expYears: number,
   lastDateUsed: Date): t.Technology => ({
-  name,
-  expYears,
-  lastDateUsed,
-  group,
-  expSource,
-  patternIndex: 1
-})
+    name,
+    expYears,
+    lastDateUsed,
+    group,
+    expSource,
+    patternIndex: 1
+  })
 
 export const mapProjectTechnology = (
   expSource: string,
@@ -25,12 +25,12 @@ export const mapProjectTechnology = (
   name: string,
   expYears?: number,
   lastDateUsed?: Date): t.ProjectTechnology => ({
-  name,
-  expYears,
-  lastDateUsed,
-  group,
-  expSource
-})
+    name,
+    expYears,
+    lastDateUsed,
+    group,
+    expSource
+  })
 
 const groups = {
   backend: {
@@ -128,13 +128,48 @@ export const data: t.Data = {
   ],
   projects: [
     {
+      name: "Provider of multi-purpose software solutions for media and subscription-based businesses",
+      position: 'Middle .NET/Full-stack Developer',
+      company: 'Lightpoint Global',
+      companyUrl: 'https://lightpointglobal.com',
+      companyIconUrl: lightpointGlobalLogo,
+      startDate: new Date('2024-03-01'),
+      endDate: 'Present',
+      areasOfActivity: ['Digital Publishing'],
+      description: `
+                Provider of multi-purpose software solutions for media and subscription-based businesses. They provide publishers with versatile and customizable software for subscription management, audience analytics and monetization, self-service features implementation, selling ads, and more. 
+                One of the major aims is to ensure seamless integration of their solutions to the client's IT ecosystem. To achieve that: 
+                - they have pre-built integrations with the most used CRMs, marketing tools, payment solutions, etc, like Salesforce, HubSpot, Verifone, Google Ad Manager, and so on; 
+                - they provide a complete pack of APIs for clients to build their own custom integrations; 
+                - they utilize plugin/widget architecture to maximize ease of 3d-party integrations. 
+                The client can either implement the purchased solutions independently or hire a tech team from the provider to get the implementation done. 
+            `,
+      // myRole: `
+      //           {{ROLE}}
+      //       `,
+      technologies: [
+        mapProjectTechnology(expSources.production, groups.backend, 'C#'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
+        mapProjectTechnology(expSources.production, groups.backend, 'ASP .NET'),
+        mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'JavaScript'),
+        mapProjectTechnology(expSources.production, groups.versionControl, 'Git'),
+        mapProjectTechnology(expSources.production, groups.devops, 'IIS'),
+        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
+        mapProjectTechnology(expSources.production, groups.testing, 'MS Test'),
+      ]
+
+    },
+    {
       name: 'ePayment Solution',
       position: 'Middle .NET Developer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
       startDate: new Date('2022-11-01'),
-      endDate: 'Present',
+      endDate: new Date('2024-02-29'),
       areasOfActivity: ['Fintech'],
       description: `
                 A non-card payment system utilized by over 100 authorized banks worldwide, including major clients like Adidas, Reebok, and Uber. This system allows consumers to purchase in their own currencies without risking personal or financial information.
