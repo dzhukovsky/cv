@@ -244,7 +244,7 @@ export const data: t.Data = {
         mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
         mapProjectTechnology(expSources.production, groups.database, 'SSAS', 2),
-        mapProjectTechnology(expSources.production, groups.backend, 'Dapper'),
+        mapProjectTechnology(expSources.production, groups.backend, 'Dapper', 1),
         mapProjectTechnology(expSources.production, groups.frontend, 'React', 1),
         mapProjectTechnology(expSources.production, groups.frontend, 'Angular', 0.5),
         mapProjectTechnology(expSources.production, groups.frontend, 'TypeScript'),
