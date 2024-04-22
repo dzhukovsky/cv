@@ -144,9 +144,14 @@ export const data: t.Data = {
                 - they utilize plugin/widget architecture to maximize ease of 3d-party integrations. 
                 The client can either implement the purchased solutions independently or hire a tech team from the provider to get the implementation done. 
             `,
-      // myRole: `
-      //           {{ROLE}}
-      //       `,
+      myRole: `
+                Generating backlog, design new features, control of roadmap of product. 
+                Design and implementation of product architecture. 
+                Design and implementation of database schema. 
+                Setting up CI/CD. 
+                Reading specifications. 
+                Writing unit/integration tests. 
+            `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
@@ -154,6 +159,7 @@ export const data: t.Data = {
         mapProjectTechnology(expSources.production, groups.backend, 'ASP .NET'),
         mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
         mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
+        mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
         mapProjectTechnology(expSources.production, groups.frontend, 'JavaScript'),
         mapProjectTechnology(expSources.production, groups.versionControl, 'Git'),
         mapProjectTechnology(expSources.production, groups.devops, 'IIS'),
