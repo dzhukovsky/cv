@@ -77,7 +77,7 @@ export const data: t.Data = {
   fullName: 'Dmitry Zhukovsky',
   linkedInUrl: 'www.linkedin.com/in/dmitry-zhukovsky',
   email: 'dmitry.zhukovsky@outlook.com',
-  lookingForPosition: 'Senior Full-Stack Developer (.NET + React)',
+  lookingForPosition: '.NET Fullstack Developer',
   location: 'Gdansk, Poland',
   contractTypes: ['Hybrid', 'Remote'],
   summary: `
@@ -137,26 +137,26 @@ export const data: t.Data = {
       endDate: 'Present',
       areasOfActivity: ['Digital Publishing'],
       description: `
-                They provide publishers with versatile and customizable software for subscription management, audience analytics and monetization, self-service features implementation, selling ads, and more. 
-                One of the major aims is to ensure seamless integration of their solutions to the client's IT ecosystem. To achieve that: 
-                - they have pre-built integrations with the most used CRMs, marketing tools, payment solutions, etc, like Salesforce, HubSpot, Verifone, Google Ad Manager, and so on; 
-                - they provide a complete pack of APIs for clients to build their own custom integrations; 
-                - they utilize plugin/widget architecture to maximize ease of 3d-party integrations. 
-                The client can either implement the purchased solutions independently or hire a tech team from the provider to get the implementation done. 
+                This project provides publishers with versatile and customizable software for subscription management, audience analytics, and monetization. This includes self-service features implementation, selling ads, and more. The primary aim is to ensure seamless integration of their solutions into the client's IT ecosystem.
+                To achieve this:
+                - They have pre-built integrations with widely-used CRMs, marketing tools, and payment solutions, including Salesforce, HubSpot, Verifone, and Google Ad Manager.
+                - They provide a comprehensive set of APIs for clients to build their own custom integrations.
+                - They utilize a plugin/widget architecture to maximize ease of third-party integrations.
+                Clients can either implement the purchased solutions independently or hire a tech team from Lightpoint Global to handle the implementation. 
             `,
       myRole: `
-                Generating backlog, design new features, control of roadmap of product. 
-                Design and implementation of product architecture. 
-                Design and implementation of database schema. 
-                Setting up CI/CD. 
-                Reading specifications. 
-                Writing unit/integration tests. 
+                Spearheaded the generation of backlog items, designed new features, and managed the product roadmap to ensure timely and efficient delivery of high-quality software solutions.
+                Architected and implemented the overall product architecture, ensuring scalability, maintainability, and performance optimization.
+                Designed and implemented robust database schemas to support complex business requirements and enhance data integrity.
+                Established and maintained CI/CD pipelines to streamline the development process and facilitate continuous integration and deployment.
+                Analyzed and interpreted technical specifications to ensure accurate implementation and compliance with client requirements.
+                Developed and executed comprehensive unit and integration tests to ensure software reliability, performance, and security.
             `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
-        mapProjectTechnology(expSources.production, groups.backend, 'ASP .NET'),
+        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET MVC'),
         mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
         mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
         mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
