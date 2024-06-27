@@ -190,24 +190,27 @@ const createTechnologies = (technologies: Technology[]) => {
         ...groups.flatMap(group => [
             createHeading2(group.name),
             new Paragraph({
-                children: group.technologies
-                    .map(x => ({ name: x.name, expYears: sum(x.expYears.map(x => x.years)) }))
-                    .flatMap((x, i, items) => {
-                        const res = [
-                            new TextRun({
-                                text: x.name
-                            }),
-                            new TextRun({ text: ' ' }),
-                            new TextRun({
-                                text: `(${buildDateDiffText(x.expYears)[0]})`,
-                                italics: true,
-                            }),
-                        ];
+                children: [
+                    ...group.technologies
+                        .map(x => ({ name: x.name, expYears: sum(x.expYears.map(x => x.years)) }))
+                        .flatMap((x, i, items) => {
+                            const res = [
+                                new TextRun({
+                                    text: x.name
+                                }),
+                                new TextRun({ text: ' ' }),
+                                new TextRun({
+                                    text: `(${buildDateDiffText(x.expYears)[0]})`,
+                                    italics: true,
+                                }),
+                            ];
 
-                        if (i < items.length - 1) res.push(new TextRun({ text: ', ' }))
+                            if (i < items.length - 1) res.push(new TextRun({ text: ', ' }))
 
-                        return res
-                    })
+                            return res
+                        }),
+                    new TextRun({ text: '.' }),
+                ]
             })
         ])
     ]
@@ -232,7 +235,8 @@ const createExperience = (data: Data) => {
                             }),
                             new TextRun({
                                 text: project.technologies.map(x => x.name).sort().join(', ')
-                            })
+                            }),
+                            new TextRun({ text: '.' }),
                         ],
                     })] : [],
         ])
