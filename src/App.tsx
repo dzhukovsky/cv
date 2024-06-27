@@ -229,7 +229,7 @@ export const App = (): React.JSX.Element => {
           </div>
           <div className={styles.avatarActionItemsMd}>
             <Tooltip
-              content="Download as docx (ATS optimized)"
+              content="Download as docx"
               relationship="inaccessible" >
               <Button
                 className={common.printHidden}
