@@ -36,7 +36,7 @@ interface IExpYears {
   patternIndex?: number
 }
 
-const mapStackedTechnologies = (technologies?: t.Technology[]): IStackedTechnologyGroup[] => {
+export const mapStackedTechnologies = (technologies?: t.Technology[]): IStackedTechnologyGroup[] => {
   const groups = groupBy(technologies ?? [], x => x.group)
   const stackedGroups: IStackedTechnologyGroup[] = []
   for (const { key, values } of groups) {
@@ -98,14 +98,14 @@ const mapStackedTechnologies = (technologies?: t.Technology[]): IStackedTechnolo
   return stackedGroups
 }
 
-const sortStackedTechnologies = (groups: IStackedTechnologyGroup[]): IStackedTechnologyGroup[] => {
+export const sortStackedTechnologies = (groups: IStackedTechnologyGroup[]): IStackedTechnologyGroup[] => {
   return groups
     .filter(group => group.technologies.length > 0)
     .map(group => {
       group.technologies = group.technologies
         .sort((a, b) => a.name.localeCompare(b.name))
-        .sort((a, b) => b.totalExpYears - a.totalExpYears)
         .sort((a, b) => +b.lastDateUsed - +a.lastDateUsed)
+        .sort((a, b) => b.totalExpYears - a.totalExpYears)
       return group
     })
     .sort((a, b) => b.technologies.length - a.technologies.length)
@@ -117,7 +117,7 @@ export interface ITechnologiesProps {
   technologies?: t.Technology[]
 }
 
-function buildDateDiffText (years: number): string {
+function buildDateDiffText(years: number): string {
   const diff = yearsToDateDiff(years)
   const words = toDateDiffWords(diff)
 
@@ -211,7 +211,7 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
         borderWidth: 0,
         tooltip: {
           headerFormat: undefined,
-          pointFormatter () {
+          pointFormatter() {
             const dateDiffText = buildDateDiffText(this.y!)
 
             return `
@@ -274,11 +274,11 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
             colorIndex: 0,
             color: expYearIndex > 0 || expYear.patternIndex
               ? {
-                  pattern: {
-                    ...patterns[technology.expYears.length > 1 ? expYearIndex : expYear.patternIndex ?? expYearIndex],
-                    color: colors[groupIndex]
-                  }
+                pattern: {
+                  ...patterns[technology.expYears.length > 1 ? expYearIndex : expYear.patternIndex ?? expYearIndex],
+                  color: colors[groupIndex]
                 }
+              }
               : colors[groupIndex],
             dataLabels: {
               style: { color: 'black' },
@@ -295,8 +295,8 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
   }
   return (<Card className={common.printCard}>
     {renderSvg(chartSvg, styles.chart) ?? <HighchartsReact ref={highChartsRef}
-        highcharts={Highcharts}
-        options={options}
+      highcharts={Highcharts}
+      options={options}
     />}
-    </Card>)
+  </Card>)
 }

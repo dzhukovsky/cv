@@ -2,11 +2,14 @@ export type LanguageLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2' | 'Native sp
 
 export interface Data {
   fullName: string
+  portfolioUrl?: string
   linkedInUrl?: string
+  phoneNumber?: string
   email?: string
   lookingForPosition: string
   summary?: string
   location: string
+  locationShort: string
   contractTypes: string[]
   languages?: Language[]
   technologies?: Technology[]

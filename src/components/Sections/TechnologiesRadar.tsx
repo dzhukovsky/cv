@@ -16,7 +16,7 @@ export interface ITechnologiesRadarProps {
   technologies?: t.Technology[]
 }
 
-const sum = (items: number[]): number => items.reduce((a, b) => a + b, 0)
+export const sum = (items: number[]): number => items.reduce((a, b) => a + b, 0)
 
 const useStyles = makeStyles({
   root: {

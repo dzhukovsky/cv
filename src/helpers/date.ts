@@ -47,3 +47,19 @@ export const toDateDiffWords = (diff: DateDiff): {
     months: monthWord
   }
 }
+
+export const toDateDiffFullWords = (diff: DateDiff): {
+  years: string
+  months: string
+} => {
+  const yearWord = diff.years > 0
+    ? diff.years === 1 ? 'year' : 'years'
+    : ''
+  const monthWord = diff.months > 0
+    ? diff.months === 1 ? 'month' : 'months'
+    : ''
+  return {
+    years: yearWord,
+    months: monthWord
+  }
+}

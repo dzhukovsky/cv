@@ -4,6 +4,8 @@ import bntuLogo from '../public/bntu_logo.jpg'
 import caspelLogo from '../public/caspel_logo.jpg'
 import type * as t from './types'
 import { date } from './helpers/date'
+import { } from 'helpers/string'
+import { getTechnologies } from './helpers/technologies'
 
 export const mapTechnology = (
   expSource: string,
@@ -75,10 +77,12 @@ const expSources = {
 
 export const data: t.Data = {
   fullName: 'Dmitry Zhukovsky',
+  phoneNumber: '+48 730 725 476',
   linkedInUrl: 'www.linkedin.com/in/dmitry-zhukovsky',
   email: 'dmitry.zhukovsky@outlook.com',
-  lookingForPosition: '.NET Fullstack Developer',
+  lookingForPosition: '.NET Full-stack Developer',
   location: 'Gdansk, Poland',
+  locationShort: 'Gdansk, PL',
   contractTypes: ['Hybrid', 'Remote'],
   summary: `
         Ambitious and curious, I am a .NET developer with over 8 years of experience, including 5 in production environments. My journey began in my school years, marked by participation in programming competitions and a self-taught dive into Microsoft technologies like C#, .NET, and Azure. This passion, coupled with a strong technical education, has driven my continuous learning and adaptation to evolving industry trends.
@@ -102,8 +106,7 @@ export const data: t.Data = {
   technologies: [
     mapTechnology(expSources.selfTaught, groups.frontend, 'Blazor', 1, date('2020')),
     mapTechnology(expSources.selfTaught, groups.backend, 'C#', 4, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.backend, '.NET 7', 1, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.backend, '.NET 6', 2, date('2023')),
+    mapTechnology(expSources.selfTaught, groups.backend, '.NET', 3, date('2024')),
     mapTechnology(expSources.selfTaught, groups.backend, 'Roslyn Analyzers', 1, date('2023')),
     mapTechnology(expSources.selfTaught, groups.backend, 'Python 3', 2, date('2021')),
     mapTechnology(expSources.selfTaught, groups.frontend, 'WPF', 4, date('2021')),
@@ -129,7 +132,7 @@ export const data: t.Data = {
   projects: [
     {
       name: "Multi-purpose Software Solutions for Media and Subscription Businesses",
-      position: 'Middle .NET/Full-stack Developer',
+      position: 'Middle .NET Full-stack Developer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
@@ -193,7 +196,7 @@ export const data: t.Data = {
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
-        mapProjectTechnology(expSources.production, groups.backend, '.NET 6'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET'),
         mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
         mapProjectTechnology(expSources.production, groups.backend, 'WCF'),
@@ -239,7 +242,7 @@ export const data: t.Data = {
         mapProjectTechnology(expSources.production, groups.backend, 'ASP .NET Core'),
         mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
-        mapProjectTechnology(expSources.production, groups.backend, '.NET Core 3'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET'),
         mapProjectTechnology(expSources.production, groups.backend, 'Node.js', 1),
         mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
@@ -259,7 +262,7 @@ export const data: t.Data = {
     },
     {
       name: 'Rental Accounting System',
-      position: 'Junior .NET Full-Stack Developer',
+      position: 'Junior .NET Full-stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
       companyIconUrl: caspelLogo,
@@ -292,7 +295,7 @@ export const data: t.Data = {
     },
     {
       name: 'Customer Manufacturing Platform',
-      position: 'Junior .NET Full-Stack Developer',
+      position: 'Junior .NET Full-stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
       companyIconUrl: caspelLogo,
@@ -357,7 +360,7 @@ export const data: t.Data = {
     {
       name: 'Critical Thinking',
       description: `
-                Serving in the role of a DevOps engineer, I anticipated a significant deployment challenge before it became apparent to the team. Understanding the potential future complexities, I proactively developed a custom extension for Azure DevOps to manage multiple release definitions simultaneously. This initiative was a result of my foresight and passion for the project. By the time the issue was recognized and discussed by senior members and leads, I already had a ready-made solution to offer.
+                Serving in the role of a DevOps engineer, I anticipated a significant deployment challenge before it became apparent to the team. Understanding the potential future complexities, I proactively developed a custom extension for Azure DevOps to manage multiple release definitions simultaneously. This initiative was a result of my foresight and passion for the project. By the time the issue was recognized and discussed by senior members and leaders, I already had a ready-made solution to offer.
                 This solution proved to be so effective and user-friendly that it was subsequently applied to another project. There, it instantly solved a similar issue, significantly reducing the time and effort required for configuring release definitions and minimizing the human factor.
             `
     },
@@ -391,3 +394,15 @@ export const data: t.Data = {
     // }
   ]
 }
+
+export const allTechnologies: t.Technology[] = [
+  ...getTechnologies(data.projects?.slice().reverse() ?? []),
+  ...data.technologies ?? []
+]
+
+export const formatDates = (startDate: Date, endDate?: Date | 'Present') => [
+  startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
+  typeof endDate === 'string'
+    ? endDate
+    : endDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+].filter(x => x).join(' - ')

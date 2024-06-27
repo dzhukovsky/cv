@@ -5,6 +5,7 @@ import { Paragraph } from '../Paragraph'
 import { media, useCommonStyles } from '../cssinjs/Common'
 import { toDateDiff, toDateDiffWords } from '../../helpers/date'
 import { Column } from '../Flex/Column'
+import { formatDates } from './../../data'
 
 const useStyles = makeStyles({
   company: {
@@ -55,7 +56,7 @@ const useStyles = makeStyles({
   }
 })
 
-function buildDateDiffText (startDate: Date, endDate: Date): string {
+function buildDateDiffText(startDate: Date, endDate: Date): string {
   const diff = toDateDiff(endDate, startDate)
   const words = toDateDiffWords(diff)
 
@@ -82,12 +83,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
           <Column>
             <Subtitle2>{props.position} | {props.name}</Subtitle2>
             <Text>
-              {[
-                props.startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
-                typeof props.endDate === 'string'
-                  ? props.endDate
-                  : props.endDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-              ].filter(x => x).join(' - ')} {buildDateDiffText(props.startDate, endDate)}
+              {formatDates(props.startDate, props.endDate)} {buildDateDiffText(props.startDate, endDate)}
             </Text>
             <TagGroup className={styles.tagsSm}>
               {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
