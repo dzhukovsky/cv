@@ -132,7 +132,7 @@ export const data: t.Data = {
   projects: [
     {
       name: "Multi-purpose Software Solutions for Media and Subscription Businesses",
-      position: 'Middle .NET Full-stack Developer',
+      position: 'Senior .NET Full-stack Developer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
@@ -173,7 +173,7 @@ export const data: t.Data = {
     },
     {
       name: 'ePayment Solution',
-      position: 'Middle .NET Developer',
+      position: 'Senior .NET Developer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
