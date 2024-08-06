@@ -137,7 +137,7 @@ export const data: t.Data = {
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
       startDate: new Date('2024-03-01'),
-      endDate: 'Present',
+      endDate: new Date('2024-5-31'),
       areasOfActivity: ['Digital Publishing'],
       description: `
                 This project provides publishers with versatile and customizable software for subscription management, audience analytics, and monetization. This includes self-service features implementation, selling ads, and more. The primary aim is to ensure seamless integration of their solutions into the client's IT ecosystem.
