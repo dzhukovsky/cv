@@ -80,7 +80,7 @@ export const data: t.Data = {
   phoneNumber: '+48 730 725 476',
   linkedInUrl: 'www.linkedin.com/in/dmitry-zhukovsky',
   email: 'dmitry.zhukovsky@outlook.com',
-  lookingForPosition: '.NET Full-stack Engineer',
+  lookingForPosition: '.NET Software Engineer',
   location: 'Gdansk, Poland',
   locationShort: 'Gdansk, PL',
   contractTypes: ['Hybrid', 'Remote'],
