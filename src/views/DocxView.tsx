@@ -127,10 +127,15 @@ const createDocument = (data: Data) => new Document({
                             children: [
                                 new TextRun({
                                     text: 'Generated via my website: ',
+                                    italics: true,
                                 }),
-                                createHyperlink(formatUrl(WINDOW_URL), WINDOW_URL),
+                                createHyperlink(formatUrl(WINDOW_URL), WINDOW_URL, true),
                                 new TextRun({
-                                    children: ['.\t', PageNumber.CURRENT]
+                                    italics: true,
+                                    text: '.\t'
+                                }),
+                                new TextRun({
+                                    children: [PageNumber.CURRENT],
                                 }),
                             ]
                         })]
@@ -382,11 +387,12 @@ const createBulletsByLine = (text?: string) =>
         }
     })) ?? []
 
-const createHyperlink = (url: string, text?: string, underline: boolean = false) => new ExternalHyperlink({
+const createHyperlink = (url: string, text?: string, italics?: boolean, underline: boolean = false) => new ExternalHyperlink({
     children: [
         new TextRun({
             text: text,
             style: "Hyperlink",
+            italics,
             underline: {
                 type: !underline ? "none" : undefined
             }
