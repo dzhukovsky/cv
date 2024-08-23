@@ -92,7 +92,7 @@ export const data: t.Data = {
   languages: [
     {
       name: 'English',
-      level: 'B1'
+      level: 'B2'
     },
     {
       name: 'Polish',
