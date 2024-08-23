@@ -85,7 +85,7 @@ export const data: t.Data = {
   locationShort: 'Gdansk, PL',
   contractTypes: ['Hybrid', 'Remote'],
   summary: `
-      I am a highly motivated and inquisitive .NET Full-stack Engineer with over 9 years of experience, including 5 years in production environments.
+      I am a highly motivated and inquisitive .NET Software Engineer with over 9 years of experience, including 5 years in production environments.
       - Developed and maintained high-performance web applications using C#, ASP.NET Core, and .NET.
       - Designed and implemented RESTful APIs and microservices architecture to facilitate efficient communication between different application components.
       - Utilized Dapper and Entity Framework for data access management, ensuring data integrity and efficient database interactions.
@@ -142,7 +142,7 @@ export const data: t.Data = {
   projects: [
     {
       name: "Multi-purpose Software Solutions for Media and Subscription Businesses",
-      position: 'Senior .NET Full-stack Developer',
+      position: '.NET Software Engineer II',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
@@ -183,7 +183,7 @@ export const data: t.Data = {
     },
     {
       name: 'ePayment Solution',
-      position: 'Senior .NET Developer',
+      position: '.NET Software Engineer II',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
@@ -226,7 +226,7 @@ export const data: t.Data = {
     },
     {
       name: 'Customer Engagement Platform',
-      position: 'Middle .NET Developer',
+      position: '.NET Software Engineer I',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: lightpointGlobalLogo,
@@ -272,7 +272,7 @@ export const data: t.Data = {
     },
     {
       name: 'Rental Accounting System',
-      position: 'Junior .NET Full-stack Developer',
+      position: '.NET Full-stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
       companyIconUrl: caspelLogo,
@@ -305,7 +305,7 @@ export const data: t.Data = {
     },
     {
       name: 'Customer Manufacturing Platform',
-      position: 'Junior .NET Full-stack Developer',
+      position: '.NET Full-stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
       companyIconUrl: caspelLogo,
