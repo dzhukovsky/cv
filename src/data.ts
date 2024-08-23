@@ -85,7 +85,7 @@ export const data: t.Data = {
   locationShort: 'Gdansk, PL',
   contractTypes: ['Hybrid', 'Remote'],
   summary: `
-      I am a highly motivated and inquisitive .NET Full Stack Developer with over 9 years of experience, including 5 years in production environments.
+      I am a highly motivated and inquisitive .NET Full-stack Engineer with over 9 years of experience, including 5 years in production environments.
       - Developed and maintained high-performance web applications using C#, ASP.NET Core, and .NET.
       - Designed and implemented RESTful APIs and microservices architecture to facilitate efficient communication between different application components.
       - Utilized Dapper and Entity Framework for data access management, ensuring data integrity and efficient database interactions.
