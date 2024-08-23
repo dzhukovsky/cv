@@ -15,7 +15,8 @@ import {
   mergeClasses,
   Link,
   Button,
-  Tooltip
+  Tooltip,
+  Subtitle2
 } from '@fluentui/react-components'
 import { SectionFrame } from './components/SectionFrame'
 import meImage from '../public/me.jpg'
@@ -62,28 +63,25 @@ const useStyles = makeStyles({
   multiLine: {
     whiteSpace: 'pre-line'
   },
-  avatarContainter: {
+  avatarContainer: {
     ...shorthands.padding(tokens.spacingVerticalXL, 0, 0),
     rowGap: tokens.spacingVerticalXXL,
-    columnGap: tokens.spacingHorizontalXXL,
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-between',
     [media.sm]: {
-      ...shorthands.padding(tokens.spacingVerticalXXXL, 0, tokens.spacingVerticalXXL),
+      ...shorthands.padding(tokens.spacingVerticalXXXL, 0, 0),
     },
-    [media.md]: {
-      alignItems: 'start',
+    [media.lg]: {
       flexDirection: 'row'
     },
   },
-  avatarContainterItems: {
+  avatarContainerItems: {
     rowGap: tokens.spacingVerticalXXL,
     columnGap: tokens.spacingHorizontalXXL,
     alignItems: 'center',
     flexDirection: 'column',
     [media.md]: {
-      alignItems: 'start',
       flexDirection: 'row'
     }
   },
@@ -109,14 +107,9 @@ const useStyles = makeStyles({
     boxShadow: tokens.shadow4,
     width: '150px',
     [media.md]: {
+      alignSelf: 'start',
+      marginTop: tokens.spacingVerticalL,
       width: '200px'
-    }
-  },
-  summaryCard: {
-    display: 'inline-grid',
-    gridTemplateColumns: 'minmax(0, 1fr)',
-    [media.lg]: {
-      gridTemplateColumns: 'auto 400px'
     }
   },
   summary: {
@@ -183,8 +176,8 @@ export const App = (): React.JSX.Element => {
   return (
     <FluentProvider className={styles.provider} theme={webLightTheme}>
       <Column className={styles.container}>
-        <Row className={styles.avatarContainter}>
-          <Row className={styles.avatarContainterItems}>
+        <Row className={styles.avatarContainer}>
+          <Row className={styles.avatarContainerItems}>
             <Image
               className={styles.avatarImage}
               shape="circular"
@@ -194,7 +187,7 @@ export const App = (): React.JSX.Element => {
               <Column className={styles.avatarItemsRows}>
                 <LargeTitle className={styles.textAlignCenterSm}>{data.fullName}</LargeTitle>
                 <Subtitle1 className={styles.textAlignCenterSm}>{data.lookingForPosition}</Subtitle1>
-                <Text>{[data.location, ...data.contractTypes].join(' · ')}</Text>
+                <Text>{[data.location, data.contractTypes.join('/')].join(' · ')}</Text>
               </Column>
               {!!(data.linkedInUrl ?? data.email) &&
                 <Column className={styles.avatarItemsRows}>
@@ -212,41 +205,27 @@ export const App = (): React.JSX.Element => {
                   }
                 </Column>
               }
+              <Column className={styles.avatarItemsRows}>
+                <Button
+                  appearance='outline'
+                  className={common.printHidden}
+                  onClick={() => downloadDocx(data, title)}
+                  icon={<ArrowDownloadRegular />}
+                  size="medium">
+                  Download as docx
+                </Button>
+              </Column>
             </Column>
           </Row>
-          <div className={styles.avatarActionItemsSm}>
-            <Tooltip
-              content="Download as docx"
-              relationship="inaccessible" >
-              <Button
-                className={common.printHidden}
-                onClick={() => downloadDocx(data, title)}
-                icon={<ArrowDownloadRegular />}
-                size="medium">
-                Download
-              </Button>
-            </Tooltip>
-          </div>
-          <div className={styles.avatarActionItemsMd}>
-            <Tooltip
-              content="Download as docx"
-              relationship="inaccessible" >
-              <Button
-                className={common.printHidden}
-                onClick={() => downloadDocx(data, title)}
-                icon={<ArrowDownloadRegular />}
-                size="medium" />
-            </Tooltip>
-          </div>
+          <TechnologiesRadar technologies={allTechnologies} />
         </Row>
         <SectionFrame title="Summary">
-          <Card className={mergeClasses(styles.summaryCard, common.printCard)}>
+          <Card className={common.printCard}>
             <div className={mergeClasses(flex.column, styles.summary)}>
-              <Paragraph>
+              <Paragraph className={styles.multiLine}>
                 {data.summary ?? ''}
               </Paragraph>
             </div>
-            <TechnologiesRadar technologies={allTechnologies} />
           </Card>
         </SectionFrame>
         <SectionFrame title="Technologies">

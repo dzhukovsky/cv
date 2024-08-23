@@ -78,22 +78,20 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Ele
 
   const options: Highcharts.Options = {
     chart: {
-      marginTop: 2,
-      marginBottom: 2,
+      marginTop: 0,
+      marginBottom: 0,
+      backgroundColor: 'transparent',
       polar: true,
       type: 'line',
-      height: 350,
+      width: 400,
       style: {
         fontFamily: tokens.fontFamilyBase
-      }
+      },
     },
     exporting: { enabled: false },
     title: { text: undefined },
     credits: { enabled: false },
     accessibility: { enabled: false },
-    pane: {
-      size: '80%'
-    },
     legend: { enabled: false },
     xAxis: {
       type: 'category',
@@ -105,10 +103,7 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps): React.JSX.Ele
       type: 'logarithmic',
       max: maxRate,
       labels: {
-        align: 'center',
-        formatter: function () {
-          return this.value + '%'
-        }
+        enabled: false,
       },
       title: { text: undefined }
     },

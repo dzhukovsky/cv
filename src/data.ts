@@ -85,9 +85,19 @@ export const data: t.Data = {
   locationShort: 'Gdansk, PL',
   contractTypes: ['Hybrid', 'Remote'],
   summary: `
-        Ambitious and curious, I am a .NET developer with over 8 years of experience, including 5 in production environments. My journey began in my school years, marked by participation in programming competitions and a self-taught dive into Microsoft technologies like C#, .NET, and Azure. This passion, coupled with a strong technical education, has driven my continuous learning and adaptation to evolving industry trends.
-        In my career, I have honed my skills in various projects, showcasing not only technical prowess but also responsibility and a strong work ethic. I pride myself on being conscientious and detail-oriented, thriving in challenging environments and committed to staying abreast of the latest advancements in technology. My hands-on approach and enjoyment of collaborative processes have allowed me to contribute positively to team dynamics and foster a productive work environment.
-        Specializing in Microsoft technologies has equipped me with a robust skill set, fueling my eagerness to tackle new challenges and make meaningful contributions to innovative projects. As I look ahead, my goal is to continue growing as a developer, leveraging my skills to push the boundaries of technology and achieve groundbreaking solutions.
+      I am a highly motivated and inquisitive .NET Full Stack Developer with over 9 years of experience, including 5 years in production environments.
+      - Developed and maintained high-performance web applications using C#, ASP.NET Core, and .NET.
+      - Designed and implemented RESTful APIs and microservices architecture to facilitate efficient communication between different application components.
+      - Utilized Dapper and Entity Framework for data access management, ensuring data integrity and efficient database interactions.
+      - Collaborated with cross-functional teams to gather and analyze requirements.
+      - Integrated third-party libraries and controls, such as Fluent UI, to enhance application functionality and user experience.
+      - Implemented authentication and authorization mechanisms to ensure secure access to application features.
+      - Leveraged Azure for the deployment, management, and scaling of applications in a reliable and cost-effective manner.
+      - Utilized third-party APIs from HubSpot and various payment providers to integrate and enhance application functionality.
+      - Worked with version control systems, particularly Git, Subversion, and TfVC, to enable efficient code collaboration and version management.
+      - Participated in code reviews, providing constructive feedback and maintaining code quality standards.
+      - Actively participated in Agile/Scrum processes for planning, tracking, and delivering software iterations on schedule.
+      - Measured system performance on multi-user platforms through test scenarios using automated testing software, providing analysis results and recommendations.
     `,
   languages: [
     {

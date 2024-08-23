@@ -1,7 +1,6 @@
-import { AlignmentType, Document, ExternalHyperlink, HeadingLevel, Packer, Paragraph, ParagraphChild, TabStopPosition, TabStopType, TextRun } from 'docx'
+import { AlignmentType, Document, ExternalHyperlink, Footer, HeadingLevel, LevelFormat, Packer, PageNumber, PageNumberElement, Paragraph, ParagraphChild, TabStopPosition, TabStopType, TextRun } from 'docx'
 import { FileChild } from 'docx/build/file/file-child';
 import { saveAs } from 'file-saver';
-import React from 'react'
 import { allTechnologies, formatDates } from './../data';
 import { Data, Technology } from './../types'
 import { mapStackedTechnologies, sortStackedTechnologies } from './../components/Sections/Technologies';
@@ -78,6 +77,29 @@ const createDocument = (data: Data) => new Document({
             }
         },
     },
+    numbering: {
+        config: [
+            {
+                levels: [
+                    {
+                        level: 0,
+                        format: LevelFormat.BULLET,
+                        text: '\u2013',
+                        alignment: AlignmentType.LEFT,
+                        style: {
+                            paragraph: {
+                                indent: {
+                                    left: 720,
+                                    hanging: 360,
+                                }
+                            }
+                        }
+                    }
+                ],
+                reference: 'dashed-numbering',
+            }
+        ]
+    },
     sections: [
         {
             children: [
@@ -93,19 +115,27 @@ const createDocument = (data: Data) => new Document({
                 ...createCertifications(data),
                 ...createEducations(data),
                 ...createSoftSkills(data),
-                createHeading1("References"),
-                new Paragraph({
-                    children: [
-                        new TextRun({
-                            text: 'This CV was generated in real-time from my personal website ',
-                        }),
-                        createHyperlink(formatUrl(WINDOW_URL), WINDOW_URL),
-                        new TextRun({
-                            text: '.',
-                        }),
-                    ]
-                }),
             ].filter(x => !!x).map(x => x as FileChild),
+            footers: {
+                default: new Footer({
+                    children: [
+                        new Paragraph({
+                            tabStops: [{
+                                type: TabStopType.RIGHT,
+                                position: TabStopPosition.MAX
+                            }],
+                            children: [
+                                new TextRun({
+                                    text: 'Generated via my website: ',
+                                }),
+                                createHyperlink(formatUrl(WINDOW_URL), WINDOW_URL),
+                                new TextRun({
+                                    children: ['.\t', PageNumber.CURRENT]
+                                }),
+                            ]
+                        })]
+                })
+            }
         }
     ],
 })
@@ -115,12 +145,12 @@ const createContactInfo = (data: Data) => {
     const phone = data.phoneNumber?.replace(/[\s()]/g, '');
     const phoneNumber = !!data.phoneNumber ? [
         new TextRun({ text: `Mobile:${NBSP}` }),
-        createHyperlink(`tel:${phone}`, phone, false),
+        createHyperlink(`tel:${phone}`, phone),
     ] : []
 
     const email = !!data.email ? [
         new TextRun({ text: `Email:${NBSP}` }),
-        createHyperlink(`mailto:${data.email}`, data.email, false),
+        createHyperlink(`mailto:${data.email}`, data.email),
     ] : []
 
     const location = !!data.location ? [
@@ -326,13 +356,33 @@ const createHeading3WithRightText = (text: string, rightText: string) => new Par
 })
 
 const createParagraphsByLine = (text?: string) =>
-    text?.trim().split('\n').map(x => new Paragraph({ text: x.trim() })) ?? []
+    text?.trim().split('\n').map(x => {
+        let text = x.trim();
+        let hasBullet = false;
+
+        if (text.startsWith('-')) {
+            text = text.substring(1).trim();
+            hasBullet = true;
+        }
+
+        return new Paragraph({
+            text, numbering: hasBullet ? {
+                level: 0,
+                reference: 'dashed-numbering',
+            } : undefined,
+        });
+    }) ?? []
 
 
 const createBulletsByLine = (text?: string) =>
-    text?.trim().split('\n').map(x => new Paragraph({ text: x.trim(), bullet: { level: 0 } })) ?? []
+    text?.trim().split('\n').map(x => new Paragraph({
+        text: x.trim(), numbering: {
+            level: 0,
+            reference: 'dashed-numbering',
+        }
+    })) ?? []
 
-const createHyperlink = (url: string, text?: string, underline: boolean = true) => new ExternalHyperlink({
+const createHyperlink = (url: string, text?: string, underline: boolean = false) => new ExternalHyperlink({
     children: [
         new TextRun({
             text: text,

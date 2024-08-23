@@ -27,6 +27,10 @@ export const Paragraph = (props: IParagraphProps): React.JSX.Element => {
       }
     });
 
+  if (buffer.length > 0) {
+    rows.push(buffer)
+  }
+
   return (<>
     {rows.map((x, i) => <Text className={props.className} key={i}>{x.trim()}</Text>)}
   </>)
