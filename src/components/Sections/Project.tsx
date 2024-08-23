@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Divider, Image, Link, Subtitle2, Tag, TagGroup, Text, makeStyles, mergeClasses, shorthands, tokens } from '@fluentui/react-components'
 import type * as t from '~/types'
 import { Paragraph } from '../Paragraph'
-import { media, useCommonStyles } from '../cssinjs/Common'
+import { media } from '../cssinjs/Common'
 import { toDateDiff, toDateDiffWords } from '../../helpers/date'
 import { Column } from '../Flex/Column'
 import { formatDates } from './../../data'
@@ -69,7 +69,6 @@ function buildDateDiffText(startDate: Date, endDate: Date): string {
 
 export const Project = (props: t.Project): React.JSX.Element => {
   const styles = useStyles()
-  const common = useCommonStyles()
 
   const endDate = typeof props.endDate !== 'string'
     ? props.endDate
@@ -78,8 +77,8 @@ export const Project = (props: t.Project): React.JSX.Element => {
   return (
     <div>
       <div></div> {/* This div is necessary to avoid a bug in the print mode when card content breaks to new page without card border */}
-      <Card className={mergeClasses(styles.children, common.printCard)}>
-        <div className={mergeClasses(styles.title, common.noBreakBefore, common.noBreak)}>
+      <Card className={styles.children}>
+        <div className={styles.title}>
           <Column>
             <Subtitle2>{props.position} | {props.name}</Subtitle2>
             <Text>
@@ -93,7 +92,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
             {props.areasOfActivity.sort().map(x => <Tag key={x} appearance="brand">{x}</Tag>)}
           </TagGroup>
         </div>
-        <Link appearance="subtle" className={mergeClasses(styles.company, common.noBreakBefore)} href={props.companyUrl} target="_blank">
+        <Link appearance="subtle" className={styles.company} href={props.companyUrl} target="_blank">
           <Image
             src={props.companyIconUrl}
             height={24}
@@ -106,7 +105,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
         </Paragraph>
         {props.myRole?.length && <>
           <Divider>My Role</Divider>
-          <Text className={common.noBreakBefore}>
+          <Text>
             <ul className={styles.list}>
               {(props.myRole ?? '').trim().split('\n').map(x => <li key={x}>{x.trim()}</li>)}
             </ul>
@@ -114,7 +113,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
         </>}
         {!!props.technologies?.length && <>
           <Divider>Skills</Divider>
-          <Text className={common.noBreakBefore}>{props.technologies.map(x => x.name).sort().join(' · ')}</Text>
+          <Text>{props.technologies.map(x => x.name).sort().join(' · ')}</Text>
         </>}
       </Card>
     </div>

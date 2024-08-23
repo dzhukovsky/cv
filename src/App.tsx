@@ -30,7 +30,7 @@ import { Row } from './components/Flex/Row'
 import { Technologies } from './components/Sections/Technologies'
 import { TechnologiesRadar } from './components/Sections/TechnologiesRadar'
 import { useFlexStyles } from './components/cssinjs/Flex'
-import { media, useCommonStyles } from './components/cssinjs/Common'
+import { media } from './components/cssinjs/Common'
 import linkedInLogo from '../public/linkedin_logo.svg'
 import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons'
 import { SoftSkill } from './components/Sections/SoftSkill'
@@ -170,7 +170,6 @@ setTitle(title);
 
 export const App = (): React.JSX.Element => {
   const styles = useStyles()
-  const common = useCommonStyles()
   const flex = useFlexStyles()
 
   return (
@@ -208,7 +207,6 @@ export const App = (): React.JSX.Element => {
               <Column className={styles.avatarItemsRows}>
                 <Button
                   appearance='outline'
-                  className={common.printHidden}
                   onClick={() => downloadDocx(data, title)}
                   icon={<ArrowDownloadRegular />}
                   size="medium">
@@ -220,7 +218,7 @@ export const App = (): React.JSX.Element => {
           <TechnologiesRadar technologies={allTechnologies} />
         </Row>
         <SectionFrame title="Summary">
-          <Card className={common.printCard}>
+          <Card>
             <div className={mergeClasses(flex.column, styles.summary)}>
               <Paragraph className={styles.multiLine}>
                 {data.summary ?? ''}
@@ -236,10 +234,10 @@ export const App = (): React.JSX.Element => {
         </SectionFrame>
         <SectionFrame title="Languages" >
           <Row className={styles.languagesMd}>
-            {data.languages?.map((x, i) => <Card key={i} className={common.printCard}>
+            {data.languages?.map((x, i) => <Card key={i}>
               <Text>{x.name} - {x.level}</Text></Card>)}
           </Row>
-          <Card className={mergeClasses(styles.languagesSm, common.printCard)}>
+          <Card className={styles.languagesSm}>
             {data.languages?.map((x, i) => <Text key={i}>{x.name} - {x.level}</Text>)}
           </Card>
         </SectionFrame>
@@ -253,7 +251,7 @@ export const App = (): React.JSX.Element => {
           {data.softSkills?.map((x, i) => <SoftSkill key={i} {...x} />)}
         </SectionFrame>
       </Column>
-      <Column className={mergeClasses(styles.footer, common.printHidden)}>
+      <Column className={styles.footer}>
         <span>Creation & design by <Link href="https://github.com/dzhukovsky" target="_blank">@dzhukovsky</Link></span>
         <span>Text editing by <Link href="https://www.openai.com/chatgpt" target="_blank">@chatgpt</Link></span>
       </Column>

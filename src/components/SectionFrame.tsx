@@ -1,7 +1,7 @@
 import React from 'react'
 import { Title3, makeStyles, mergeClasses, shorthands, tokens } from '@fluentui/react-components'
 import { Column } from './Flex/Column'
-import { media, useCommonStyles } from './cssinjs/Common'
+import { media } from './cssinjs/Common'
 
 export interface ISectionFrameProps {
   title: string
@@ -27,14 +27,13 @@ const useStyles = makeStyles({
 
 export const SectionFrame = (props: ISectionFrameProps): React.JSX.Element => {
   const styles = useStyles()
-  const common = useCommonStyles()
 
   return (
-        <Column className={styles.container}>
-            {props.title && <Title3 className={styles.title}>{props.title}</Title3>}
-            <Column className={mergeClasses(styles.children, common.noBreakBefore, props.className)}>
-                {props.children}
-            </Column>
-        </Column>
+    <Column className={styles.container}>
+      {props.title && <Title3 className={styles.title}>{props.title}</Title3>}
+      <Column className={mergeClasses(styles.children, props.className)}>
+        {props.children}
+      </Column>
+    </Column>
   )
 }

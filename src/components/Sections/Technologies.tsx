@@ -4,7 +4,7 @@ import Highcharts, { type PointOptionsObject, type XAxisBreaksOptions } from 'hi
 import BrokenAxis from 'highcharts/modules/broken-axis'
 import HighchartsReact, { type HighchartsReactRefObject } from 'highcharts-react-official'
 import type * as t from '~/types'
-import { media, useCommonStyles } from '../cssinjs/Common'
+import { media } from '../cssinjs/Common'
 import PatternFill from 'highcharts/modules/pattern-fill'
 import { groupBy } from '../../helpers/object'
 import { MIN_DATE, dateMax, toDateDiffWords, yearsToDateDiff } from '../../helpers/date'
@@ -167,7 +167,6 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
     }
   }, [])
   const styles = useStyles()
-  const common = useCommonStyles()
   const groups = sortStackedTechnologies(mapStackedTechnologies(props.technologies ?? []))
   const items = groups.flatMap(group => group.technologies)
   const breaks: XAxisBreaksOptions[] = []
@@ -293,7 +292,7 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
       )
     }))
   }
-  return (<Card className={common.printCard}>
+  return (<Card>
     {renderSvg(chartSvg, styles.chart) ?? <HighchartsReact ref={highChartsRef}
       highcharts={Highcharts}
       options={options}
