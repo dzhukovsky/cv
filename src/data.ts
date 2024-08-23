@@ -76,7 +76,7 @@ const expSources = {
 }
 
 export const data: t.Data = {
-  fullName: 'Dmitry Zhukovsky',
+  fullName: 'Dzmitry Zhukouski',
   phoneNumber: '+48 730 725 476',
   linkedInUrl: 'www.linkedin.com/in/dmitry-zhukovsky',
   email: 'dmitry.zhukovsky@outlook.com',
