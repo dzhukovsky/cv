@@ -9,7 +9,7 @@ import {
   mergeClasses,
   tokens,
 } from '@fluentui/react-components';
-import type * as t from '~/types';
+import type * as t from '@/types';
 import { Column } from '../Flex/Column';
 import { useFlexStyles } from '../cssinjs/Flex';
 import { media } from '../cssinjs/Common';
