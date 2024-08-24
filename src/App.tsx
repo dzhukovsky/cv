@@ -44,8 +44,7 @@ const useStyles = makeStyles({
     }
   },
   container: {
-    ...shorthands.padding(tokens.spacingVerticalXXXL, 0, 0, 0),
-    ...shorthands.margin(0),
+    paddingTop: `calc(${tokens.spacingVerticalXXL} * 2)`,
     rowGap: tokens.spacingVerticalXXXL,
     columnGap: tokens.spacingHorizontalXXXL,
     alignItems: 'stretch',
@@ -64,8 +63,7 @@ const useStyles = makeStyles({
     whiteSpace: 'pre-line'
   },
   avatarContainer: {
-    ...shorthands.padding(tokens.spacingVerticalXL, 0, 0),
-    rowGap: tokens.spacingVerticalXXL,
+    rowGap: tokens.spacingVerticalXXXL,
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -83,6 +81,9 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     [media.md]: {
       flexDirection: 'row'
+    },
+    [media.lg]: {
+      alignSelf: 'start'
     }
   },
   avatarActionItemsSm: {

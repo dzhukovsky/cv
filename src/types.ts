@@ -50,7 +50,7 @@ export interface Project {
   description?: string
   startDate: Date
   endDate: Date | 'Present'
-  myRole?: string
+  contribution?: string
   technologies?: ProjectTechnology[]
 }
 

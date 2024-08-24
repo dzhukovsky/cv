@@ -157,7 +157,7 @@ export const data: t.Data = {
                 - They utilize a plugin/widget architecture to maximize ease of third-party integrations.
                 Clients can either implement the purchased solutions independently or hire a tech team from Lightpoint Global to handle the implementation. 
             `,
-      myRole: `
+      contribution: `
                 Spearheaded the generation of backlog items, designed new features, and managed the product roadmap to ensure timely and efficient delivery of high-quality software solutions.
                 Architected and implemented the overall product architecture, ensuring scalability, maintainability, and performance optimization.
                 Designed and implemented robust database schemas to support complex business requirements and enhance data integrity.
@@ -195,11 +195,11 @@ export const data: t.Data = {
                 It offers businesses the ability to transact rapidly, securely, and inexpensively. Delivered as a multi-component electronic payment system, it includes integrations with APIs for banks, databases, and tertiary services, as well as a web app for payment management and control.
                 Integrated with SAP, the system enables automated workflows, reducing human labor and potential errors. It functions without requiring personal or financial data, providing protection against identity theft, chargeback, and fraud.
             `,
-      myRole: `
-                Key contributor to the development of a multi-component electronic payment system, focusing on transactional optimization for speed, security, and cost-efficiency.
-                Played a pivotal role in integrating our APIs with those of various banks and tertiary services, enhancing the functionality and efficiency of the system.
+      contribution: `
+                Played a crucial role in developing a multi-component electronic payment system, with a focus on optimizing transactions for speed, security, and cost-efficiency.
+                Instrumental in integrating our APIs with those of various banks and tertiary services, significantly enhancing the system's functionality and efficiency.
                 Tasked with managing efficient data processes within the electronic payment system, ensuring streamlined data handling and retrieval.
-                Actively engaged in conceptualizing and implementing new features, contributing to the improvement of the overall product architecture.
+                Actively participated in conceptualizing and implementing new features, enhancing the overall product architecture.
                 Provided consistent support for the project, addressing technical issues and collaborating with the team to maintain system stability and performance.
                 Conducted comprehensive unit testing of backend components to validate functionality and identify areas for optimization.
             `,
@@ -239,8 +239,8 @@ export const data: t.Data = {
                 Distinct teams, focusing on implementation and development, drive the project. The implementation team handles the system's connection and configuration for new clients, including updates and new feature additions. A significant goal is the automation of these processes.
                 The project encompasses extensive integrations, including with Vindicia CashBox, various Payment Providers (like PayPal, ApplePay, Edgil, Matrix, Stripe, Braintree), and Google Analytics.
             `,
-      myRole: `
-                Contributed significantly to the implementation of automated feature updates, achieving a 20% reduction in development time for new functionalities.
+      contribution: `
+                Successfully drove the implementation of automated feature updates, resulting in a 20% reduction in development time for new functionalities.
                 Developed essential modules for the platform, targeting key business operations from user engagement to subscription conversion.
                 Actively participated in the development of a comprehensive platform that enhances subscription management, pricing optimization, and revenue generation for publishers.
                 Provided consistent technical support for the project, tackling challenges and collaborating with cross-functional teams to ensure system stability and performance.
@@ -282,13 +282,13 @@ export const data: t.Data = {
       description: `
                 The Rental Accounting System is tailored for the management and reporting of workspace rentals. It integrates a suite of tools including a designer for accounting rental space, CRM, cash register, reporting module, warehouse, and logistics. This system is designed to streamline rental management processes, enhance reporting accuracy, and improve overall operational efficiency.
             `,
-      myRole: `
-                Contributed significantly to the development of the system, focusing on the integration of features and functionalities vital for workspace rental management.
+      contribution: `
+                Was instrumental in developing the system, focusing on integrating key features and functionalities essential for workspace rental management.
                 Involved in designing and implementing the project's architecture, ensuring a scalable and efficient software development process.
                 Developed a comprehensive database structure to facilitate intricate calculations and data management for rental space accounting.
                 Collaborated closely with stakeholders to understand their needs and priorities, ensuring these were effectively addressed in the project development.
                 Conducted thorough unit testing of backend components, guaranteeing the reliability and performance stability of the software.
-                Played a key role in optimizing the system for rental space management, leading to enhanced operational efficiency and streamlined rental processes.
+                Focused on optimizing the system for rental space management, which led to enhanced operational efficiency and streamlined rental processes.
             `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
@@ -315,7 +315,7 @@ export const data: t.Data = {
       description: `
                 This project supports a furniture manufacturing organization, providing assembly services and material supplies to other dealers. Key features include a sophisticated system for calculating material cutting dimensions, managing material usage, work performance, and salary computations. The platform integrates various modules like a material cutting designer, CRM, cash register, reporting module, warehouse, and logistics to meet the comprehensive needs of the organization.
             `,
-      myRole: `
+      contribution: `
                 Personally developed the material cutting designer, a crucial component of the multifaceted system that includes CRM, cash register, reporting module, warehouse, and logistics.
                 Utilized strong analytical skills to solve complex business problems, implementing innovative solutions and strategic development practices.
                 Actively engaged in both backend and frontend development, ensuring seamless feature integration across the platform.
@@ -409,6 +409,8 @@ export const allTechnologies: t.Technology[] = [
   ...getTechnologies(data.projects?.slice().reverse() ?? []),
   ...data.technologies ?? []
 ]
+
+export const allProdTechnologies: t.Technology[] = allTechnologies.filter(x => x.expSource === expSources.production)
 
 export const formatDates = (startDate: Date, endDate?: Date | 'Present') => [
   startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),

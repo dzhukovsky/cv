@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   list: {
     ...shorthands.margin(0),
     paddingLeft: tokens.spacingHorizontalXL,
-    listStyleType: 'disc'
+    listStyleType: "'•  '"
   },
   tagsMd: {
     display: 'none',
@@ -80,7 +80,7 @@ export const Project = (props: t.Project): React.JSX.Element => {
       <Card className={styles.children}>
         <div className={styles.title}>
           <Column>
-            <Subtitle2>{props.position} | {props.name}</Subtitle2>
+            <Subtitle2>{props.position} · {props.name}</Subtitle2>
             <Text>
               {formatDates(props.startDate, props.endDate)} {buildDateDiffText(props.startDate, endDate)}
             </Text>
@@ -103,16 +103,16 @@ export const Project = (props: t.Project): React.JSX.Element => {
         <Paragraph className={styles.multiLine}>
           {props.description ?? ''}
         </Paragraph>
-        {props.myRole?.length && <>
-          <Divider>My Role</Divider>
+        {props.contribution?.length && <>
+          <Divider>Contribution</Divider>
           <Text>
             <ul className={styles.list}>
-              {(props.myRole ?? '').trim().split('\n').map(x => <li key={x}>{x.trim()}</li>)}
+              {(props.contribution ?? '').trim().split('\n').map(x => <li key={x}>{x.trim()}</li>)}
             </ul>
           </Text>
         </>}
         {!!props.technologies?.length && <>
-          <Divider>Skills</Divider>
+          <Divider>Technologies</Divider>
           <Text>{props.technologies.map(x => x.name).sort().join(' · ')}</Text>
         </>}
       </Card>

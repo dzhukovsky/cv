@@ -1,7 +1,7 @@
 import { AlignmentType, Document, ExternalHyperlink, Footer, HeadingLevel, LevelFormat, Packer, PageNumber, PageNumberElement, Paragraph, ParagraphChild, TabStopPosition, TabStopType, TextRun } from 'docx'
 import { FileChild } from 'docx/build/file/file-child';
 import { saveAs } from 'file-saver';
-import { allTechnologies, formatDates } from './../data';
+import { allProdTechnologies, formatDates } from './../data';
 import { Data, Technology } from './../types'
 import { mapStackedTechnologies, sortStackedTechnologies } from './../components/Sections/Technologies';
 import { sum } from './../components/Sections/TechnologiesRadar';
@@ -109,7 +109,7 @@ const createDocument = (data: Data) => new Document({
                 }),
                 createContactInfo(data),
                 ...createSummary(data),
-                ...createTechnologies(allTechnologies),
+                ...createTechnologies(allProdTechnologies),
                 ...createExperience(data),
                 ...createLanguages(data),
                 ...createCertifications(data),
@@ -259,14 +259,14 @@ const createExperience = (data: Data) => {
         ...data.projects.flatMap(project => [
             createHeading2(`${project.company} | ${project.name}`),
             createHeading3WithRightText(project.position, formatDates(project.startDate, project.endDate).replace(/\s/g, NBSP)),
-            ...createBulletsByLine(project.myRole),
+            ...createBulletsByLine(project.contribution),
             ...!!project.technologies?.length ?
                 [
                     new Paragraph({
                         children: [
                             new TextRun({
                                 font: 'Segoe UI SemiBold',
-                                text: 'Skills: '
+                                text: 'Technologies: '
                             }),
                             new TextRun({
                                 text: project.technologies.map(x => x.name).sort().join(', ')
