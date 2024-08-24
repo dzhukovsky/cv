@@ -222,36 +222,41 @@ const createTechnologies = (technologies: Technology[]) => {
 
     return [
         createHeading1("Technologies"),
-        ...groups.flatMap(group => [
-            createHeading2(group.name),
-            new Paragraph({
-                children: [
-                    ...group.technologies
-                        .map(x => ({ name: x.name, expYears: sum(x.expYears.map(x => x.years)) }))
-                        .flatMap((x, i, items) => {
-                            const res = [
-                                new TextRun({
-                                    text: x.name
-                                }),
-                                new TextRun({ text: ' ' }),
-                                new TextRun({
-                                    text: `(${buildDateDiffText(roundYears(x.expYears))[0]})`,
-                                    italics: true,
-                                }),
-                            ];
-
-                            if (i < items.length - 1) res.push(new TextRun({ text: ', ' }))
-
-                            return res
+        ...groups.flatMap(group => {
+            const filteredTechnologies = group.technologies
+                .map(x => ({ name: x.name, expYears: roundYears(sum(x.expYears.map(x => x.years))) }))
+                .filter(x => x.expYears > 0)
+                .flatMap((x, i, items) => {
+                    const res = [
+                        new TextRun({
+                            text: x.name
                         }),
-                    new TextRun({ text: '.' }),
-                ]
-            })
-        ])
+                        new TextRun({ text: ' ' }),
+                        new TextRun({
+                            text: `(${buildDateDiffText(x.expYears)[0]})`,
+                            italics: true,
+                        }),
+                    ];
+
+                    if (i < items.length - 1) res.push(new TextRun({ text: ', ' }))
+
+                    return res
+                });
+
+            return filteredTechnologies.length > 0 ? [
+                createHeading2(group.name),
+                new Paragraph({
+                    children: [
+                        ...filteredTechnologies,
+                        new TextRun({ text: '.' }),
+                    ]
+                })
+            ] : undefined
+        }).filter(x => !!x)
     ]
 }
 
-const roundYears = (years: number) => Math.max(1, Math.round(Math.round((years - 2 / 12) * 10) / 10))
+const roundYears = (years: number) => Math.round(Math.round((years - 2 / 12) * 10) / 10)
 
 const createExperience = (data: Data) => {
     if (!data.projects?.length) return []
