@@ -17,7 +17,7 @@ body {
 
 @media screen {
   #root {
-    &>div:before {
+    & > div:before {
       content: '';
       position: absolute;
       top: -200px;
@@ -29,7 +29,7 @@ body {
       filter: blur(200px);
     }
 
-    &>div:after {
+    & > div:after {
       content: '';
       position: absolute;
       top: -200px;
@@ -41,8 +41,8 @@ body {
       filter: blur(200px);
     }
 
-    &>div,
-    &>div>div {
+    & > div,
+    & > div > div {
       z-index: 1;
       position: relative;
     }

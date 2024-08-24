@@ -1,5 +1,5 @@
-import React from 'react'
-import './App.scss'
+import React from 'react';
+import './App.scss';
 import {
   FluentProvider,
   Subtitle1,
@@ -15,33 +15,29 @@ import {
   mergeClasses,
   Link,
   Button,
-  Tooltip,
-  Subtitle2
-} from '@fluentui/react-components'
-import { SectionFrame } from './components/SectionFrame'
-import meImage from '../public/me.jpg'
-import { allTechnologies, data } from './data'
-import { Paragraph } from './components/Paragraph'
-import { Certification } from './components/Sections/Certification'
-import { Education } from './components/Sections/Education'
-import { Project } from './components/Sections/Project'
-import { Column } from './components/Flex/Column'
-import { Row } from './components/Flex/Row'
-import { Technologies } from './components/Sections/Technologies'
-import { TechnologiesRadar } from './components/Sections/TechnologiesRadar'
-import { useFlexStyles } from './components/cssinjs/Flex'
-import { media } from './components/cssinjs/Common'
-import linkedInLogo from '../public/linkedin_logo.svg'
-import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons'
-import { SoftSkill } from './components/Sections/SoftSkill'
-import { downloadDocx } from './views/DocxView'
+} from '@fluentui/react-components';
+import { SectionFrame } from './components/SectionFrame';
+import { allTechnologies, data } from './data';
+import { Paragraph } from './components/Paragraph';
+import { Certification } from './components/Sections/Certification';
+import { Education } from './components/Sections/Education';
+import { Project } from './components/Sections/Project';
+import { Column } from './components/Flex/Column';
+import { Row } from './components/Flex/Row';
+import { Technologies } from './components/Sections/Technologies';
+import { TechnologiesRadar } from './components/Sections/TechnologiesRadar';
+import { useFlexStyles } from './components/cssinjs/Flex';
+import { media } from './components/cssinjs/Common';
+import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons';
+import { SoftSkill } from './components/Sections/SoftSkill';
+import { downloadDocx } from './views/DocxView';
 
 const useStyles = makeStyles({
   provider: {
     backgroundColor: tokens.colorNeutralBackground2,
     [media.print]: {
-      backgroundColor: 'transparent'
-    }
+      backgroundColor: 'transparent',
+    },
   },
   container: {
     paddingTop: `calc(${tokens.spacingVerticalXXL} * 2)`,
@@ -49,18 +45,18 @@ const useStyles = makeStyles({
     columnGap: tokens.spacingHorizontalXXXL,
     alignItems: 'stretch',
     [media.sm]: {
-      ...shorthands.margin(0, tokens.spacingHorizontalS)
+      ...shorthands.margin(0, tokens.spacingHorizontalS),
     },
     [media.md]: {
-      ...shorthands.margin(0, tokens.spacingHorizontalL)
+      ...shorthands.margin(0, tokens.spacingHorizontalL),
     },
     [media.lg]: {
       ...shorthands.margin(0, 'auto'),
-      maxWidth: '968px'
-    }
+      maxWidth: '968px',
+    },
   },
   multiLine: {
-    whiteSpace: 'pre-line'
+    whiteSpace: 'pre-line',
   },
   avatarContainer: {
     rowGap: tokens.spacingVerticalXXXL,
@@ -71,7 +67,7 @@ const useStyles = makeStyles({
       ...shorthands.padding(tokens.spacingVerticalXXXL, 0, 0),
     },
     [media.lg]: {
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
   },
   avatarContainerItems: {
@@ -80,29 +76,29 @@ const useStyles = makeStyles({
     alignItems: 'center',
     flexDirection: 'column',
     [media.md]: {
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
     [media.lg]: {
-      alignSelf: 'start'
-    }
+      alignSelf: 'start',
+    },
   },
   avatarActionItemsSm: {
     display: 'block',
     [media.md]: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
   avatarActionItemsMd: {
     display: 'none',
     [media.md]: {
-      display: 'block'
-    }
+      display: 'block',
+    },
   },
   textAlignCenterSm: {
     textAlign: 'center',
     [media.md]: {
-      textAlign: 'start'
-    }
+      textAlign: 'start',
+    },
   },
   avatarImage: {
     boxShadow: tokens.shadow4,
@@ -110,8 +106,8 @@ const useStyles = makeStyles({
     [media.md]: {
       alignSelf: 'start',
       marginTop: tokens.spacingVerticalL,
-      width: '200px'
-    }
+      width: '200px',
+    },
   },
   summary: {
     rowGap: `var(${cardCSSVars.cardSizeVar})`,
@@ -124,54 +120,60 @@ const useStyles = makeStyles({
   avatarItemsRows: {
     alignItems: 'center',
     [media.md]: {
-      alignItems: 'start'
-    }
+      alignItems: 'start',
+    },
   },
   contact: {
     rowGap: tokens.spacingVerticalXS,
     columnGap: tokens.spacingHorizontalXS,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textCenter: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   languagesMd: {
     rowGap: tokens.spacingVerticalM,
     columnGap: tokens.spacingHorizontalM,
     display: 'none',
     [media.sm]: {
-      display: 'flex'
-    }
+      display: 'flex',
+    },
   },
   languagesSm: {
     display: 'flex',
     [media.sm]: {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
   footer: {
     fontSize: tokens.fontSizeBase200,
     color: tokens.colorNeutralForeground3,
-    ...shorthands.padding(tokens.spacingVerticalXL, 0, tokens.spacingVerticalXL, 0),
+    ...shorthands.padding(
+      tokens.spacingVerticalXL,
+      0,
+      tokens.spacingVerticalXL,
+      0,
+    ),
     rowGap: tokens.spacingVerticalXS,
     columnGap: tokens.spacingHorizontalXS,
     textAlign: 'center',
-    flexWrap: 'wrap'
-  }
-})
+    flexWrap: 'wrap',
+  },
+});
 
 const setTitle = (text: string): void => {
-  const title: HTMLTitleElement = document.querySelector('title') ?? document.createElement('title')
-  title.textContent = text
-  document.getElementsByTagName('head')[0].appendChild(title)
-}
+  const title: HTMLTitleElement =
+    document.querySelector('title') ?? document.createElement('title');
+  title.textContent = text;
+  document.getElementsByTagName('head')[0].appendChild(title);
+};
 
 const title = `${data.fullName} • ${data.lookingForPosition}`;
 setTitle(title);
 
 export const App = (): React.JSX.Element => {
-  const styles = useStyles()
-  const flex = useFlexStyles()
+  const styles = useStyles();
+  const flex = useFlexStyles();
 
   return (
     <FluentProvider className={styles.provider} theme={webLightTheme}>
@@ -181,36 +183,50 @@ export const App = (): React.JSX.Element => {
             <Image
               className={styles.avatarImage}
               shape="circular"
-              src={meImage}
+              src="me.jpg"
             />
             <Column className={styles.avatarItems}>
               <Column className={styles.avatarItemsRows}>
-                <LargeTitle className={styles.textAlignCenterSm}>{data.fullName}</LargeTitle>
-                <Subtitle1 className={styles.textAlignCenterSm}>{data.lookingForPosition}</Subtitle1>
-                <Text>{[data.location, data.contractTypes.join('/')].join(' · ')}</Text>
+                <LargeTitle className={styles.textAlignCenterSm}>
+                  {data.fullName}
+                </LargeTitle>
+                <Subtitle1 className={styles.textAlignCenterSm}>
+                  {data.lookingForPosition}
+                </Subtitle1>
+                <Text>
+                  {[data.location, data.contractTypes.join('/')].join(' · ')}
+                </Text>
               </Column>
-              {!!(data.linkedInUrl ?? data.email) &&
+              {!!(data.linkedInUrl ?? data.email) && (
                 <Column className={styles.avatarItemsRows}>
-                  {!!data.linkedInUrl &&
-                    <Link className={mergeClasses(flex.row, styles.contact)} href={`https://${data.linkedInUrl}`} target="_blank">
-                      <Image src={linkedInLogo} />
+                  {!!data.linkedInUrl && (
+                    <Link
+                      className={mergeClasses(flex.row, styles.contact)}
+                      href={`https://${data.linkedInUrl}`}
+                      target="_blank"
+                    >
+                      <Image src="linkedin_logo.svg" />
                       <Text>{data.linkedInUrl}</Text>
                     </Link>
-                  }
-                  {!!data.email &&
-                    <Link className={mergeClasses(flex.row, styles.contact)} href={`mailto://${data.email}`}>
+                  )}
+                  {!!data.email && (
+                    <Link
+                      className={mergeClasses(flex.row, styles.contact)}
+                      href={`mailto://${data.email}`}
+                    >
                       <Mail24Regular />
                       <Text>{data.email}</Text>
                     </Link>
-                  }
+                  )}
                 </Column>
-              }
+              )}
               <Column className={styles.avatarItemsRows}>
                 <Button
-                  appearance='outline'
+                  appearance="outline"
                   onClick={() => downloadDocx(data, title)}
                   icon={<ArrowDownloadRegular />}
-                  size="medium">
+                  size="medium"
+                >
                   Download as docx
                 </Button>
               </Column>
@@ -233,13 +249,22 @@ export const App = (): React.JSX.Element => {
         <SectionFrame title="Experience">
           {data.projects?.map((x, i) => <Project key={i} {...x} />)}
         </SectionFrame>
-        <SectionFrame title="Languages" >
+        <SectionFrame title="Languages">
           <Row className={styles.languagesMd}>
-            {data.languages?.map((x, i) => <Card key={i}>
-              <Text>{x.name} - {x.level}</Text></Card>)}
+            {data.languages?.map((x, i) => (
+              <Card key={i}>
+                <Text>
+                  {x.name} - {x.level}
+                </Text>
+              </Card>
+            ))}
           </Row>
           <Card className={styles.languagesSm}>
-            {data.languages?.map((x, i) => <Text key={i}>{x.name} - {x.level}</Text>)}
+            {data.languages?.map((x, i) => (
+              <Text key={i}>
+                {x.name} - {x.level}
+              </Text>
+            ))}
           </Card>
         </SectionFrame>
         <SectionFrame title="Licenses & certifications">
@@ -253,9 +278,19 @@ export const App = (): React.JSX.Element => {
         </SectionFrame>
       </Column>
       <Column className={styles.footer}>
-        <span>Creation & design by <Link href="https://github.com/dzhukovsky" target="_blank">@dzhukovsky</Link></span>
-        <span>Text editing by <Link href="https://www.openai.com/chatgpt" target="_blank">@chatgpt</Link></span>
+        <span>
+          Creation & design by{' '}
+          <Link href="https://github.com/dzhukovsky" target="_blank">
+            @dzhukovsky
+          </Link>
+        </span>
+        <span>
+          Text editing by{' '}
+          <Link href="https://www.openai.com/chatgpt" target="_blank">
+            @chatgpt
+          </Link>
+        </span>
       </Column>
     </FluentProvider>
-  )
-}
+  );
+};

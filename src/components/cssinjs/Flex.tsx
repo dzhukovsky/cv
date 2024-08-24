@@ -1,24 +1,24 @@
-import { makeStyles } from '@fluentui/react-components'
+import { makeStyles } from '@fluentui/react-components';
 
 export const useFlexStyles = makeStyles({
   column: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   row: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   justifyBetween: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   justifyCenter: {
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   alignItemsCenter: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   alignContentCenter: {
-    alignContent: 'center'
-  }
-})
+    alignContent: 'center',
+  },
+});

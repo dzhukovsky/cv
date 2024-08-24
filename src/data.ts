@@ -1,79 +1,77 @@
-import microsoftLogo from '../public/microsoft_logo.jpg'
-import lightpointGlobalLogo from '../public/lightpoint_global_logo.jpg'
-import bntuLogo from '../public/bntu_logo.jpg'
-import caspelLogo from '../public/caspel_logo.jpg'
-import type * as t from './types'
-import { date } from './helpers/date'
-import { } from 'helpers/string'
-import { getTechnologies } from './helpers/technologies'
+import type * as t from './types';
+import { date } from './helpers/date';
+import {} from './helpers/string';
+import { getTechnologies } from './helpers/technologies';
 
 export const mapTechnology = (
   expSource: string,
   group: t.TechnologyGroup,
   name: string,
   expYears: number,
-  lastDateUsed: Date): t.Technology => ({
-    name,
-    expYears,
-    lastDateUsed,
-    group,
-    expSource,
-    patternIndex: 1
-  })
+  lastDateUsed: Date,
+): t.Technology => ({
+  name,
+  expYears,
+  lastDateUsed,
+  group,
+  expSource,
+  patternIndex: 1,
+});
 
 export const mapProjectTechnology = (
   expSource: string,
   group: t.TechnologyGroup,
   name: string,
   expYears?: number,
-  lastDateUsed?: Date): t.ProjectTechnology => ({
-    name,
-    expYears,
-    lastDateUsed,
-    group,
-    expSource
-  })
+  lastDateUsed?: Date,
+): t.ProjectTechnology => ({
+  name,
+  expYears,
+  lastDateUsed,
+  group,
+  expSource,
+});
 
 const groups = {
   backend: {
     name: 'Backend Development',
-    shortName: 'Backend'
+    shortName: 'Backend',
   },
   database: {
     name: 'Database Management',
-    shortName: 'Database'
+    shortName: 'Database',
   },
   frontend: {
     name: 'Frontend Development',
-    shortName: 'Frontend'
+    shortName: 'Frontend',
   },
   cloud: {
-    name: 'Cloud'
+    name: 'Cloud',
   },
   security: {
-    name: 'Security'
+    name: 'Security',
   },
   testing: {
-    name: 'Testing & QA'
+    name: 'Testing & QA',
   },
   versionControl: {
     name: 'Version Control & Collaboration',
-    shortName: 'Version Control'
+    shortName: 'Version Control',
   },
   algorithms: {
     name: 'Problem Solving & Algorithms',
-    shortName: 'Algorithms'
+    shortName: 'Algorithms',
   },
   devops: {
     name: 'DevOps and Deployment',
-    shortName: 'DevOps'
-  }
-}
+    shortName: 'DevOps',
+  },
+};
 
 const expSources = {
   production: 'production',
-  selfTaught: 'self-taught'
-}
+  selfTaught: 'self-taught',
+};
 
 export const data: t.Data = {
   fullName: 'Dmitry Zhukovsky',
@@ -102,50 +100,182 @@ export const data: t.Data = {
   languages: [
     {
       name: 'English',
-      level: 'B2'
+      level: 'B2',
     },
     {
       name: 'Polish',
-      level: 'A1'
+      level: 'A1',
     },
     {
       name: 'Russian',
-      level: 'Native speaker'
-    }
+      level: 'Native speaker',
+    },
   ],
   technologies: [
-    mapTechnology(expSources.selfTaught, groups.frontend, 'Blazor', 1, date('2020')),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'Blazor',
+      1,
+      date('2020'),
+    ),
     mapTechnology(expSources.selfTaught, groups.backend, 'C#', 4, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.backend, '.NET', 3, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.backend, 'Roslyn Analyzers', 1, date('2023')),
-    mapTechnology(expSources.selfTaught, groups.backend, 'Python 3', 2, date('2021')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'WPF', 4, date('2021')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'UWP', 1.5, date('2022')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'WinUI 3', 1, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'React', 2, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'SCSS', 1, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'TypeScript', 2, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'Azure DevOps SDK', 1, date('2023')),
-    mapTechnology(expSources.selfTaught, groups.frontend, 'Microsoft Fluent 2', 1, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.devops, 'YAML', 1, date('2024')),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.backend,
+      '.NET',
+      3,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.backend,
+      'Roslyn Analyzers',
+      1,
+      date('2023'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.backend,
+      'Python 3',
+      2,
+      date('2021'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'WPF',
+      4,
+      date('2021'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'UWP',
+      1.5,
+      date('2022'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'WinUI 3',
+      1,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'React',
+      2,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'SCSS',
+      1,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'TypeScript',
+      2,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'Azure DevOps SDK',
+      1,
+      date('2023'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.frontend,
+      'Microsoft Fluent 2',
+      1,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.devops,
+      'YAML',
+      1,
+      date('2024'),
+    ),
     mapTechnology(expSources.selfTaught, groups.devops, 'YML', 1, date('2023')),
-    mapTechnology(expSources.selfTaught, groups.devops, 'Azure DevOps', 1, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.devops, 'GitHub', 2, date('2024')),
-    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure Graph API', 0.5, date('2020')),
-    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure SQL Databases', 0.5, date('2020')),
-    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure App Service', 1, date('2023')),
-    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure Monitor', 1, date('2023')),
-    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure Functions', 0.5, date('2023')),
-    mapTechnology(expSources.selfTaught, groups.cloud, 'Azure ML Studio', 0.5, date('2023')),
-    mapTechnology(expSources.selfTaught, groups.versionControl, 'Git', 1, date('2024'))
+    mapTechnology(
+      expSources.selfTaught,
+      groups.devops,
+      'Azure DevOps',
+      1,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.devops,
+      'GitHub',
+      2,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
+      'Azure Graph API',
+      0.5,
+      date('2020'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
+      'Azure SQL Databases',
+      0.5,
+      date('2020'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
+      'Azure App Service',
+      1,
+      date('2023'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
+      'Azure Monitor',
+      1,
+      date('2023'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
+      'Azure Functions',
+      0.5,
+      date('2023'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
+      'Azure ML Studio',
+      0.5,
+      date('2023'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.versionControl,
+      'Git',
+      1,
+      date('2024'),
+    ),
   ],
   projects: [
     {
-      name: "Multi-purpose Software Solutions for Media and Subscription Businesses",
+      name: 'Multi-purpose Software Solutions for Media and Subscription Businesses',
       position: '.NET Software Engineer II',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
-      companyIconUrl: lightpointGlobalLogo,
+      companyIconUrl: 'lightpoint_global_logo.jpg',
       startDate: new Date('2024-03-01'),
       endDate: new Date('2024-07-31'),
       areasOfActivity: ['Digital Publishing'],
@@ -167,26 +297,49 @@ export const data: t.Data = {
             `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
-        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          '.NET Framework',
+        ),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
-        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET MVC'),
-        mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'ASP.NET MVC',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Entity Framework',
+        ),
         mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
         mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
-        mapProjectTechnology(expSources.production, groups.frontend, 'JavaScript'),
-        mapProjectTechnology(expSources.production, groups.versionControl, 'Git'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.frontend,
+          'JavaScript',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.versionControl,
+          'Git',
+        ),
         mapProjectTechnology(expSources.production, groups.devops, 'IIS'),
-        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'Azure DevOps',
+        ),
         mapProjectTechnology(expSources.production, groups.testing, 'MS Test'),
-      ]
-
+      ],
     },
     {
       name: 'ePayment Solution',
       position: '.NET Software Engineer II',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
-      companyIconUrl: lightpointGlobalLogo,
+      companyIconUrl: 'lightpoint_global_logo.jpg',
       startDate: new Date('2022-11-01'),
       endDate: new Date('2024-02-29'),
       areasOfActivity: ['Fintech'],
@@ -205,31 +358,61 @@ export const data: t.Data = {
             `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
-        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          '.NET Framework',
+        ),
         mapProjectTechnology(expSources.production, groups.backend, '.NET'),
         mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
         mapProjectTechnology(expSources.production, groups.backend, 'WCF'),
-        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET Core'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'ASP.NET Core',
+        ),
         mapProjectTechnology(expSources.production, groups.backend, 'Dapper'),
         mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
         mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
-        mapProjectTechnology(expSources.production, groups.versionControl, 'SVN'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.versionControl,
+          'SVN',
+        ),
         mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
         mapProjectTechnology(expSources.production, groups.testing, 'Moq'),
-        mapProjectTechnology(expSources.production, groups.testing, 'JMeter', 1),
-        mapProjectTechnology(expSources.production, groups.testing, 'Sumo Logic', 1),
+        mapProjectTechnology(
+          expSources.production,
+          groups.testing,
+          'JMeter',
+          1,
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.testing,
+          'Sumo Logic',
+          1,
+        ),
         mapProjectTechnology(expSources.production, groups.devops, 'IIS'),
-        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
-        mapProjectTechnology(expSources.production, groups.devops, 'PowerShell')
-      ]
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'Azure DevOps',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'PowerShell',
+        ),
+      ],
     },
     {
       name: 'Customer Engagement Platform',
       position: '.NET Software Engineer I',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
-      companyIconUrl: lightpointGlobalLogo,
+      companyIconUrl: 'lightpoint_global_logo.jpg',
       startDate: new Date('2020-02-01'),
       endDate: new Date('2022-10-01'),
       areasOfActivity: ['Publishing', 'Martech'],
@@ -249,33 +432,82 @@ export const data: t.Data = {
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
         mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET'),
-        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET Core'),
-        mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
-        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'ASP.NET Core',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Entity Framework',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          '.NET Framework',
+        ),
         mapProjectTechnology(expSources.production, groups.backend, '.NET'),
-        mapProjectTechnology(expSources.production, groups.backend, 'Node.js', 1),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Node.js',
+          1,
+        ),
         mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
         mapProjectTechnology(expSources.production, groups.database, 'SSAS', 2),
-        mapProjectTechnology(expSources.production, groups.backend, 'Dapper', 1),
-        mapProjectTechnology(expSources.production, groups.frontend, 'React', 1),
-        mapProjectTechnology(expSources.production, groups.frontend, 'Angular', 0.5),
-        mapProjectTechnology(expSources.production, groups.frontend, 'TypeScript'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Dapper',
+          1,
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.frontend,
+          'React',
+          1,
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.frontend,
+          'Angular',
+          0.5,
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.frontend,
+          'TypeScript',
+        ),
         mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
         mapProjectTechnology(expSources.production, groups.frontend, 'SCSS'),
-        mapProjectTechnology(expSources.production, groups.versionControl, 'TfVC'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.versionControl,
+          'TfVC',
+        ),
         mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
-        mapProjectTechnology(expSources.production, groups.cloud, 'Google BigQuery', 0.5),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Google BigQuery',
+          0.5,
+        ),
         mapProjectTechnology(expSources.production, groups.devops, 'IIS'),
-        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps')
-      ]
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'Azure DevOps',
+        ),
+      ],
     },
     {
       name: 'Rental Accounting System',
       position: '.NET Full-stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
-      companyIconUrl: caspelLogo,
+      companyIconUrl: 'caspel_logo.jpg',
       startDate: new Date('2019-08-01'),
       endDate: new Date('2020-01-01'),
       areasOfActivity: ['Rent', 'Management', 'Reporting'],
@@ -292,23 +524,39 @@ export const data: t.Data = {
             `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
-        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET MVC'),
-        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'ASP.NET MVC',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          '.NET Framework',
+        ),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
         mapProjectTechnology(expSources.production, groups.database, 'SSRS'),
         mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
         mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
-        mapProjectTechnology(expSources.production, groups.versionControl, 'Git'),
-        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
-        mapProjectTechnology(expSources.production, groups.testing, 'NUnit')
-      ]
+        mapProjectTechnology(
+          expSources.production,
+          groups.versionControl,
+          'Git',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'Azure DevOps',
+        ),
+        mapProjectTechnology(expSources.production, groups.testing, 'NUnit'),
+      ],
     },
     {
       name: 'Customer Manufacturing Platform',
       position: '.NET Full-stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
-      companyIconUrl: caspelLogo,
+      companyIconUrl: 'caspel_logo.jpg',
       startDate: new Date('2019-02-01'),
       endDate: new Date('2019-07-01'),
       areasOfActivity: ['Manufacture', 'Reporting'],
@@ -324,36 +572,62 @@ export const data: t.Data = {
             `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
-        mapProjectTechnology(expSources.production, groups.backend, 'ASP.NET MVC'),
-        mapProjectTechnology(expSources.production, groups.backend, '.NET Framework'),
-        mapProjectTechnology(expSources.production, groups.backend, 'Entity Framework'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'ASP.NET MVC',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          '.NET Framework',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Entity Framework',
+        ),
         mapProjectTechnology(expSources.production, groups.database, 'MySQL'),
-        mapProjectTechnology(expSources.production, groups.frontend, 'JavaScript'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.frontend,
+          'JavaScript',
+        ),
         mapProjectTechnology(expSources.production, groups.frontend, 'HTML'),
         mapProjectTechnology(expSources.production, groups.frontend, 'CSS'),
-        mapProjectTechnology(expSources.production, groups.versionControl, 'Git'),
-        mapProjectTechnology(expSources.production, groups.devops, 'Azure DevOps'),
-        mapProjectTechnology(expSources.production, groups.testing, 'NUnit')
-      ]
-    }
+        mapProjectTechnology(
+          expSources.production,
+          groups.versionControl,
+          'Git',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'Azure DevOps',
+        ),
+        mapProjectTechnology(expSources.production, groups.testing, 'NUnit'),
+      ],
+    },
   ],
   certifications: [
     {
       name: 'Microsoft Certified: Azure Fundamentals',
       issuingOrganization: 'Microsoft',
-      issuingOrganizationIconUrl: microsoftLogo,
+      issuingOrganizationIconUrl: 'microsoft_logo.jpg',
       issueDate: new Date('2023-11-01'),
       credentialId: 'C4BD0FCD8D69A8C1',
-      credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1'
+      credentialUrl:
+        'https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1',
     },
     {
       name: 'Microsoft Certified: Azure AI Fundamentals',
       issuingOrganization: 'Microsoft',
-      issuingOrganizationIconUrl: microsoftLogo,
+      issuingOrganizationIconUrl: 'microsoft_logo.jpg',
       issueDate: new Date('2023-09-01'),
       credentialId: 'E2CBCF6AEE7B238E',
-      credentialUrl: 'https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E'
-    }
+      credentialUrl:
+        'https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E',
+    },
   ],
   educations: [
     {
@@ -363,8 +637,8 @@ export const data: t.Data = {
       startDate: new Date('2017-09-01'),
       endDate: new Date('2021-08-01'),
       schoolUrl: 'https://bntu.by/en',
-      schoolIconUrl: bntuLogo
-    }
+      schoolIconUrl: 'bntu_logo.jpg',
+    },
   ],
   softSkills: [
     {
@@ -372,14 +646,14 @@ export const data: t.Data = {
       description: `
                 Serving in the role of a DevOps engineer, I anticipated a significant deployment challenge before it became apparent to the team. Understanding the potential future complexities, I proactively developed a custom extension for Azure DevOps to manage multiple release definitions simultaneously. This initiative was a result of my foresight and passion for the project. By the time the issue was recognized and discussed by senior members and leaders, I already had a ready-made solution to offer.
                 This solution proved to be so effective and user-friendly that it was subsequently applied to another project. There, it instantly solved a similar issue, significantly reducing the time and effort required for configuring release definitions and minimizing the human factor.
-            `
+            `,
     },
     {
       name: 'Reliability',
       description: `
             Starting with reliable development can save substantial resources in the long run. It's a known fact that writing completely bug-free code is not possible, but aiming for the highest quality is crucial. Ensuring a strong first impression is vital, as it sets the tone for future interactions and perceptions.
             Even in junior roles, our responsibility extends beyond ourselves to our team, the entire project, and the client. Remember, you never get a second chance to make a first impression. Transparency about existing problems is essential. Over-reliance on oneself can be limiting. Teamwork often proves to be a lifeline, especially during tough times. This collaborative approach can not only preserve but potentially enhance the client's impression through timely and effective problem resolution.
-            `
+            `,
     },
     {
       name: 'Perseverance',
@@ -387,8 +661,8 @@ export const data: t.Data = {
                 On a challenging project I was part of, we encountered a significant problem with data stream loss. This was especially critical as the project relied heavily on data analysis, handling vast volumes of data. We undertook a multifaceted approach to diagnose the issue, gathering log statistics, analyzing time-specific charts, and conducting an in-depth investigation of the code. Despite these efforts, the solution remained elusive.
                 Realizing the complexity of the situation, we decided to create two detailed diagrams: one representing the algorithm's functioning as per the existing code, and the other depicting how it was intended to operate. The enormity of the project made this task particularly daunting. However, guided by the belief that persistence leads to success, we pressed on.
                 Our determination eventually bore fruit. Through teamwork and a steadfast belief in our capabilities, we overcame the challenges and successfully rectified the problem. This experience underscored the importance of never losing hope and the power of perseverance in overcoming even the most challenging obstacles.
-            `
-    }
+            `,
+    },
     // {
     //   name: 'Motivation',
     //   description: `
@@ -402,19 +676,27 @@ export const data: t.Data = {
     //         Understanding that those who never try, never achieve, I recognize the importance of experimentation. Making mistakes is not a crime; not everything new is necessarily better, but progress is constant and we must keep pace with the times. The ongoing efforts of innovators, like Microsoft with its myriad of business solutions, continue to simplify our lives and make work more enjoyable. In the same spirit, we too strive to create what will be useful for others in the future, possibly having an impact already. There's no need to fear trying new things; we should boldly forge ahead, leaving a trail of evolution in our wake.
     //     `
     // }
-  ]
-}
+  ],
+};
 
 export const allTechnologies: t.Technology[] = [
   ...getTechnologies(data.projects?.slice().reverse() ?? []),
-  ...data.technologies ?? []
-]
+  ...(data.technologies ?? []),
+];
 
-export const allProdTechnologies: t.Technology[] = allTechnologies.filter(x => x.expSource === expSources.production)
+export const allProdTechnologies: t.Technology[] = allTechnologies.filter(
+  (x) => x.expSource === expSources.production,
+);
 
-export const formatDates = (startDate: Date, endDate?: Date | 'Present') => [
-  startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
-  typeof endDate === 'string'
-    ? endDate
-    : endDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-].filter(x => x).join(' - ')
+export const formatDates = (startDate: Date, endDate?: Date | 'Present') =>
+  [
+    startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
+    typeof endDate === 'string'
+      ? endDate
+      : endDate?.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+        }),
+  ]
+    .filter((x) => x)
+    .join(' - ');
