@@ -20,7 +20,8 @@ export const sum = (items: number[]): number => items.reduce((a, b) => a + b, 0)
 
 const useStyles = makeStyles({
   root: {
-    ...shorthands.margin('auto', 0)
+    ...shorthands.margin('auto', 0),
+    paddingTop: tokens.spacingVerticalXXXL
   }
 })
 
