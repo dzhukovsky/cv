@@ -235,7 +235,7 @@ const createTechnologies = (technologies: Technology[]) => {
                                 }),
                                 new TextRun({ text: ' ' }),
                                 new TextRun({
-                                    text: `(${buildDateDiffText(x.expYears)[0]})`,
+                                    text: `(${buildDateDiffText(roundYears(x.expYears))[0]})`,
                                     italics: true,
                                 }),
                             ];
@@ -250,6 +250,8 @@ const createTechnologies = (technologies: Technology[]) => {
         ])
     ]
 }
+
+const roundYears = (years: number) => Math.round(Math.round((years - 2 / 12) * 10) / 10)
 
 const createExperience = (data: Data) => {
     if (!data.projects?.length) return []
