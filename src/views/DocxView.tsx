@@ -1,7 +1,7 @@
 import { AlignmentType, Document, ExternalHyperlink, Footer, HeadingLevel, LevelFormat, Packer, PageNumber, PageNumberElement, Paragraph, ParagraphChild, TabStopPosition, TabStopType, TextRun } from 'docx'
 import { FileChild } from 'docx/build/file/file-child';
 import { saveAs } from 'file-saver';
-import { allProdTechnologies, formatDates } from './../data';
+import { allTechnologies, formatDates } from './../data';
 import { Data, Technology } from './../types'
 import { mapStackedTechnologies, sortStackedTechnologies } from './../components/Sections/Technologies';
 import { sum } from './../components/Sections/TechnologiesRadar';
@@ -109,7 +109,7 @@ const createDocument = (data: Data) => new Document({
                 }),
                 createContactInfo(data),
                 ...createSummary(data),
-                ...createTechnologies(allProdTechnologies),
+                ...createTechnologies(allTechnologies),
                 ...createExperience(data),
                 ...createLanguages(data),
                 ...createCertifications(data),
@@ -224,7 +224,7 @@ const createTechnologies = (technologies: Technology[]) => {
         createHeading1("Technologies"),
         ...groups.flatMap(group => {
             const filteredTechnologies = group.technologies
-                .map(x => ({ name: x.name, expYears: roundYears(sum(x.expYears.map(x => x.years))) }))
+                .map(x => ({ name: x.name, expYears: sum(x.expYears.map(x => x.years)) }))
                 .filter(x => x.expYears > 0)
                 .flatMap((x, i, items) => {
                     const res = [
@@ -256,7 +256,7 @@ const createTechnologies = (technologies: Technology[]) => {
     ]
 }
 
-const roundYears = (years: number) => Math.round(Math.round((years - 2 / 12) * 10) / 10)
+// const roundYears = (years: number) => Math.round(Math.round((years - 2 / 12) * 10) / 10)
 
 const createExperience = (data: Data) => {
     if (!data.projects?.length) return []
