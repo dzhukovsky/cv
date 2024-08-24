@@ -1,7 +1,7 @@
 import type * as t from './types';
 import { date } from './helpers/date';
-import {} from './helpers/string';
 import { getTechnologies } from './helpers/technologies';
+import './helpers/string';
 
 export const mapTechnology = (
   expSource: string,
