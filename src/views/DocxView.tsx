@@ -251,7 +251,7 @@ const createTechnologies = (technologies: Technology[]) => {
     ]
 }
 
-const roundYears = (years: number) => Math.round(Math.round((years - 2 / 12) * 10) / 10)
+const roundYears = (years: number) => Math.max(1, Math.round(Math.round((years - 2 / 12) * 10) / 10))
 
 const createExperience = (data: Data) => {
     if (!data.projects?.length) return []
