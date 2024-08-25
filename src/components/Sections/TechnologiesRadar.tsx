@@ -88,6 +88,7 @@ export const TechnologiesRadar = (
     },
     tooltip: {
       headerFormat: undefined,
+      followTouchMove: false,
       pointFormatter: function () {
         return `
                     <span style="color:${this.series.color as string}">\u25CF</span>
