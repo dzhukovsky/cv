@@ -168,7 +168,7 @@ const setTitle = (text: string): void => {
   document.getElementsByTagName('head')[0].appendChild(title);
 };
 
-const title = `${data.fullName} • ${data.lookingForPosition}`;
+const title = `${data.fullName} ${data.lookingForPosition}`;
 setTitle(title);
 
 export const App = (): React.JSX.Element => {
