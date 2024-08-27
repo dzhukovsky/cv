@@ -6,8 +6,8 @@ import {
   shorthands,
   tokens,
 } from '@fluentui/react-components';
+import { media } from '@/helpers/media';
 import { Column } from './Flex/Column';
-import { media } from './cssinjs/Common';
 
 export interface ISectionFrameProps {
   title: string;

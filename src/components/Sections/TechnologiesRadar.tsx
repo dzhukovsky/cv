@@ -5,11 +5,11 @@ import type * as t from '@/types';
 import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { type KeyValue, groupBy } from '../../helpers/object';
 import { toDateDiff } from '../../helpers/date';
-import Exporting from 'highcharts/modules/exporting';
-import { sum } from '@/utils/math';
+import { sum } from '@/helpers/math';
 
-HighchartsMore(Highcharts);
-Exporting(Highcharts);
+if (typeof Highcharts === 'object') {
+  HighchartsMore(Highcharts);
+}
 
 export interface ITechnologiesRadarProps {
   technologies?: t.Technology[];
@@ -91,9 +91,13 @@ export const TechnologiesRadar = (
       followTouchMove: false,
       pointFormatter: function () {
         return `
-                    <span style="color:${this.series.color as string}">\u25CF</span>
+                    <span style="color:${
+                      this.series.color as string
+                    }">\u25CF</span>
                     ${this.name}
-                    <span style="font-size: 0.9em;font-weight:${tokens.fontWeightBold}">${+this.y!.toFixed(1)}%</span>
+                    <span style="font-size: 0.9em;font-weight:${
+                      tokens.fontWeightBold
+                    }">${+this.y!.toFixed(1)}%</span>
                     `.trim();
       },
     },

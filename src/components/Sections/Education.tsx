@@ -10,7 +10,7 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import type * as t from '@/types';
-import { media } from '../cssinjs/Common';
+import { media } from '@/helpers/media';
 
 const useStyles = makeStyles({
   children: {

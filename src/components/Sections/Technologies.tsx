@@ -6,19 +6,19 @@ import Highcharts, {
 import BrokenAxis from 'highcharts/modules/broken-axis';
 import HighchartsReact from 'highcharts-react-official';
 import type * as t from '@/types';
-import { media } from '../cssinjs/Common';
 import PatternFill from 'highcharts/modules/pattern-fill';
 import { toDateDiffWords, yearsToDateDiff } from '../../helpers/date';
-import Exporting from 'highcharts/modules/exporting';
 import { Series } from 'highcharts';
 import {
   mapStackedTechnologies,
   sortStackedTechnologies,
 } from '@/helpers/technologies';
+import { media } from '@/helpers/media';
 
-BrokenAxis(Highcharts);
-PatternFill(Highcharts);
-Exporting(Highcharts);
+if (typeof Highcharts === 'object') {
+  BrokenAxis(Highcharts);
+  PatternFill(Highcharts);
+}
 
 type BarSeries = Series & {
   group: {
@@ -62,9 +62,11 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
   const breaks: XAxisBreaksOptions[] = [];
   const seriesHeights: number[] = [];
 
-  const colors: string[] = (Highcharts.getOptions().colors ?? []).filter(
-    (x) => typeof x === 'string',
-  ) as string[];
+  const colors: string[] = (
+    (typeof Highcharts === 'object'
+      ? Highcharts.getOptions().colors
+      : undefined) ?? []
+  ).filter((x) => typeof x === 'string') as string[];
   const { patterns = [] } = Highcharts as {
     patterns?: Highcharts.PatternOptionsObject[];
   };
@@ -108,11 +110,19 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
             const dateDiffText = buildDateDiffText(this.y!);
 
             return `
-              <span style="font-size: 1.2em;color:${this.color as string}">\u25CF</span>
-              <span style="font-size: 0.9em;font-weight:${tokens.fontWeightBold}">${this.name} - ${this.series.name}</span>
+              <span style="font-size: 1.2em;color:${
+                this.color as string
+              }">\u25CF</span>
+              <span style="font-size: 0.9em;font-weight:${
+                tokens.fontWeightBold
+              }">${this.name} - ${this.series.name}</span>
               <br/>
-              ${dateDiffText} of <span style="font-weight:${tokens.fontWeightBold}">${this.options.custom?.expSource}</span> experience, 
-              last used in <span style="font-weight:${tokens.fontWeightBold}">${this.options.custom?.lastYearUsed}</span>
+              ${dateDiffText} of <span style="font-weight:${
+              tokens.fontWeightBold
+            }">${this.options.custom?.expSource}</span> experience, 
+              last used in <span style="font-weight:${tokens.fontWeightBold}">${
+              this.options.custom?.lastYearUsed
+            }</span>
               <br/>`.trim();
           },
         },
@@ -177,7 +187,7 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
                       ...patterns[
                         technology.expYears.length > 1
                           ? expYearIndex
-                          : (expYear.patternIndex ?? expYearIndex)
+                          : expYear.patternIndex ?? expYearIndex
                       ],
                       color: colors[groupIndex],
                     },

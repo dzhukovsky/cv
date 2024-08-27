@@ -14,10 +14,10 @@ import {
 } from '@fluentui/react-components';
 import type * as t from '@/types';
 import { Paragraph } from '../Paragraph';
-import { media } from '../cssinjs/Common';
 import { toDateDiff, toDateDiffWords } from '../../helpers/date';
 import { Column } from '../Flex/Column';
 import { formatDates } from './../../data';
+import { media } from '@/helpers/media';
 
 const useStyles = makeStyles({
   company: {

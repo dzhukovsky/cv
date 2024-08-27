@@ -1,6 +1,6 @@
+import { useFlexStyles } from '@/hooks/FlexStyles';
 import { mergeClasses } from '@fluentui/react-components';
 import React from 'react';
-import { useFlexStyles } from '../cssinjs/Flex';
 
 export type RowProps = Pick<
   React.HTMLAttributes<HTMLElement>,

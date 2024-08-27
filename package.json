@@ -1,49 +1,33 @@
 {
   "name": "cv",
-  "author": "dzhukovsky",
-  "license": "MIT",
-  "version": "1.0.0",
-  "type": "module",
-  "keywords": [],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dzhukovsky/cv.git"
-  },
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@fluentui/react-components": "^9.54.10",
+    "@fluentui/react-components": "^9.54.13",
     "@fluentui/react-icons": "^2.0.255",
-    "docx": "^8.5.0",
-    "file-saver": "^2.0.5",
     "highcharts": "^11.4.7",
     "highcharts-react-official": "^3.2.1",
+    "docx": "^8.5.0",
+    "file-saver": "^2.0.5",
+    "next": "14.2.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sort-css-media-queries": "^2.3.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.8.0",
     "@types/file-saver": "^2.0.7",
+    "@types/node": "^22.5.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "9.x",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.35.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "globals": "^15.9.0",
-    "prettier": "^3.3.3",
-    "prettier-eslint": "^16.3.0",
+    "eslint": "^9.9.1",
+    "eslint-config-next": "^14.2.6",
     "sass": "^1.77.8",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.0"
+    "typescript": "^5.5.3"
   }
 }

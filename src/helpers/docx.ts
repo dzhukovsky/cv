@@ -17,13 +17,13 @@ import { saveAs } from 'file-saver';
 import { allTechnologies, formatDates } from './../data';
 import { Data, Technology } from './../types';
 import { toDateDiffFullWords, yearsToDateDiff } from './../helpers/date';
-import { sum } from '@/utils/math';
 import {
   mapStackedTechnologies,
   sortStackedTechnologies,
 } from '@/helpers/technologies';
+import { sum } from './math';
 
-const WINDOW_URL =
+const getPath = () =>
   `${window.location.host}${window.location.pathname}`.trimChar('/');
 const NBSP = '\u00A0';
 const SPACING = {
@@ -40,8 +40,9 @@ export const downloadDocx = async (data: Data, title: string) => {
   saveAs(blob, `${title}.docx`);
 };
 
-const createDocument = (data: Data) =>
-  new Document({
+const createDocument = (data: Data) => {
+  const path = getPath();
+  return new Document({
     styles: {
       default: {
         document: {
@@ -149,7 +150,7 @@ const createDocument = (data: Data) =>
                     text: 'Generated via my website: ',
                     italics: true,
                   }),
-                  createHyperlink(formatUrl(WINDOW_URL), WINDOW_URL, true),
+                  createHyperlink(formatUrl(path), path, true),
                   new TextRun({
                     italics: true,
                     text: '.\t',
@@ -165,6 +166,7 @@ const createDocument = (data: Data) =>
       },
     ],
   });
+};
 
 const createContactInfo = (data: Data) => {
   const phone = data.phoneNumber?.replace(/[\s()]/g, '');

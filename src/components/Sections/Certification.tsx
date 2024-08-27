@@ -11,8 +11,8 @@ import {
 } from '@fluentui/react-components';
 import type * as t from '@/types';
 import { Column } from '../Flex/Column';
-import { useFlexStyles } from '../cssinjs/Flex';
-import { media } from '../cssinjs/Common';
+import { media } from '@/helpers/media';
+import { useFlexStyles } from '@/hooks/FlexStyles';
 
 const useStyles = makeStyles({
   root: {
