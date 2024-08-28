@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Card,
   Image,
@@ -10,7 +9,7 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import type * as t from '@/types';
-import { media } from '../cssinjs/Common';
+import { media } from '@/utils/media';
 
 const useStyles = makeStyles({
   children: {
@@ -38,7 +37,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Education = (props: t.Education): React.JSX.Element => {
+export const Education = (props: t.Education) => {
   const styles = useStyles();
 
   return (

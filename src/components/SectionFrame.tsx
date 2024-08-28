@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Title3,
   makeStyles,
@@ -6,8 +5,8 @@ import {
   shorthands,
   tokens,
 } from '@fluentui/react-components';
-import { Column } from './Flex/Column';
-import { media } from './cssinjs/Common';
+import { media } from '@/utils/media';
+import { Column } from './Flex';
 
 export interface ISectionFrameProps {
   title: string;
@@ -17,10 +16,10 @@ export interface ISectionFrameProps {
 
 const useStyles = makeStyles({
   container: {
-    ...shorthands.gap(tokens.spacingVerticalL),
+    rowGap: tokens.spacingVerticalL,
   },
   children: {
-    ...shorthands.gap(tokens.spacingVerticalM),
+    rowGap: tokens.spacingVerticalM,
     width: '100%',
   },
   title: {
@@ -31,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const SectionFrame = (props: ISectionFrameProps): React.JSX.Element => {
+export const SectionFrame = (props: ISectionFrameProps) => {
   const styles = useStyles();
 
   return (

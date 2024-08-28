@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Card,
   Divider,
@@ -13,11 +12,11 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import type * as t from '@/types';
+import { media } from '@/utils/media';
+import { toDateDiff, toDateDiffWords } from '@/helpers/date';
+import { Column } from '../Flex';
+import { formatDates } from '@/data';
 import { Paragraph } from '../Paragraph';
-import { media } from '../cssinjs/Common';
-import { toDateDiff, toDateDiffWords } from '../../helpers/date';
-import { Column } from '../Flex/Column';
-import { formatDates } from './../../data';
 
 const useStyles = makeStyles({
   company: {
@@ -79,7 +78,7 @@ function buildDateDiffText(startDate: Date, endDate: Date): string {
   return result.trim();
 }
 
-export const Project = (props: t.Project): React.JSX.Element => {
+export const Project = (props: t.Project) => {
   const styles = useStyles();
 
   const endDate =

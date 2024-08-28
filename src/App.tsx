@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.scss';
 import {
   FluentProvider,
@@ -26,18 +25,15 @@ import { Column } from './components/Flex/Column';
 import { Row } from './components/Flex/Row';
 import { Technologies } from './components/Sections/Technologies';
 import { TechnologiesRadar } from './components/Sections/TechnologiesRadar';
-import { useFlexStyles } from './components/cssinjs/Flex';
-import { media } from './components/cssinjs/Common';
 import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons';
 import { SoftSkill } from './components/Sections/SoftSkill';
-import { downloadDocx } from './views/DocxView';
+import { media } from './utils/media';
+import { useFlexStyles } from './hooks/useFlexStyles';
+import { downloadDocx } from './helpers/docxExport';
 
 const useStyles = makeStyles({
   provider: {
     backgroundColor: tokens.colorNeutralBackground2,
-    [media.print]: {
-      backgroundColor: 'transparent',
-    },
   },
   container: {
     paddingTop: `calc(${tokens.spacingVerticalXXL} * 2)`,
@@ -171,7 +167,7 @@ const setTitle = (text: string): void => {
 const title = `${data.fullName} ${data.lookingForPosition}`;
 setTitle(title);
 
-export const App = (): React.JSX.Element => {
+export const App = () => {
   const styles = useStyles();
   const flex = useFlexStyles();
 

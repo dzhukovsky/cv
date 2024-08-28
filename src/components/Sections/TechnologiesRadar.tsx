@@ -3,10 +3,10 @@ import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
 import type * as t from '@/types';
 import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
-import { type KeyValue, groupBy } from '../../helpers/object';
-import { toDateDiff } from '../../helpers/date';
 import Exporting from 'highcharts/modules/exporting';
 import { sum } from '@/utils/math';
+import { groupBy, KeyValue } from '@/utils/object';
+import { toDateDiff } from '@/helpers/date';
 
 HighchartsMore(Highcharts);
 Exporting(Highcharts);
@@ -47,9 +47,7 @@ const getGroupRates = (
   return exps.sort((a, b) => a.name.localeCompare(b.name));
 };
 
-export const TechnologiesRadar = (
-  props: ITechnologiesRadarProps,
-): React.JSX.Element => {
+export const TechnologiesRadar = (props: ITechnologiesRadarProps) => {
   const styles = useStyles();
   const groups = groupBy(props.technologies ?? [], (x) => x.group);
   const rates = getGroupRates(groups);

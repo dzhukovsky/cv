@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   makeStyles,
   shorthands,
@@ -19,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Paragraph = (props: IParagraphProps): React.JSX.Element => {
+export const Paragraph = (props: IParagraphProps) => {
   const styles = useStyles();
   const groups: string[][] = [];
   let buffer: string[] = [];

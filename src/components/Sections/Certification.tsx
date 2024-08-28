@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Card,
   Image,
@@ -10,9 +9,9 @@ import {
   tokens,
 } from '@fluentui/react-components';
 import type * as t from '@/types';
-import { Column } from '../Flex/Column';
-import { useFlexStyles } from '../cssinjs/Flex';
-import { media } from '../cssinjs/Common';
+import { media } from '@/utils/media';
+import { useFlexStyles } from '@/hooks/useFlexStyles';
+import { Column } from '../Flex';
 
 const useStyles = makeStyles({
   root: {
@@ -36,7 +35,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Certification = (props: t.Certification): React.JSX.Element => {
+export const Certification = (props: t.Certification) => {
   const styles = useStyles();
   const flex = useFlexStyles();
 

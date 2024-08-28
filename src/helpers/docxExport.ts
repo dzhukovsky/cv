@@ -14,14 +14,14 @@ import {
   TextRun,
 } from 'docx';
 import { saveAs } from 'file-saver';
-import { allTechnologies, formatDates } from './../data';
-import { Data, Technology } from './../types';
-import { toDateDiffFullWords, yearsToDateDiff } from './../helpers/date';
 import { sum } from '@/utils/math';
 import {
   mapStackedTechnologies,
   sortStackedTechnologies,
 } from '@/helpers/technologies';
+import { Data, Technology } from '@/types';
+import { allTechnologies, formatDates } from '@/data';
+import { toDateDiffFullWords, yearsToDateDiff } from './date';
 
 const WINDOW_URL =
   `${window.location.host}${window.location.pathname}`.trimChar('/');
@@ -40,13 +40,13 @@ export const downloadDocx = async (data: Data, title: string) => {
   saveAs(blob, `${title}.docx`);
 };
 
-const createDocument = (data: Data) =>
+export const createDocument = (data: Data) =>
   new Document({
     styles: {
       default: {
         document: {
           run: {
-            font: 'Segoe UI',
+            font: 'Segoe UI, Calibri, Arial, Tahoma, Verdana',
           },
           paragraph: {
             spacing: { after: SPACING.HALF },

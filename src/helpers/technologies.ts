@@ -1,6 +1,6 @@
-import { type Project, type Technology } from '../types';
+import { Project, Technology } from '@/types';
+import { groupBy } from '@/utils/object';
 import { dateMax, MIN_DATE, toDateDiff } from './date';
-import { groupBy } from './object';
 
 interface IStackedTechnologyGroup {
   name: string;

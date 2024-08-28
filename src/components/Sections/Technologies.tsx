@@ -1,4 +1,4 @@
-import { Card, makeStyles, tokens } from '@fluentui/react-components';
+import { Card, tokens } from '@fluentui/react-components';
 import Highcharts, {
   type PointOptionsObject,
   type XAxisBreaksOptions,
@@ -6,15 +6,14 @@ import Highcharts, {
 import BrokenAxis from 'highcharts/modules/broken-axis';
 import HighchartsReact from 'highcharts-react-official';
 import type * as t from '@/types';
-import { media } from '../cssinjs/Common';
 import PatternFill from 'highcharts/modules/pattern-fill';
-import { toDateDiffWords, yearsToDateDiff } from '../../helpers/date';
 import Exporting from 'highcharts/modules/exporting';
-import { Series } from 'highcharts';
+import { type Series } from 'highcharts';
 import {
   mapStackedTechnologies,
   sortStackedTechnologies,
 } from '@/helpers/technologies';
+import { toDateDiffWords, yearsToDateDiff } from '@/helpers/date';
 
 BrokenAxis(Highcharts);
 PatternFill(Highcharts);
@@ -43,18 +42,7 @@ function buildDateDiffText(years: number): string {
   return result.trim();
 }
 
-const useStyles = makeStyles({
-  chart: {
-    [media.print]: {
-      '& svg': {
-        maxHeight: 'calc(100vh - 110px)',
-      },
-    },
-  },
-});
-
-export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
-  const styles = useStyles();
+export const Technologies = (props: ITechnologiesProps) => {
   const groups = sortStackedTechnologies(
     mapStackedTechnologies(props.technologies ?? []),
   );
@@ -199,7 +187,7 @@ export const Technologies = (props: ITechnologiesProps): React.JSX.Element => {
     })),
   };
   return (
-    <Card className={styles.chart}>
+    <Card>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </Card>
   );
