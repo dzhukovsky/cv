@@ -3,6 +3,12 @@ name: Deploy to Pages
 on:
   push:
     branches: ['main']
+    paths-ignore:
+      - 'azure/**'
+      - '.github/workflows/**'
+    paths:
+      - '.github/workflows/deploy.yml'
+
   workflow_dispatch:
 
 permissions:

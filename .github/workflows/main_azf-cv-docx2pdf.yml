@@ -6,8 +6,10 @@ name: Build and deploy Python project to Azure Function App - azf-cv-docx2pdf
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - '.github/workflows/main_azf-cv-docx2pdf.yml'
+      - 'azure/azf-cv-docx2pdf/**'
   workflow_dispatch:
 
 env:
@@ -17,6 +19,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./azure/azf-cv-docx2pdf
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,12 +37,12 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies
-        run: pip install -r ./azure/azf-cv-docx2pdf/requirements.txt
+        run: pip install -r requirements.txt
 
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./azure/azf-cv-docx2pdf/* -r
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -51,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'azf-cv-docx2pdf'
       url: ${{ steps.deploy-to-function.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
