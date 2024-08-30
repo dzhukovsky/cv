@@ -46,12 +46,29 @@ const onRenderHtml: OnRenderHtmlAsync = async (
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html lang="en">
       <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8">
+        <meta name="language" content="en">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <title>${metadata.title}</title>
-        <meta name="description" content="${metadata.description}" />
-        <meta name="keywords" content="${metadata.keywords}" />
+        <meta name="author" content="${metadata.author}">
+        <meta name="description" content="${metadata.description}">
+        <meta name="keywords" content="${metadata.keywords}">
+
+        <meta property="og:title" content="${metadata.title}">
+        <meta property="og:description" content="${metadata.description}">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="${metadata.url}">
+        <meta property="og:site_name" content="${metadata.title}">
+        <meta property="og:locale" content="en_US">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:creator" content="${metadata.author}">
+        <meta name="twitter:title" content="${metadata.title}">
+        <meta name="twitter:description" content="${metadata.description}">
+        <meta name="twitter:site" content="${metadata.url}">
+
         <script defer src="https://cloud.umami.is/script.js" 
           data-website-id="b51e153a-f932-4f11-b54b-55fe153bde03">
         </script>
