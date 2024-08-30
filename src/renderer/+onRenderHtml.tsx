@@ -55,6 +55,7 @@ const onRenderHtml: OnRenderHtmlAsync = async (
         <meta name="author" content="${metadata.author}">
         <meta name="description" content="${metadata.description}">
         <meta name="keywords" content="${metadata.keywords}">
+        <link rel="canonical" href="${metadata.url}">
 
         <meta property="og:title" content="${metadata.title}">
         <meta property="og:description" content="${metadata.description}">
