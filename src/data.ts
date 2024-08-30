@@ -738,18 +738,13 @@ export const jsonLd = {
         project.endDate != 'Present'
           ? project.endDate.toISOString().split('T')[0]
           : undefined,
-      description: project.description?.trim(),
+      description: project.contribution?.trim(),
       identifier: project.company,
       worksFor: {
         '@type': 'Organization',
         name: project.company,
         url: project.companyUrl,
       },
-      responsibilities: project.contribution
-        ?.split('\n')
-        .map((x) => x.trim())
-        .filter((x) => !!x.length),
-      skills: project.technologies?.map((x) => x.name),
     })),
     knowsLanguage: data.languages?.map((x) => x.code.toLowerCase()),
     alumniOf: data.educations?.map((education) => ({
