@@ -14,7 +14,12 @@ import {
   cardCSSVars,
   mergeClasses,
   Link,
-  Button,
+  Menu,
+  MenuTrigger,
+  SplitButton,
+  MenuPopover,
+  MenuList,
+  MenuItem,
 } from '@fluentui/react-components';
 import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons';
 import { useFlexStyles } from '@/hooks/useFlexStyles';
@@ -210,14 +215,35 @@ export const Page = () => {
                 </Column>
               )}
               <Column className={styles.avatarItemsRows}>
-                <Button
-                  appearance="outline"
-                  onClick={() => downloadDocx(data, metadata.title)}
-                  icon={<ArrowDownloadRegular />}
-                  size="medium"
-                >
-                  Download as docx
-                </Button>
+                <Menu positioning="below-end">
+                  <MenuTrigger disableButtonEnhancement>
+                    {(triggerProps) => (
+                      <SplitButton
+                        appearance="outline"
+                        icon={<ArrowDownloadRegular />}
+                        size="medium"
+                        menuButton={triggerProps}
+                        primaryActionButton={{
+                          href: `${metadata.title}.pdf`,
+                          download: `${metadata.title}.pdf`,
+                          target: '_blank',
+                          as: 'a',
+                        }}
+                      >
+                        Download as pdf
+                      </SplitButton>
+                    )}
+                  </MenuTrigger>
+                  <MenuPopover>
+                    <MenuList>
+                      <MenuItem
+                        onClick={() => downloadDocx(data, metadata.title)}
+                      >
+                        Download as docx
+                      </MenuItem>
+                    </MenuList>
+                  </MenuPopover>
+                </Menu>
               </Column>
             </Column>
           </Row>
