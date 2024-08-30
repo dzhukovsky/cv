@@ -758,6 +758,7 @@ export const jsonLd = {
       '@type': 'PostalAddress',
       addressLocality: data.address.locality,
       addressCountry: data.address.countryCode,
+      postalCode: data.address.postalCode,
     },
     hasCredential: [
       ...(data.educations?.map((education) => ({
