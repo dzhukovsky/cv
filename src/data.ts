@@ -679,6 +679,13 @@ export const data: t.Data = {
   ],
 };
 
+export const metadata: { [key: string]: string } = {
+  title: `${data.fullName} ${data.lookingForPosition}`,
+  description: data.summary || '',
+  keywords:
+    'Dmitry Zhukovsky, .NET Software Engineer, C#, ASP.NET Core, .NET, RESTful APIs, microservices, Dapper, Entity Framework, Azure, HubSpot, payment providers, Git, Subversion, TfVC, Agile, Scrum, Azure DevOps, Fluent UI, React, TypeScript, SCSS, WPF, UWP, WinUI 3, Roslyn Analyzers, Python 3',
+};
+
 export const allTechnologies: t.Technology[] = [
   ...getTechnologies(data.projects?.slice().reverse() ?? []),
   ...(data.technologies ?? []),

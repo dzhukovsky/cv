@@ -1,4 +1,10 @@
-import { Card, tokens } from '@fluentui/react-components';
+import {
+  Card,
+  makeStyles,
+  Skeleton,
+  SkeletonItem,
+  tokens,
+} from '@fluentui/react-components';
 import Highcharts, {
   type PointOptionsObject,
   type XAxisBreaksOptions,
@@ -14,16 +20,51 @@ import {
   sortStackedTechnologies,
 } from '@/helpers/technologies';
 import { toDateDiffWords, yearsToDateDiff } from '@/helpers/date';
+import { hasWindow } from '@/utils/window';
+import { type HTMLAttributes } from 'react';
+import { useIsClient } from '@/hooks/useIsClient';
 
-BrokenAxis(Highcharts);
-PatternFill(Highcharts);
-Exporting(Highcharts);
+if (hasWindow()) {
+  BrokenAxis(Highcharts);
+  PatternFill(Highcharts);
+  Exporting(Highcharts);
+}
 
 type BarSeries = Series & {
   group: {
     element: SVGGElement;
   };
 };
+
+const useStyles = makeStyles({
+  skeleton: {
+    paddingLeft: tokens.spacingHorizontalXL,
+    paddingRight: tokens.spacingHorizontalXL,
+    paddingTop: tokens.spacingVerticalXL,
+    paddingBottom: tokens.spacingVerticalXL,
+  },
+  skeletonLegend: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    rowGap: tokens.spacingVerticalS,
+    columnGap: tokens.spacingHorizontalL,
+    justifyContent: 'center',
+    marginBottom: tokens.spacingVerticalL,
+  },
+  skeletonLegendItem: {
+    display: 'grid',
+    width: '200px',
+    gridTemplateColumns: 'auto 1fr',
+    columnGap: tokens.spacingHorizontalS,
+  },
+  skeletonBars: {
+    display: 'grid',
+    gridTemplateColumns: `max(18%, 50px) calc(85% - ${tokens.spacingVerticalS})`,
+    marginTop: tokens.spacingVerticalXS,
+    rowGap: tokens.spacingVerticalXS,
+    columnGap: tokens.spacingHorizontalXS,
+  },
+});
 
 export interface ITechnologiesProps {
   technologies?: t.Technology[];
@@ -42,17 +83,64 @@ function buildDateDiffText(years: number): string {
   return result.trim();
 }
 
+const BarsSkeleton = ({
+  values,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & {
+  values: number[];
+}) => {
+  return (
+    <div {...props}>
+      {Array.from({ length: values.length }).flatMap((_, i) => [
+        <SkeletonItem key={i} shape="rectangle" size={16} />,
+        <SkeletonItem
+          key={values.length + i}
+          shape="rectangle"
+          size={16}
+          style={{ width: `${values[i]}%` }}
+        />,
+      ])}
+    </div>
+  );
+};
+
+const LegendSkeleton = ({
+  count,
+  itemClassName,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & {
+  count: number;
+  itemClassName: string;
+}) => {
+  return (
+    <div {...props}>
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} className={itemClassName}>
+          <SkeletonItem shape="circle" size={12} />
+          <SkeletonItem shape="rectangle" size={12} />
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const Technologies = (props: ITechnologiesProps) => {
+  const styles = useStyles();
+  const isClient = useIsClient();
+
   const groups = sortStackedTechnologies(
     mapStackedTechnologies(props.technologies ?? []),
   );
+
+  const maxExpYears = Math.max(...groups.map((x) => x.maxExpYears)) * 1.05;
+
   const items = groups.flatMap((group) => group.technologies);
   const breaks: XAxisBreaksOptions[] = [];
   const seriesHeights: number[] = [];
 
-  const colors: string[] = (Highcharts.getOptions().colors ?? []).filter(
-    (x) => typeof x === 'string',
-  ) as string[];
+  const colors: string[] = (
+    (isClient ? Highcharts.getOptions().colors : []) ?? []
+  ).filter((x) => typeof x === 'string') as string[];
   const { patterns = [] } = Highcharts as {
     patterns?: Highcharts.PatternOptionsObject[];
   };
@@ -187,8 +275,31 @@ export const Technologies = (props: ITechnologiesProps) => {
     })),
   };
   return (
-    <Card>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </Card>
+    (isClient && (
+      <Card>
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      </Card>
+    )) || (
+      <Card>
+        <Skeleton aria-label="Loading Content" className={styles.skeleton}>
+          <LegendSkeleton
+            className={styles.skeletonLegend}
+            itemClassName={styles.skeletonLegendItem}
+            count={groups.length}
+          />
+          {groups.map((group) => {
+            return (
+              <BarsSkeleton
+                key={group.name}
+                className={styles.skeletonBars}
+                values={group.technologies.map(
+                  (x) => (x.totalExpYears / maxExpYears) * 100,
+                )}
+              />
+            );
+          })}
+        </Skeleton>
+      </Card>
+    )
   );
 };

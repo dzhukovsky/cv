@@ -17,14 +17,15 @@
   },
   "dependencies": {
     "@fluentui/react-components": "^9.54.10",
-    "@fluentui/react-icons": "^2.0.255",
+    "@fluentui/react-icons": "^2.0.256",
     "docx": "^8.5.0",
     "file-saver": "^2.0.5",
-    "highcharts": "^11.4.7",
+    "highcharts": "^11.4.8",
     "highcharts-react-official": "^3.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sort-css-media-queries": "^2.3.0"
+    "sort-css-media-queries": "^2.3.0",
+    "vike-react": "^0.5.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
@@ -43,7 +44,9 @@
     "prettier-eslint": "^16.3.0",
     "sass": "^1.77.8",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.0"
+    "typescript-eslint": "^8.3.0",
+    "vike": "^0.4.193",
+    "vite": "^5.4.0",
+    "vite-plugin-cjs-interop": "^2.1.2"
   }
 }

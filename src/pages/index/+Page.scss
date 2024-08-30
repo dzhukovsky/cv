@@ -5,18 +5,12 @@ body {
   overflow-x: clip;
 }
 
-#root {
+#react-root {
   height: 100%;
 }
 
-@media print {
-  #root {
-    overflow-x: unset;
-  }
-}
-
 @media screen {
-  #root {
+  #react-root {
     & > div:before {
       content: '';
       position: absolute;

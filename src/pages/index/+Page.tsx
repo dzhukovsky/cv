@@ -1,4 +1,5 @@
-import './App.scss';
+import { media } from '@/utils/media';
+import './+Page.scss';
 import {
   FluentProvider,
   Subtitle1,
@@ -15,21 +16,20 @@ import {
   Link,
   Button,
 } from '@fluentui/react-components';
-import { SectionFrame } from './components/SectionFrame';
-import { allTechnologies, data } from './data';
-import { Paragraph } from './components/Paragraph';
-import { Certification } from './components/Sections/Certification';
-import { Education } from './components/Sections/Education';
-import { Project } from './components/Sections/Project';
-import { Column } from './components/Flex/Column';
-import { Row } from './components/Flex/Row';
-import { Technologies } from './components/Sections/Technologies';
-import { TechnologiesRadar } from './components/Sections/TechnologiesRadar';
 import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons';
-import { SoftSkill } from './components/Sections/SoftSkill';
-import { media } from './utils/media';
-import { useFlexStyles } from './hooks/useFlexStyles';
-import { downloadDocx } from './helpers/docxExport';
+import { useFlexStyles } from '@/hooks/useFlexStyles';
+import { Column, Row } from '@/components/Flex';
+import { allTechnologies, data, metadata } from '@/data';
+import { downloadDocx } from '@/helpers/docxExport';
+import {
+  Certification,
+  Education,
+  Project,
+  SoftSkill,
+  Technologies,
+  TechnologiesRadar,
+} from '@/components/Sections';
+import { Paragraph, SectionFrame } from '@/components';
 
 const useStyles = makeStyles({
   provider: {
@@ -157,17 +157,7 @@ const useStyles = makeStyles({
   },
 });
 
-const setTitle = (text: string): void => {
-  const title: HTMLTitleElement =
-    document.querySelector('title') ?? document.createElement('title');
-  title.textContent = text;
-  document.getElementsByTagName('head')[0].appendChild(title);
-};
-
-const title = `${data.fullName} ${data.lookingForPosition}`;
-setTitle(title);
-
-export const App = () => {
+export const Page = () => {
   const styles = useStyles();
   const flex = useFlexStyles();
 
@@ -219,7 +209,7 @@ export const App = () => {
               <Column className={styles.avatarItemsRows}>
                 <Button
                   appearance="outline"
-                  onClick={() => downloadDocx(data, title)}
+                  onClick={() => downloadDocx(data, metadata.title)}
                   icon={<ArrowDownloadRegular />}
                   size="medium"
                 >

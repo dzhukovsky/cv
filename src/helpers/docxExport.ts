@@ -23,8 +23,6 @@ import { Data, Technology } from '@/types';
 import { allTechnologies, formatDates } from '@/data';
 import { toDateDiffFullWords, yearsToDateDiff } from './date';
 
-const WINDOW_URL =
-  `${window.location.host}${window.location.pathname}`.trimChar('/');
 const NBSP = '\u00A0';
 const SPACING = {
   HALF: 6 * 20, // 6 pt
@@ -40,8 +38,11 @@ export const downloadDocx = async (data: Data, title: string) => {
   saveAs(blob, `${title}.docx`);
 };
 
-export const createDocument = (data: Data) =>
-  new Document({
+export const createDocument = (data: Data) => {
+  const windowUrl =
+    `${window.location.host}${window.location.pathname}`.trimChar('/');
+
+  return new Document({
     styles: {
       default: {
         document: {
@@ -149,7 +150,7 @@ export const createDocument = (data: Data) =>
                     text: 'Generated via my website: ',
                     italics: true,
                   }),
-                  createHyperlink(formatUrl(WINDOW_URL), WINDOW_URL, true),
+                  createHyperlink(formatUrl(windowUrl), windowUrl, true),
                   new TextRun({
                     italics: true,
                     text: '.\t',
@@ -165,6 +166,7 @@ export const createDocument = (data: Data) =>
       },
     ],
   });
+};
 
 const createContactInfo = (data: Data) => {
   const phone = data.phoneNumber?.replace(/[\s()]/g, '');

@@ -2,14 +2,23 @@ import Highcharts, { type PointOptionsObject } from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
 import type * as t from '@/types';
-import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
+import {
+  makeStyles,
+  shorthands,
+  Spinner,
+  tokens,
+} from '@fluentui/react-components';
 import Exporting from 'highcharts/modules/exporting';
 import { sum } from '@/utils/math';
 import { groupBy, KeyValue } from '@/utils/object';
 import { toDateDiff } from '@/helpers/date';
+import { hasWindow } from '@/utils/window';
+import { useIsClient } from '@/hooks/useIsClient';
 
-HighchartsMore(Highcharts);
-Exporting(Highcharts);
+if (hasWindow()) {
+  HighchartsMore(Highcharts);
+  Exporting(Highcharts);
+}
 
 export interface ITechnologiesRadarProps {
   technologies?: t.Technology[];
@@ -18,6 +27,11 @@ export interface ITechnologiesRadarProps {
 const useStyles = makeStyles({
   root: {
     ...shorthands.margin('auto', 0),
+  },
+  spinner: {
+    width: '100%',
+    maxWidth: '400px',
+    height: '280px',
   },
 });
 
@@ -49,12 +63,16 @@ const getGroupRates = (
 
 export const TechnologiesRadar = (props: ITechnologiesRadarProps) => {
   const styles = useStyles();
+
+  const isClient = useIsClient();
+
   const groups = groupBy(props.technologies ?? [], (x) => x.group);
   const rates = getGroupRates(groups);
   const maxRate = Math.max(...rates.map((x) => x.rating));
 
   const options: Highcharts.Options = {
     chart: {
+      animation: false,
       marginTop: 0,
       marginBottom: 0,
       backgroundColor: 'transparent',
@@ -141,8 +159,12 @@ export const TechnologiesRadar = (props: ITechnologiesRadarProps) => {
   };
 
   return (
-    <div className={styles.root}>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </div>
+    <>
+      {(isClient && (
+        <div className={styles.root}>
+          <HighchartsReact highcharts={Highcharts} options={options} />
+        </div>
+      )) || <Spinner className={styles.spinner} />}
+    </>
   );
 };
