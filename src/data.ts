@@ -680,7 +680,7 @@ export const data: t.Data = {
 };
 
 export const metadata = {
-  title: `${data.fullName} - ${data.lookingForPosition} | ${data.location}`,
+  title: `${data.fullName} - ${data.lookingForPosition}`,
   description: `${data.fullName}, ${data.lookingForPosition} with 9+ years of experience in developing high-performance web applications using C#, ASP.NET Core, .NET. Skilled in RESTful APIs, microservices, and Azure. Seeking opportunities in Hybrid or Remote roles.`,
   keywords: `${data.fullName}, ${data.lookingForPosition}, C#, ASP.NET Core, Microservices, Azure, Azure DevOps, RESTful APIs, Software Development, Gdansk, Poland, Hybrid, Remote, .NET Developer, Software Engineer, .NET Full-stack Developer, .NET Software Engineer`,
   author: data.fullName,

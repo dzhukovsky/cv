@@ -50,7 +50,8 @@ const onRenderHtml: OnRenderHtmlAsync = async (
         <meta name="language" content="en">
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <meta name="robots" content="index, follow">
+
         <title>${metadata.title}</title>
         <meta name="author" content="${metadata.author}">
         <meta name="description" content="${metadata.description}">
@@ -61,7 +62,6 @@ const onRenderHtml: OnRenderHtmlAsync = async (
         <meta property="og:description" content="${metadata.description}">
         <meta property="og:type" content="website">
         <meta property="og:url" content="${metadata.url}">
-        <meta property="og:site_name" content="${metadata.title}">
         <meta property="og:locale" content="en_US">
 
         <meta name="twitter:card" content="summary_large_image">
