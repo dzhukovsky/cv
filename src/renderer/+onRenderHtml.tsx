@@ -12,7 +12,7 @@ import {
   SSRProvider,
 } from '@fluentui/react-components';
 import sortCSSmq from 'sort-css-media-queries';
-import { metadata } from '@/data';
+import { jsonLd, metadata } from '@/data';
 
 const onRenderHtml: OnRenderHtmlAsync = async (
   pageContext,
@@ -69,6 +69,12 @@ const onRenderHtml: OnRenderHtmlAsync = async (
         <meta name="twitter:title" content="${metadata.title}">
         <meta name="twitter:description" content="${metadata.description}">
         <meta name="twitter:site" content="${metadata.url}">
+
+        <meta name="google-site-verification" content="Zzq5NY7cVcCYNcp9SjwtaExeIVqjnnqnYYCBBEnQk_M" />
+        
+        <script type="application/ld+json">
+          ${dangerouslySkipEscape(JSON.stringify(jsonLd))}
+        </script>
 
         <script defer src="https://cloud.umami.is/script.js" 
           data-website-id="b51e153a-f932-4f11-b54b-55fe153bde03">

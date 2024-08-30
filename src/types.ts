@@ -15,8 +15,7 @@ export interface Data {
   email?: string;
   lookingForPosition: string;
   summary?: string;
-  location: string;
-  locationShort: string;
+  address: Address;
   contractTypes: string[];
   languages?: Language[];
   technologies?: Technology[];
@@ -26,8 +25,16 @@ export interface Data {
   softSkills?: SoftSkill[];
 }
 
+export interface Address {
+  country: string;
+  countryCode: string;
+  locality: string;
+  postalCode: string;
+}
+
 export interface Language {
   name: string;
+  code: string;
   level: LanguageLevel;
 }
 
@@ -64,8 +71,10 @@ export interface Project {
 
 export interface Certification {
   name: string;
+  code: string;
   issuingOrganization: string;
   issuingOrganizationIconUrl: string;
+  competencyRequired: string;
   issueDate: Date;
   credentialId: string;
   credentialUrl: string;

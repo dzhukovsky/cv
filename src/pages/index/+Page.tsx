@@ -180,7 +180,10 @@ export const Page = () => {
                   {data.lookingForPosition}
                 </Subtitle1>
                 <Text>
-                  {[data.location, data.contractTypes.join('/')].join(' · ')}
+                  {[
+                    `${data.address.locality}, ${data.address.country}`,
+                    data.contractTypes.join('/'),
+                  ].join(' · ')}
                 </Text>
               </Column>
               {!!(data.linkedInUrl ?? data.email) && (

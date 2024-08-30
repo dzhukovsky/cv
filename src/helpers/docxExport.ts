@@ -184,9 +184,12 @@ const createContactInfo = (data: Data) => {
       ]
     : [];
 
-  const location = data.location
-    ? [new TextRun({ text: `Location:${NBSP}${data.locationShort}` })]
-    : [];
+  const locationValue =
+    `${data.address.locality}, ${data.address.countryCode}`.trim();
+  const location =
+    locationValue.length > 1
+      ? [new TextRun({ text: `Location:${NBSP}${locationValue}` })]
+      : [];
 
   const linkedInUrl = data.linkedInUrl
     ? [

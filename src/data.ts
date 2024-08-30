@@ -2,6 +2,8 @@ import type * as t from './types';
 import { date } from './helpers/date';
 import { getTechnologies } from './helpers/technologies';
 import './utils/string';
+import { distinctByProperty } from './utils/object';
+import { tryAddHttps } from './utils/url';
 
 export const mapTechnology = (
   expSource: string,
@@ -79,8 +81,12 @@ export const data: t.Data = {
   linkedInUrl: 'www.linkedin.com/in/dmitry-zhukovsky',
   email: 'dmitry.zhukovsky@outlook.com',
   lookingForPosition: '.NET Software Engineer',
-  location: 'Gdansk, Poland',
-  locationShort: 'Gdansk, PL',
+  address: {
+    country: 'Gdansk',
+    countryCode: 'PL',
+    locality: 'Gdansk',
+    postalCode: '80-299',
+  },
   contractTypes: ['Hybrid', 'Remote'],
   summary: `
       I am a highly motivated and inquisitive .NET Software Engineer with over 9 years of experience, including 5 years in production environments.
@@ -99,14 +105,17 @@ export const data: t.Data = {
     `,
   languages: [
     {
+      code: 'en',
       name: 'English',
       level: 'B2',
     },
     {
+      code: 'pl',
       name: 'Polish',
       level: 'A1',
     },
     {
+      code: 'ru',
       name: 'Russian',
       level: 'Native speaker',
     },
@@ -290,7 +299,7 @@ export const data: t.Data = {
       contribution: `
                 Spearheaded the generation of backlog items, designed new features, and managed the product roadmap to ensure timely and efficient delivery of high-quality software solutions.
                 Architected and implemented the overall product architecture, ensuring scalability, maintainability, and performance optimization.
-                Designed and implemented robust database schemas to support complex business requirements and enhance data integrity.
+                Engineered and implemented robust database schemas to support complex business requirements and enhance data integrity.
                 Established and maintained CI/CD pipelines to streamline the development process and facilitate continuous integration and deployment.
                 Analyzed and interpreted technical specifications to ensure accurate implementation and compliance with client requirements.
                 Developed and executed comprehensive unit and integration tests to ensure software reliability, performance, and security.
@@ -612,6 +621,8 @@ export const data: t.Data = {
   certifications: [
     {
       name: 'Microsoft Certified: Azure Fundamentals',
+      code: 'AZ-900',
+      competencyRequired: 'Understanding of Azure fundamentals',
       issuingOrganization: 'Microsoft',
       issuingOrganizationIconUrl: 'microsoft_logo.jpg',
       issueDate: new Date('2023-11-01'),
@@ -621,6 +632,8 @@ export const data: t.Data = {
     },
     {
       name: 'Microsoft Certified: Azure AI Fundamentals',
+      code: 'AI-900',
+      competencyRequired: 'Understanding of Azure AI solutions',
       issuingOrganization: 'Microsoft',
       issuingOrganizationIconUrl: 'microsoft_logo.jpg',
       issueDate: new Date('2023-09-01'),
@@ -695,6 +708,102 @@ export const allTechnologies: t.Technology[] = [
 export const allProdTechnologies: t.Technology[] = allTechnologies.filter(
   (x) => x.expSource === expSources.production,
 );
+
+export const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@id': '#author',
+    '@type': 'Person',
+    name: data.fullName,
+    image: 'me.jpg',
+    jobTitle: data.lookingForPosition,
+    email: `mailto:${data.email}`,
+    telephone: data.phoneNumber,
+    url: metadata.url,
+    sameAs: [tryAddHttps(data.linkedInUrl)],
+    description: data.summary?.trim(),
+    affiliation: distinctByProperty(data.projects ?? [], 'company').map(
+      (project) => ({
+        '@type': 'Organization',
+        name: project.company,
+        url: project.companyUrl,
+      }),
+    ),
+    hasOccupation: data.projects?.map((project) => ({
+      '@type': 'Role',
+      roleName: project.position,
+      startDate: project.startDate.toISOString().split('T')[0],
+      endDate:
+        project.endDate != 'Present'
+          ? project.endDate.toISOString().split('T')[0]
+          : undefined,
+      description: project.description?.trim(),
+      identifier: project.company,
+      worksFor: {
+        '@type': 'Organization',
+        name: project.company,
+        url: project.companyUrl,
+      },
+      hasOccupation: {
+        '@type': 'Occupation',
+        responsibilities: project.contribution
+          ?.split('\n')
+          .map((x) => x.trim())
+          .filter((x) => !!x.length),
+        skills: project.technologies?.map((x) => x.name),
+      },
+    })),
+    knowsLanguage: data.languages?.map((x) => x.code.toLowerCase()),
+    alumniOf: data.educations?.map((education) => ({
+      '@type': 'CollegeOrUniversity',
+      name: education.school,
+      url: education.schoolUrl,
+      startDate: education.startDate.toISOString().split('T')[0],
+      endDate: education.endDate?.toISOString().split('T')[0],
+    })),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: data.address.locality,
+      addressCountry: data.address.countryCode,
+    },
+    hasCredential: [
+      ...(data.educations?.map((education) => ({
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: education.degree,
+        educationalLevel: education.fieldOfStudy,
+        recognizedBy: {
+          '@type': 'Organization',
+          name: education.school,
+          url: education.schoolUrl,
+        },
+      })) ?? []),
+      ...(data.certifications
+        ?.filter((x) => !x.expirationDate || x.expirationDate >= new Date())
+        ?.map((certification) => ({
+          '@type': 'EducationalOccupationalCredential',
+          credentialCategory: 'Certificate',
+          educationalLevel: certification.code,
+          competencyRequired: certification.competencyRequired,
+          recognizedBy: {
+            '@type': 'Organization',
+            name: certification.issuingOrganization,
+          },
+          identifier: certification.credentialId,
+          url: certification.credentialUrl,
+        })) ?? []),
+    ],
+  },
+  // hasPart: [
+  //   {
+  //     '@type': 'Article',
+  //     headline: 'Things to see in NJ',
+  //     url: 'https://example.com/things-to-see-nj',
+  //     datePublished: '2014-02-23T18:34:00Z',
+  //     author: { '@id': '#author' },
+  //   },
+  // ],
+};
 
 export const formatDates = (startDate: Date, endDate?: Date | 'Present') =>
   [
