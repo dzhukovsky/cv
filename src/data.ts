@@ -745,14 +745,11 @@ export const jsonLd = {
         name: project.company,
         url: project.companyUrl,
       },
-      hasOccupation: {
-        '@type': 'Occupation',
-        responsibilities: project.contribution
-          ?.split('\n')
-          .map((x) => x.trim())
-          .filter((x) => !!x.length),
-        skills: project.technologies?.map((x) => x.name),
-      },
+      responsibilities: project.contribution
+        ?.split('\n')
+        .map((x) => x.trim())
+        .filter((x) => !!x.length),
+      skills: project.technologies?.map((x) => x.name),
     })),
     knowsLanguage: data.languages?.map((x) => x.code.toLowerCase()),
     alumniOf: data.educations?.map((education) => ({
