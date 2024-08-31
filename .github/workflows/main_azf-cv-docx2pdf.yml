@@ -22,15 +22,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Zip artifact for deployment
-        run: zip -r release.zip ./*
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: python-app
+          name: release
           path: |
-            ${{ env.CWD }}/release.zip
+            ${{ env.CWD }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,10 +42,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: python-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
+          name: release
 
       - name: Login to Azure
         uses: azure/login@v2
