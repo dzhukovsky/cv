@@ -43,10 +43,7 @@ jobs:
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment
-        run: zip -r ./release.zip ./* -x ./venv/*
-
-      - name: List all files before uploading artifact
-        run: ls -R -l
+        run: zip -r ./release.zip ./* -x venv/*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
