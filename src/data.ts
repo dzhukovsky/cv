@@ -722,7 +722,7 @@ export const jsonLd = {
     telephone: data.phoneNumber,
     url: metadata.url,
     sameAs: [tryAddHttps(data.linkedInUrl)],
-    description: data.summary?.trim(),
+    description: metadata.description,
     affiliation: distinctByProperty(data.projects ?? [], 'company').map(
       (project) => ({
         '@type': 'Organization',
