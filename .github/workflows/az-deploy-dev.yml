@@ -44,11 +44,11 @@ jobs:
           output_location: "dist/client"
           skip_app_build: true
           
-  close_pr_and_finalize:
+  finalize_and_close_pr:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     environment: dev
     runs-on: ubuntu-latest
-    name: Close PR & Finalize Deployment
+    name: Finalize & Close PR
     steps:
       - name: Close Pull Request
         id: closepullrequest
