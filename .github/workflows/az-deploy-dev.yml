@@ -48,7 +48,7 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     environment: dev
     runs-on: ubuntu-latest
-    name: Close PR and Finalize Deployment
+    name: Close PR & Finalize Deployment
     steps:
       - name: Close Pull Request
         id: closepullrequest
