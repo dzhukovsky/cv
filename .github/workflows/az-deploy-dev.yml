@@ -9,14 +9,10 @@ on:
     branches:
       - dev
 
-env:
-  DEPLOY_ENVIRONMENT: dev
-  NODE_VERSION: 22
-
 jobs:
   build_and_predeploy:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    environment: ${{ env.DEPLOY_ENVIRONMENT }}
+    environment: dev
     runs-on: ubuntu-latest
     name: Build & Predeploy
     steps:
@@ -26,7 +22,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: 22
 
       - name: Install dependencies
         run: yarn install
@@ -50,7 +46,7 @@ jobs:
           
   close_pr_and_finalize:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    environment: ${{ env.DEPLOY_ENVIRONMENT }}
+    environment: dev
     runs-on: ubuntu-latest
     name: Close PR and Finalize Deployment
     steps:
