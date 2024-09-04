@@ -304,7 +304,6 @@ export const Page = () => {
           <Link href="https://www.openai.com/chatgpt" target="_blank">
             @chatgpt
           </Link>
-          todo
         </span>
       </Column>
     </FluentProvider>
