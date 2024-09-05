@@ -20,6 +20,7 @@ import {
   MenuPopover,
   MenuList,
   MenuItem,
+  Avatar,
 } from '@fluentui/react-components';
 import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons';
 import { useFlexStyles } from '@/hooks/useFlexStyles';
@@ -104,10 +105,12 @@ const useStyles = makeStyles({
   avatarImage: {
     boxShadow: tokens.shadow4,
     width: '150px',
+    height: '150px',
     [media.md]: {
       alignSelf: 'start',
       marginTop: tokens.spacingVerticalL,
       width: '200px',
+      height: '200px',
     },
   },
   summary: {
@@ -171,10 +174,13 @@ export const Page = () => {
       <Column className={styles.container}>
         <Row className={styles.avatarContainer}>
           <Row className={styles.avatarContainerItems}>
-            <Image
+            <Avatar
+              name={data.fullName}
+              image={{
+                src: 'me.jpg',
+                draggable: false,
+              }}
               className={styles.avatarImage}
-              shape="circular"
-              src="me.jpg"
             />
             <Column className={styles.avatarItems}>
               <Column className={styles.avatarItemsRows}>
