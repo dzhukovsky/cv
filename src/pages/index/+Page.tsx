@@ -21,6 +21,7 @@ import {
   MenuList,
   MenuItem,
   Avatar,
+  SplitButtonProps,
 } from '@fluentui/react-components';
 import { ArrowDownloadRegular, Mail24Regular } from '@fluentui/react-icons';
 import { useFlexStyles } from '@/hooks/useFlexStyles';
@@ -35,7 +36,7 @@ import {
   Technologies,
   TechnologiesRadar,
 } from '@/components/Sections';
-import { Paragraph, SectionFrame } from '@/components';
+import { Media, Paragraph, SectionFrame } from '@/components';
 
 const useStyles = makeStyles({
   provider: {
@@ -163,7 +164,54 @@ const useStyles = makeStyles({
     textAlign: 'center',
     flexWrap: 'wrap',
   },
+  downloadButtonSm: {
+    display: 'block',
+    [media.md]: {
+      display: 'none',
+    },
+  },
+  downloadButtonMd: {
+    display: 'none',
+    [media.md]: {
+      display: 'block',
+    },
+  },
 });
+
+const DownloadButton = (props: SplitButtonProps) => {
+  return (
+    <Menu positioning="below-end">
+      <MenuTrigger disableButtonEnhancement>
+        {(triggerProps) => (
+          <>
+            <SplitButton
+              appearance="outline"
+              icon={<ArrowDownloadRegular />}
+              size="large"
+              menuButton={triggerProps}
+              primaryActionButton={{
+                href: `${metadata.title}.pdf`,
+                download: `${metadata.title}.pdf`,
+                target: '_blank',
+                as: 'a',
+              }}
+              {...props}
+            >
+              Download as pdf
+            </SplitButton>
+          </>
+        )}
+      </MenuTrigger>
+      <MenuPopover>
+        <MenuList>
+          <MenuItem onClick={() => downloadDocx(data, metadata.title)}>
+            Download as docx
+          </MenuItem>
+        </MenuList>
+      </MenuPopover>
+    </Menu>
+  );
+};
 
 export const Page = () => {
   const styles = useStyles();
@@ -221,35 +269,10 @@ export const Page = () => {
                 </Column>
               )}
               <Column className={styles.avatarItemsRows}>
-                <Menu positioning="below-end">
-                  <MenuTrigger disableButtonEnhancement>
-                    {(triggerProps) => (
-                      <SplitButton
-                        appearance="outline"
-                        icon={<ArrowDownloadRegular />}
-                        size="medium"
-                        menuButton={triggerProps}
-                        primaryActionButton={{
-                          href: `${metadata.title}.pdf`,
-                          download: `${metadata.title}.pdf`,
-                          target: '_blank',
-                          as: 'a',
-                        }}
-                      >
-                        Download as pdf
-                      </SplitButton>
-                    )}
-                  </MenuTrigger>
-                  <MenuPopover>
-                    <MenuList>
-                      <MenuItem
-                        onClick={() => downloadDocx(data, metadata.title)}
-                      >
-                        Download as docx
-                      </MenuItem>
-                    </MenuList>
-                  </MenuPopover>
-                </Menu>
+                <Media
+                  sm={<DownloadButton size="large" />}
+                  md={<DownloadButton size="medium" />}
+                />
               </Column>
             </Column>
           </Row>
