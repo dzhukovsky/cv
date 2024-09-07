@@ -138,8 +138,5 @@ export const sortStackedTechnologies = (
     })
     .sort((a, b) => b.technologies.length - a.technologies.length)
     .sort((a, b) => b.maxExpYears - a.maxExpYears)
-    .sort(
-      (a, b) =>
-        +b.technologies[0].lastDateUsed - +a.technologies[0].lastDateUsed,
-    );
+    .sort((a, b) => +b.lastDateUsed - +a.lastDateUsed);
 };

@@ -89,19 +89,17 @@ export const data: t.Data = {
   },
   contractTypes: ['Hybrid', 'Remote'],
   summary: `
-      I am a highly motivated and inquisitive .NET Software Engineer with over 9 years of experience, including 5 years in production environments.
-      - Developed and maintained high-performance web applications using C#, ASP.NET Core, and .NET.
-      - Designed and implemented RESTful APIs and microservices architecture to facilitate efficient communication between different application components.
-      - Utilized Dapper and Entity Framework for data access management, ensuring data integrity and efficient database interactions.
-      - Collaborated with cross-functional teams to gather and analyze requirements.
-      - Integrated third-party libraries and controls, such as Fluent UI, to enhance application functionality and user experience.
-      - Implemented authentication and authorization mechanisms to ensure secure access to application features.
-      - Leveraged Azure for the deployment, management, and scaling of applications in a reliable and cost-effective manner.
-      - Utilized third-party APIs from HubSpot and various payment providers to integrate and enhance application functionality.
-      - Worked with version control systems, particularly Git, Subversion, and TfVC, to enable efficient code collaboration and version management.
-      - Participated in code reviews, providing constructive feedback and maintaining code quality standards.
-      - Actively participated in Agile/Scrum processes for planning, tracking, and delivering software iterations on schedule.
-      - Measured system performance on multi-user platforms through test scenarios using automated testing software, providing analysis results and recommendations.
+      Highly motivated and inquisitive .NET Software Engineer with over 9 years of experience, including 5+ years in production environments. Specializing in developing high-performance web applications using C#, ASP.NET Core, .NET, and React. Proficient in designing and implementing RESTful APIs and microservices architecture for scalable systems.
+      Demonstrated expertise across multiple areas of software development, including:
+      - Leveraging Azure for cloud services, deployment, management, and scaling.
+      - Managing data access using Dapper and Entity Framework for efficient database interactions.
+      - Integrating third-party libraries and APIs from various platforms and payment providers to enhance functionality.
+      - Implementing authentication and authorization mechanisms to ensure secure access to application features.
+      - Working with version control systems, including Git, Subversion, and TfVC, for efficient code collaboration and version management.
+      - Participating in Agile/Scrum processes, collaborating with cross-functional teams to deliver software iterations on schedule.
+      - Actively participating in code reviews, ensuring adherence to high-quality coding standards.
+      - Measuring system performance in multi-user platforms through test scenarios using automated testing tools, providing analysis and recommendations for performance improvements.
+      Thrives in dynamic, collaborative environments, solving complex challenges and delivering robust and high-quality software solutions.
     `,
   languages: [
     {
@@ -252,16 +250,30 @@ export const data: t.Data = {
     mapTechnology(
       expSources.selfTaught,
       groups.cloud,
+      'Azure Static App',
+      1,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
+      'Azure Storage',
+      1,
+      date('2024'),
+    ),
+    mapTechnology(
+      expSources.selfTaught,
+      groups.cloud,
       'Azure Monitor',
       1,
-      date('2023'),
+      date('2024'),
     ),
     mapTechnology(
       expSources.selfTaught,
       groups.cloud,
       'Azure Functions',
-      0.5,
-      date('2023'),
+      1,
+      date('2024'),
     ),
     mapTechnology(
       expSources.selfTaught,
@@ -693,8 +705,9 @@ export const data: t.Data = {
 };
 
 export const metadata = {
+  siteName: `Portfolio · ${data.fullName}`,
   title: `${data.fullName} - ${data.lookingForPosition}`,
-  description: `${data.fullName}, ${data.lookingForPosition} with 9+ years of experience in developing high-performance web applications using C#, ASP.NET Core, .NET. Skilled in RESTful APIs, microservices, and Azure. Seeking opportunities in Hybrid or Remote roles.`,
+  description: `${data.fullName}, ${data.lookingForPosition} with 5+ years of experience in developing high-performance web applications using C#, ASP.NET Core, .NET. Skilled in RESTful APIs, microservices, and Azure. Seeking opportunities in Hybrid or Remote roles.`,
   keywords: `${data.fullName}, ${data.lookingForPosition}, C#, ASP.NET Core, Microservices, Azure, Azure DevOps, RESTful APIs, Software Development, Gdansk, Poland, Hybrid, Remote, .NET Developer, Software Engineer, .NET Full-stack Developer, .NET Software Engineer`,
   author: data.fullName,
   url: 'https://cv.dzhukovsky.me',

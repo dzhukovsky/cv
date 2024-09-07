@@ -60,6 +60,7 @@ const onRenderHtml: OnRenderHtmlAsync = async (
 
         <meta property="og:title" content="${metadata.title}">
         <meta property="og:description" content="${metadata.description}">
+        <meta property="og:site_name" content="${metadata.siteName}">
         <meta property="og:type" content="website">
         <meta property="og:url" content="${metadata.url}">
         <meta property="og:locale" content="en_US">
@@ -70,6 +71,7 @@ const onRenderHtml: OnRenderHtmlAsync = async (
         <meta name="twitter:description" content="${metadata.description}">
         <meta name="twitter:site" content="${metadata.url}">
 
+        <meta name="googlebot" content="notranslate">
         <meta name="google-site-verification" content="Zzq5NY7cVcCYNcp9SjwtaExeIVqjnnqnYYCBBEnQk_M" />
         
         <script type="application/ld+json">

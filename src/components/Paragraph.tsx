@@ -33,8 +33,12 @@ export const Paragraph = (props: IParagraphProps) => {
         return;
       }
 
-      groups.push([...buffer, item]);
-      buffer = [];
+      if (buffer.length > 0) {
+        groups.push(buffer);
+        buffer = [];
+      }
+
+      groups.push([item]);
     });
 
   if (buffer.length > 0) {
