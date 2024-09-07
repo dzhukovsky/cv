@@ -64,7 +64,7 @@ export interface Project {
   areasOfActivity: string[];
   description?: string;
   startDate: Date;
-  endDate: Date | 'Present';
+  endDate?: Date;
   contribution?: string;
   technologies?: ProjectTechnology[];
 }

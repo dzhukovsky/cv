@@ -81,9 +81,6 @@ function buildDateDiffText(startDate: Date, endDate: Date): string {
 export const Project = (props: t.Project) => {
   const styles = useStyles();
 
-  const endDate =
-    typeof props.endDate !== 'string' ? props.endDate : new Date();
-
   return (
     <div>
       <div></div>{' '}
@@ -96,7 +93,7 @@ export const Project = (props: t.Project) => {
             </Subtitle2>
             <Text>
               {formatDates(props.startDate, props.endDate)}{' '}
-              {buildDateDiffText(props.startDate, endDate)}
+              {buildDateDiffText(props.startDate, props.endDate ?? new Date())}
             </Text>
             <TagGroup className={styles.tagsSm}>
               {props.areasOfActivity.sort().map((x) => (

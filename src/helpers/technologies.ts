@@ -24,15 +24,12 @@ interface IExpYears {
   patternIndex?: number;
 }
 
-const getDate = (date: Date | string): Date | null =>
-  typeof date === 'string' ? null : date;
-
 export const getTechnologies = (projects: Project[]): Technology[] => {
   const currentDate = new Date();
   return projects.flatMap((project) =>
     (project.technologies ?? []).map((technology): Technology => {
       const lastDateUsed =
-        technology.lastDateUsed ?? getDate(project.endDate) ?? currentDate;
+        technology.lastDateUsed ?? project.endDate ?? currentDate;
       const diff = toDateDiff(lastDateUsed, project.startDate);
       const expYears = technology.expYears ?? diff.years + diff.months / 12;
 

@@ -747,10 +747,7 @@ export const jsonLd = {
       '@type': 'Role',
       roleName: project.position,
       startDate: project.startDate.toISOString().split('T')[0],
-      endDate:
-        project.endDate != 'Present'
-          ? project.endDate.toISOString().split('T')[0]
-          : undefined,
+      endDate: project.endDate?.toISOString().split('T')[0],
       description: project.contribution?.trim(),
       identifier: project.company,
       worksFor: {
@@ -811,15 +808,13 @@ export const jsonLd = {
   // ],
 };
 
-export const formatDates = (startDate: Date, endDate?: Date | 'Present') =>
+export const formatDates = (startDate: Date, endDate?: Date) =>
   [
     startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }),
-    typeof endDate === 'string'
-      ? endDate
-      : endDate?.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-        }),
+    endDate?.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+    }) ?? 'Present',
   ]
     .filter((x) => x)
     .join(' - ');
