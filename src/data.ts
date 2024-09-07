@@ -82,7 +82,7 @@ export const data: t.Data = {
   email: 'dmitry.zhukovsky@outlook.com',
   lookingForPosition: '.NET Software Engineer',
   address: {
-    country: 'Gdansk',
+    country: 'Poland',
     countryCode: 'PL',
     locality: 'Gdansk',
     postalCode: '80-299',
