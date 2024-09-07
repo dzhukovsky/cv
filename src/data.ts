@@ -215,13 +215,6 @@ export const data: t.Data = {
     mapTechnology(
       expSources.selfTaught,
       groups.devops,
-      'Azure DevOps',
-      1,
-      date('2024'),
-    ),
-    mapTechnology(
-      expSources.selfTaught,
-      groups.devops,
       'GitHub',
       2,
       date('2024'),
