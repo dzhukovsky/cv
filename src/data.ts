@@ -84,12 +84,12 @@ export const data: t.Data = {
   address: {
     country: 'Poland',
     countryCode: 'PL',
-    locality: 'Warsaw',
-    postalCode: '02-972',
+    locality: 'Gdansk',
+    postalCode: '80-311',
   },
-  contractTypes: ['Hybrid', 'Remote'],
+  contractTypes: ['Remote'],
   summary: `
-      Highly motivated and inquisitive .NET Software Engineer with over 9 years of experience, including 5+ years in production environments. Specializing in developing high-performance web applications using C#, ASP.NET Core, .NET, and React. Proficient in designing and implementing RESTful APIs and microservices architecture for scalable systems.
+      Highly motivated and inquisitive .NET Software Engineer with over 9 years of experience, including 6+ years in production environments. Specializing in developing high-performance web applications using C#, ASP.NET Core, .NET, and React. Proficient in designing and implementing RESTful APIs and microservices architecture for scalable systems.
       Demonstrated expertise across multiple areas of software development, including:
       - Leveraging Azure for cloud services, deployment, management, and scaling.
       - Managing data access using Dapper and Entity Framework for efficient database interactions.
@@ -257,7 +257,7 @@ export const data: t.Data = {
     mapTechnology(
       expSources.selfTaught,
       groups.cloud,
-      'Azure Monitor',
+      'Applications Insights',
       1,
       date('2024'),
     ),
@@ -284,6 +284,76 @@ export const data: t.Data = {
     ),
   ],
   projects: [
+    {
+      name: 'Enterprise-grade data processing platform',
+      position: '.NET Software Engineer III',
+      company: 'Under NDA',
+      companyUrl: undefined,
+      companyIconUrl: undefined,
+      startDate: new Date('2024-11-01'),
+      endDate: undefined,
+      areasOfActivity: ['High-throughput', 'Data Processing'],
+      description: `
+                Distributed platform for processing and transforming large volumes of data in real time.
+                Developed scalable backend services with a focus on automation, integrations, and high system reliability. Involved in API development, background processing, and system optimization using modern .NET stack.
+            `,
+      contribution: `
+                Built microservices using .NET (C#), ASP.NET Core, and Entity Framework Core
+                Developed REST APIs and background jobs for data ingestion and processing
+                Integrated with third-party systems via HTTP, messaging queues, and scheduled tasks
+                Applied Clean Architecture, SOLID principles, and DDD practices
+                Ensured reliability and observability through unit tests, structured logging, and monitoring tools
+                Deployed and maintained services in a cloud-based environment (Azure)
+            `,
+      technologies: [
+        mapProjectTechnology(expSources.production, groups.backend, 'C#'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET'),
+        mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'ASP.NET Core',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Entity Framework',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.versionControl,
+          'Git',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'Azure DevOps',
+        ),
+        mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
+        mapProjectTechnology(expSources.production, groups.cloud, 'Kubernetes'),
+        mapProjectTechnology(expSources.production, groups.cloud, 'Helm'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Applications Insights',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Azure App Service',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Azure Service Bus',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Azure SQL Databases',
+        ),
+      ],
+    },
     {
       name: 'Multi-purpose Software Solutions for Media and Subscription Businesses',
       position: '.NET Software Engineer II',

@@ -117,7 +117,9 @@ export const Project = (props: t.Project) => {
           href={props.companyUrl}
           target="_blank"
         >
-          <Image src={props.companyIconUrl} height={24} width={24} />
+          {props.companyIconUrl && (
+            <Image src={props.companyIconUrl} height={24} width={24} />
+          )}
           <Text>{props.company}</Text>
         </Link>
         <Paragraph className={styles.multiLine}>

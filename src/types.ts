@@ -58,8 +58,8 @@ export type ProjectTechnology = Omit<Technology, 'lastDateUsed' | 'expYears'> &
 export interface Project {
   name: string;
   company: string;
-  companyUrl: string;
-  companyIconUrl: string;
+  companyUrl?: string;
+  companyIconUrl?: string;
   position: string;
   areasOfActivity: string[];
   description?: string;
