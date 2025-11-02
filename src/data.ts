@@ -697,7 +697,8 @@ export const data: t.Data = {
     {
       name: 'Microsoft Certified: Azure Developer Associate',
       code: 'AZ-204',
-      competencyRequired: 'Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more',
+      competencyRequired:
+        'Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more',
       issuingOrganization: 'Microsoft',
       issuingOrganizationIconUrl: 'microsoft_logo.jpg',
       issueDate: new Date('2025-11-02'),
