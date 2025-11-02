@@ -695,6 +695,18 @@ export const data: t.Data = {
   ],
   certifications: [
     {
+      name: 'Microsoft Certified: Azure Developer Associate',
+      code: 'AZ-204',
+      competencyRequired: 'Build end-to-end solutions in Microsoft Azure to create Azure Functions, implement and manage web apps, develop solutions utilizing Azure storage, and more',
+      issuingOrganization: 'Microsoft',
+      issuingOrganizationIconUrl: 'microsoft_logo.jpg',
+      issueDate: new Date('2025-11-02'),
+      expirationDate: new Date('2026-11-03'),
+      credentialId: 'D47FFA664405C85C',
+      credentialUrl:
+        'https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/D47FFA664405C85C',
+    },
+    {
       name: 'Microsoft Certified: Azure Fundamentals',
       code: 'AZ-900',
       competencyRequired: 'Understanding of Azure fundamentals',
