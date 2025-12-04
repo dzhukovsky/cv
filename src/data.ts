@@ -319,11 +319,7 @@ export const data: t.Data = {
           groups.backend,
           'Entity Framework',
         ),
-        mapProjectTechnology(
-          expSources.production,
-          groups.backend,
-          'SignalR',
-        ),
+        mapProjectTechnology(expSources.production, groups.backend, 'SignalR'),
         mapProjectTechnology(
           expSources.production,
           groups.versionControl,
@@ -364,7 +360,7 @@ export const data: t.Data = {
       position: 'Senior .NET Backend Engineer',
       company: 'Exadel',
       companyUrl: 'https://exadel.com',
-      companyIconUrl: "exadel_logo.png",
+      companyIconUrl: 'exadel_logo.png',
       startDate: new Date('2024-11-01'),
       endDate: undefined,
       areasOfActivity: ['Fintech'],
@@ -380,7 +376,13 @@ export const data: t.Data = {
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET'),
-        mapProjectTechnology(expSources.production, groups.backend, 'Python 3', 0.25, date('2025')),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Python 3',
+          0.25,
+          date('2025'),
+        ),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
         mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(
@@ -398,11 +400,7 @@ export const data: t.Data = {
           groups.versionControl,
           'Git',
         ),
-        mapProjectTechnology(
-          expSources.production,
-          groups.devops,
-          'GitHub',
-        ),
+        mapProjectTechnology(expSources.production, groups.devops, 'GitHub'),
         mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
         mapProjectTechnology(expSources.production, groups.cloud, 'Kubernetes'),
         mapProjectTechnology(expSources.production, groups.devops, 'Helm'),

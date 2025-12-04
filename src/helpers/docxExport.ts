@@ -257,7 +257,11 @@ const createTechnologies = (technologies: Technology[]) => {
         const filteredTechnologies = group.technologies
           .map((x) => ({
             name: x.name,
-            expYears: sum(x.expYears.filter((x) => x.source === expSources.production).map((x) => x.years)),
+            expYears: sum(
+              x.expYears
+                .filter((x) => x.source === expSources.production)
+                .map((x) => x.years),
+            ),
           }))
           .filter((x) => x.expYears > 0)
           .flatMap((x, i, items) => {

@@ -35,7 +35,7 @@ const distinctTechnologiesByMonth = (
     }
   }
   return Array.from(distinctMap.values());
-}
+};
 
 export const getTechnologies = (projects: Project[]): Technology[] => {
   const currentDate = new Date();
