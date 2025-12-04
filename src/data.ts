@@ -70,14 +70,14 @@ const groups = {
   },
 };
 
-const expSources = {
+export const expSources = {
   production: 'production',
   selfTaught: 'self-taught',
 };
 
 export const data: t.Data = {
   fullName: 'Dmitry Zhukovsky',
-  phoneNumber: '+48 730 725 476',
+  phoneNumber: undefined,
   linkedInUrl: 'www.linkedin.com/in/dmitry-zhukovsky',
   email: 'dmitry.zhukovsky@outlook.com',
   lookingForPosition: '.NET Software Engineer',
@@ -285,30 +285,30 @@ export const data: t.Data = {
   ],
   projects: [
     {
-      name: 'Enterprise-grade data processing platform',
-      position: '.NET Software Engineer III',
-      company: 'Under NDA',
-      companyUrl: undefined,
-      companyIconUrl: undefined,
+      name: 'Cloud Contact-Center and Communications Platform',
+      position: 'Senior .NET Backend Engineer',
+      company: 'Fotando Global',
+      companyUrl: 'https://www.fotando.global',
+      companyIconUrl: 'fotando_global_logo.jpg',
       startDate: new Date('2024-11-01'),
       endDate: undefined,
-      areasOfActivity: ['High-throughput', 'Data Processing'],
+      areasOfActivity: ['Telecom', 'Cloud Communications'],
       description: `
-                Distributed platform for processing and transforming large volumes of data in real time.
-                Developed scalable backend services with a focus on automation, integrations, and high system reliability. Involved in API development, background processing, and system optimization using modern .NET stack.
+                Enterprise SaaS ecosystem for unified customer communications and digital telephony. It integrates voice, messaging, workflow automation, compliance controls, and analytics into Microsoft-based business environments. The system focuses on secure operations, interoperability, and scalable customer engagement at global enterprise level.
             `,
       contribution: `
-                Built microservices using .NET (C#), ASP.NET Core, and Entity Framework Core
-                Developed REST APIs and background jobs for data ingestion and processing
-                Integrated with third-party systems via HTTP, messaging queues, and scheduled tasks
-                Applied Clean Architecture, SOLID principles, and DDD practices
-                Ensured reliability and observability through unit tests, structured logging, and monitoring tools
-                Deployed and maintained services in a cloud-based environment (Azure)
+                Established a reputation as a reliable engineer through strong ownership and attention to detail, becoming responsible for planning and executing production deployments.
+                Developed core infrastructure NuGet packages to standardize baseline configuration across .NET microservices, significantly reducing misconfigurations and setup effort.
+                Architected a secure Power BI integration (KQL per tenant shortcuts and a dedicated connector) enabling customers to work directly with their data in a multi-tenant environment and increasing adoption of the platform.
+                Implemented a custom EF Core migrations management tool that enabled independent CI/CD for database schema changes and simplified developers day-to-day workflows.
+                Drove major improvements to CI/CD by shaping Helm templates and Azure DevOps pipelines, centralizing configuration in Azure DevOps Library and dynamically generating config/secret maps during deployments to meet security and compliance requirements.
             `,
       technologies: [
         mapProjectTechnology(expSources.production, groups.backend, 'C#'),
         mapProjectTechnology(expSources.production, groups.backend, '.NET'),
         mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
+        mapProjectTechnology(expSources.production, groups.database, 'KQL'),
+        mapProjectTechnology(expSources.production, groups.database, 'Redis'),
         mapProjectTechnology(
           expSources.production,
           groups.backend,
@@ -318,6 +318,11 @@ export const data: t.Data = {
           expSources.production,
           groups.backend,
           'Entity Framework',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'SignalR',
         ),
         mapProjectTechnology(
           expSources.production,
@@ -331,7 +336,7 @@ export const data: t.Data = {
         ),
         mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
         mapProjectTechnology(expSources.production, groups.cloud, 'Kubernetes'),
-        mapProjectTechnology(expSources.production, groups.cloud, 'Helm'),
+        mapProjectTechnology(expSources.production, groups.devops, 'Helm'),
         mapProjectTechnology(
           expSources.production,
           groups.cloud,
@@ -350,13 +355,77 @@ export const data: t.Data = {
         mapProjectTechnology(
           expSources.production,
           groups.cloud,
-          'Azure SQL Databases',
+          'Microsoft Fabric',
+        ),
+      ],
+    },
+    {
+      name: 'Enterprise Tax Allocation Platform',
+      position: 'Senior .NET Backend Engineer',
+      company: 'Exadel',
+      companyUrl: 'https://exadel.com',
+      companyIconUrl: "exadel_logo.png",
+      startDate: new Date('2024-11-01'),
+      endDate: undefined,
+      areasOfActivity: ['Fintech'],
+      description: `
+                Distributed backend platform for automated financial allocations and rules-driven calculations. It processes structured datasets, applies configurable business logic, and generates standardized reporting outputs for enterprise use. The system emphasizes performance, accuracy, and maintainability to support long-term scalability in regulated environments.
+            `,
+      contribution: `
+                Developed the core data import functionality that became the foundation of the service, meeting strict performance requirements while keeping the system easy to extend.
+                Built a reputation as a reliable engineer with a low defect rate and minimal post-development effort on new features.
+                Quickly became a go-to person for knowledge and support on the project, despite holding a standard developer role.
+                Demonstrated strong ownership and team support, actively participating in key architectural discussions and helping the team resolve complex technical issues.
+            `,
+      technologies: [
+        mapProjectTechnology(expSources.production, groups.backend, 'C#'),
+        mapProjectTechnology(expSources.production, groups.backend, '.NET'),
+        mapProjectTechnology(expSources.production, groups.backend, 'Python 3', 0.25, date('2025')),
+        mapProjectTechnology(expSources.production, groups.database, 'MS-SQL'),
+        mapProjectTechnology(expSources.production, groups.database, 'Redis'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'ASP.NET Core',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.backend,
+          'Entity Framework',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.versionControl,
+          'Git',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.devops,
+          'GitHub',
+        ),
+        mapProjectTechnology(expSources.production, groups.testing, 'xUnit'),
+        mapProjectTechnology(expSources.production, groups.cloud, 'Kubernetes'),
+        mapProjectTechnology(expSources.production, groups.devops, 'Helm'),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Applications Insights',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Azure API Management',
+        ),
+        mapProjectTechnology(
+          expSources.production,
+          groups.cloud,
+          'Azure Service Bus',
         ),
       ],
     },
     {
       name: 'Multi-purpose Software Solutions for Media and Subscription Businesses',
-      position: '.NET Software Engineer II',
+      position: 'Senior .NET Software Engineer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: 'lightpoint_global_logo.jpg',
@@ -364,12 +433,7 @@ export const data: t.Data = {
       endDate: new Date('2024-07-31'),
       areasOfActivity: ['Digital Publishing'],
       description: `
-                This project provides publishers with versatile and customizable software for subscription management, audience analytics, and monetization. This includes self-service features implementation, selling ads, and more. The primary aim is to ensure seamless integration of their solutions into the client's IT ecosystem.
-                To achieve this:
-                - They have pre-built integrations with widely-used CRMs, marketing tools, and payment solutions, including Salesforce, HubSpot, Verifone, and Google Ad Manager.
-                - They provide a comprehensive set of APIs for clients to build their own custom integrations.
-                - They utilize a plugin/widget architecture to maximize ease of third-party integrations.
-                Clients can either implement the purchased solutions independently or hire a tech team from Lightpoint Global to handle the implementation. 
+                Provides media and subscription businesses with flexible software for subscription management, audience analytics, and monetization, including self-service portals and advertising sales workflows. The platform offers pre-built integrations with widely used CRMs, marketing tools, and payment providers (Salesforce, HubSpot, Verifone, Google Ad Manager), along with comprehensive APIs and a plugin/widget architecture that facilitates custom and third-party integrations.
             `,
       contribution: `
                 Spearheaded the generation of backlog items, designed new features, and managed the product roadmap to ensure timely and efficient delivery of high-quality software solutions.
@@ -420,7 +484,7 @@ export const data: t.Data = {
     },
     {
       name: 'ePayment Solution',
-      position: '.NET Software Engineer II',
+      position: 'Middle .NET Software Engineer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: 'lightpoint_global_logo.jpg',
@@ -428,9 +492,7 @@ export const data: t.Data = {
       endDate: new Date('2024-02-29'),
       areasOfActivity: ['Fintech'],
       description: `
-                A non-card payment system utilized by over 100 authorized banks worldwide, including major clients like Adidas, Reebok, and Uber. This system allows consumers to purchase in their own currencies without risking personal or financial information.
-                It offers businesses the ability to transact rapidly, securely, and inexpensively. Delivered as a multi-component electronic payment system, it includes integrations with APIs for banks, databases, and tertiary services, as well as a web app for payment management and control.
-                Integrated with SAP, the system enables automated workflows, reducing human labor and potential errors. It functions without requiring personal or financial data, providing protection against identity theft, chargeback, and fraud.
+                Non-card payment platform used by 100+ authorized banks worldwide, allowing consumers to pay in local currencies without exposing personal or financial data. The system integrates with bank APIs, SAP, internal databases, and third-party services to enable fast, secure, and cost-efficient transactions, while automated workflows reduce manual effort and mitigate risks of errors, identity theft, chargebacks, and fraud.
             `,
       contribution: `
                 Played a crucial role in developing a multi-component electronic payment system, with a focus on optimizing transactions for speed, security, and cost-efficiency.
@@ -493,7 +555,7 @@ export const data: t.Data = {
     },
     {
       name: 'Customer Engagement Platform',
-      position: '.NET Software Engineer I',
+      position: 'Junior .NET Software Engineer',
       company: 'Lightpoint Global',
       companyUrl: 'https://lightpointglobal.com',
       companyIconUrl: 'lightpoint_global_logo.jpg',
@@ -501,10 +563,8 @@ export const data: t.Data = {
       endDate: new Date('2022-10-01'),
       areasOfActivity: ['Publishing', 'Martech'],
       description: `
-                Designed for leading publishers like The New York Times, Chicago Tribune, and USA Today, this project introduced a customizable multi-module engagement platform. Each module is tailored to address distinct aspects of the business flow, ranging from initial user engagement and subscription conversion to unsubscription and analytics.
-                The platform empowers publishers to manage subscriptions efficiently, optimize pricing, and maximize revenue. It also allows for subscription upgrades and more. A key feature of the system is its ability to track user behavior, recommend relevant content, predict user's next steps, and offer optimal subscription options, making the interaction as user-friendly as possible.
-                Distinct teams, focusing on implementation and development, drive the project. The implementation team handles the system's connection and configuration for new clients, including updates and new feature additions. A significant goal is the automation of these processes.
-                The project encompasses extensive integrations, including with Vindicia CashBox, various Payment Providers (like PayPal, ApplePay, Edgil, Matrix, Stripe, Braintree), and Google Analytics.
+                Customizable multi-module engagement platform for leading publishers (e.g., The New York Times, Chicago Tribune, USA Today), covering the full subscription lifecycle from initial acquisition and conversion to retention, churn prevention, and analytics. It enables efficient subscription management, pricing optimization, upgrades, and personalized offers by tracking user behavior, recommending relevant content, and predicting next actions.
+                The solution includes extensive integrations with billing and payment providers (Vindicia CashBox, PayPal, Apple Pay, Edgil, Matrix, Stripe, Braintree) and Google Analytics, and supports both core product development and client-specific implementation and configuration.
             `,
       contribution: `
                 Successfully drove the implementation of automated feature updates, resulting in a 20% reduction in development time for new functionalities.
@@ -588,7 +648,7 @@ export const data: t.Data = {
     },
     {
       name: 'Rental Accounting System',
-      position: '.NET Full-stack Developer',
+      position: 'Junior .NET Full-Stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
       companyIconUrl: 'caspel_logo.jpg',
@@ -637,7 +697,7 @@ export const data: t.Data = {
     },
     {
       name: 'Customer Manufacturing Platform',
-      position: '.NET Full-stack Developer',
+      position: 'Junior .NET Full-Stack Developer',
       company: 'Caspel LLC',
       companyUrl: 'https://caspel.com',
       companyIconUrl: 'caspel_logo.jpg',

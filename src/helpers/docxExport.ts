@@ -20,7 +20,7 @@ import {
   sortStackedTechnologies,
 } from '@/helpers/technologies';
 import { Data, Technology } from '@/types';
-import { allTechnologies, formatDates } from '@/data';
+import { allTechnologies, expSources, formatDates } from '@/data';
 import { toDateDiffFullWords, yearsToDateDiff } from './date';
 
 const NBSP = '\u00A0';
@@ -257,7 +257,7 @@ const createTechnologies = (technologies: Technology[]) => {
         const filteredTechnologies = group.technologies
           .map((x) => ({
             name: x.name,
-            expYears: sum(x.expYears.map((x) => x.years)),
+            expYears: sum(x.expYears.filter((x) => x.source === expSources.production).map((x) => x.years)),
           }))
           .filter((x) => x.expYears > 0)
           .flatMap((x, i, items) => {
@@ -299,6 +299,7 @@ const createExperience = (data: Data) => {
     createHeading1('Experience'),
     ...data.projects.flatMap((project) => [
       createHeading2(`${project.company} | ${project.name}`),
+      ...createParagraphsByLine(project.description),
       createHeading3WithRightText(
         project.position,
         formatDates(project.startDate, project.endDate).replace(/\s/g, NBSP),

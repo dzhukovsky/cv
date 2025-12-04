@@ -24,9 +24,22 @@ interface IExpYears {
   patternIndex?: number;
 }
 
+const distinctTechnologiesByMonth = (
+  technologies: Technology[],
+): Technology[] => {
+  const distinctMap = new Map<string, Technology>();
+  for (const technology of technologies) {
+    const key = `${technology.name}-${technology.lastDateUsed.getFullYear()}-${technology.lastDateUsed.getMonth()}`;
+    if (!distinctMap.has(key)) {
+      distinctMap.set(key, technology);
+    }
+  }
+  return Array.from(distinctMap.values());
+}
+
 export const getTechnologies = (projects: Project[]): Technology[] => {
   const currentDate = new Date();
-  return projects.flatMap((project) =>
+  const technologies = projects.flatMap((project) =>
     (project.technologies ?? []).map((technology): Technology => {
       const lastDateUsed =
         technology.lastDateUsed ?? project.endDate ?? currentDate;
@@ -40,6 +53,7 @@ export const getTechnologies = (projects: Project[]): Technology[] => {
       };
     }),
   );
+  return distinctTechnologiesByMonth(technologies);
 };
 
 export const mapStackedTechnologies = (
