@@ -1,0 +1,53 @@
+{
+  "name": "cv",
+  "author": "dzhukovsky",
+  "license": "MIT",
+  "version": "1.0.0",
+  "type": "module",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dzhukovsky/cv.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "^9.54.10",
+    "@fluentui/react-icons": "^2.0.256",
+    "docx": "^8.5.0",
+    "file-saver": "^2.0.5",
+    "highcharts": "^11.4.8",
+    "highcharts-react-official": "^3.2.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sort-css-media-queries": "^2.3.0",
+    "vike-react": "^0.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@types/file-saver": "^2.0.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "9.x",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "prettier-eslint": "^16.3.0",
+    "sass": "^1.77.8",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.3.0",
+    "vike": "^0.4.193",
+    "vite": "^5.4.0",
+    "vite-plugin-cjs-interop": "^2.1.2"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

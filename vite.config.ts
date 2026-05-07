@@ -1,25 +1,14 @@
-import react from '@vitejs/plugin-react-swc';
-import path from 'path';
-import vike from 'vike/plugin';
-import { UserConfig } from 'vite';
-import { cjsInterop } from 'vite-plugin-cjs-interop';
+import path from 'node:path'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
-const config: UserConfig = {
-  plugins: [
-    react(),
-    vike({ prerender: true }),
-    cjsInterop({
-      dependencies: ['@fluentui/react-components', 'file-saver'],
-    }),
-  ],
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-  ssr: {
-    noExternal: ['@fluentui/react-icons'],
-  },
-};
-
-export default config;
+})
