@@ -182,7 +182,10 @@ function Hero() {
   const yearsTotal = 9
 
   return (
-    <section id="top" className="fl-mica relative no-print">
+    // Pull the hero up under the sticky header (h-14 = 56px) so its mica
+    // gradient extends behind the header — the acrylic blur has tinted
+    // content to sample at scroll = 0, no visible cut line.
+    <section id="top" className="fl-mica relative no-print -mt-14 pt-14">
       <div className="absolute inset-0 fl-grid-bg pointer-events-none" />
       <div className="relative mx-auto max-w-[1180px] px-5 md:px-8 pt-10 pb-14 md:pt-16 md:pb-20">
         <div className="grid grid-cols-12 gap-8 items-end">
