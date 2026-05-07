@@ -710,21 +710,19 @@ function Skills() {
         </Card>
 
         <Card className="col-span-12 lg:col-span-5 p-5 md:p-6" elevation={2}>
-          <div className="lg:sticky lg:top-20">
-            <div className="flex items-baseline justify-between mb-3">
-              <h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
-                <Radar size={15} style={{ color: 'var(--fl-brand)' }} />
-                Profile balance
-              </h3>
-              <span
-                className="text-[10.5px]"
-                style={{ color: 'var(--fl-fg-subtle)', fontFamily: 'var(--font-mono)' }}
-              >
-                years × recency
-              </span>
-            </div>
-            <TechRadar />
+          <div className="flex items-baseline justify-between mb-3">
+            <h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
+              <Radar size={15} style={{ color: 'var(--fl-brand)' }} />
+              Profile balance
+            </h3>
+            <span
+              className="text-[10.5px]"
+              style={{ color: 'var(--fl-fg-subtle)', fontFamily: 'var(--font-mono)' }}
+            >
+              years × recency
+            </span>
           </div>
+          <TechRadar />
         </Card>
 
         <Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
