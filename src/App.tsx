@@ -29,7 +29,7 @@ import {
   Radar,
 } from 'lucide-react'
 import { Linkedin, Github } from '@/components/brand-icons'
-import { cv, formatPeriod, formatDuration, monthsBetween } from '@/data/cv'
+import { cv, formatPeriod, formatDuration } from '@/data/cv'
 import {
   Card,
   PrimaryButton,
@@ -518,10 +518,9 @@ function ExperienceRow({ p, index }: { p: typeof cv.projects[number]; index: num
     ? 'Middle'
     : 'Junior'
   const isCurrent = !p.end
-  const months = monthsBetween(p.start, p.end)
 
   return (
-    <div className="relative pl-8 md:pl-10">
+    <div className="relative pl-12 md:pl-14">
       <div
         className="absolute left-0 top-5 grid place-items-center h-[30px] w-[30px] md:h-[38px] md:w-[38px] rounded-full"
         style={{
@@ -581,8 +580,6 @@ function ExperienceRow({ p, index }: { p: typeof cv.projects[number]; index: num
               </span>
               <span style={{ color: 'var(--fl-stroke)' }}>·</span>
               <span>{formatDuration(p.start, p.end)}</span>
-              <span style={{ color: 'var(--fl-stroke)' }}>·</span>
-              <span>{months} mo</span>
             </div>
           </div>
           <ChevronDown
@@ -633,7 +630,7 @@ function ExperienceRow({ p, index }: { p: typeof cv.projects[number]; index: num
             </div>
             <div className="mt-2.5 flex flex-wrap gap-1.5">
               {p.tech.map((t) => (
-                <Tag key={t.name} variant="subtle">
+                <Tag key={t.name} variant="outline">
                   {t.name}
                 </Tag>
               ))}
