@@ -664,21 +664,17 @@ const groupMeta: Record<string, { icon: typeof Cpu; label: string }> = {
   Quality: { icon: TestTube2, label: 'Quality' },
 }
 
-function Skills() {
-  const groups = [
-    'Backend',
-    'Frontend',
-    'Data',
-    'Cloud',
-    'DevOps',
-    'Quality',
-  ] as const
+// VCS noise — Git is universal, SVN/TfVC are historical. Bars still sum their
+// years, but the chip-cloud index hides them so DevOps doesn't read inflated.
+const VCS_NAMES = new Set(['Git', 'SVN', 'TfVC'])
 
+function Skills() {
   const densities = useMemo(
     () =>
       computeCategoryDensity().sort((a, b) => b.totalYears - a.totalYears),
     [],
   )
+  const groups = useMemo(() => densities.map((d) => d.name), [densities])
   const maxYears = useMemo(
     () => Math.max(...densities.map((c) => c.totalYears)),
     [densities],
@@ -688,8 +684,8 @@ function Skills() {
     <Section id="skills">
       <SectionHeader
         eyebrow="03 — Technologies"
-        title="The toolkit, with proficiency"
-        description="Top tools by years in production, plus a full grouped index. Production stack is filled; self-taught is outlined."
+        title="The toolkit"
+        description="Years per category, with a profile snapshot. Filled = production, striped = self-taught."
       />
 
       <div className="grid grid-cols-12 gap-3">
@@ -703,7 +699,7 @@ function Skills() {
               className="text-[10.5px]"
               style={{ color: 'var(--fl-fg-subtle)', fontFamily: 'var(--font-mono)' }}
             >
-              years across roles
+              sum of tech-years
             </span>
           </div>
           <div className="space-y-5">
@@ -757,7 +753,9 @@ function Skills() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-5">
             {groups.map((g) => {
-              const items = cv.technologies.filter((t) => t.group === g)
+              const items = cv.technologies.filter(
+                (t) => t.group === g && !VCS_NAMES.has(t.name),
+              )
               if (!items.length) return null
               const meta = groupMeta[g]
               const Icon = meta.icon
@@ -815,7 +813,13 @@ function computeCategoryDensity(): CategoryDensity[] {
         years: t.years ?? 0.5,
         source: t.source,
       }))
-      .sort((a, b) => b.years - a.years)
+      .sort((a, b) => {
+        // Production first, self-taught after; then years desc within each group.
+        const ap = a.source === 'production' ? 0 : 1
+        const bp = b.source === 'production' ? 0 : 1
+        if (ap !== bp) return ap - bp
+        return b.years - a.years
+      })
     const totalYears = techs.reduce((acc, t) => acc + t.years, 0)
     return {
       name,
@@ -847,7 +851,7 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
         </span>
       </div>
       <div
-        className="flex h-3 rounded-sm overflow-hidden"
+        className="flex h-3.5 rounded-sm overflow-hidden"
         style={{
           width: `${barPct}%`,
           minWidth: 24,
@@ -920,7 +924,9 @@ const RADAR_SHORT_NAMES: Record<string, string> = {
   Quality: 'Quality',
 }
 
-const RADAR_ORDER = ['Backend', 'Data', 'Cloud', 'DevOps', 'Quality', 'Frontend']
+// Sorted so the two strongest vectors (Backend, DevOps) sit adjacent at top —
+// the polygon leans into one quadrant instead of forming a symmetric diamond.
+const RADAR_ORDER = ['Backend', 'DevOps', 'Cloud', 'Data', 'Frontend', 'Quality']
 
 function computeGroupRates(): RadarPoint[] {
   const currentYear = new Date().getFullYear()
@@ -1057,32 +1063,21 @@ function RadarChart({ data, size = 320 }: { data: RadarPoint[]; size?: number })
           />
         ))}
 
-        {/* Labels */}
+        {/* Labels — names only; percentages live in the legend */}
         {data.map((d, i) => {
           const [lx, ly] = labelPoint(i)
           const { textAnchor, baseline } = layoutFor(i)
-          const dy = baseline === 'auto' ? -2 : baseline === 'hanging' ? 2 : 0
           return (
-            <g key={`l-${d.name}`}>
-              <text
-                x={lx}
-                y={ly + dy}
-                textAnchor={textAnchor}
-                dominantBaseline={baseline}
-                style={{ fontSize: 11, fontWeight: 600, fill: 'var(--fl-fg)' }}
-              >
-                {d.shortName}
-              </text>
-              <text
-                x={lx}
-                y={ly + dy + (baseline === 'auto' ? -13 : 13)}
-                textAnchor={textAnchor}
-                dominantBaseline={baseline}
-                style={{ fontSize: 10, fill: 'var(--fl-brand-hover)', fontWeight: 600 }}
-              >
-                {d.rate.toFixed(0)}%
-              </text>
-            </g>
+            <text
+              key={`l-${d.name}`}
+              x={lx}
+              y={ly}
+              textAnchor={textAnchor}
+              dominantBaseline={baseline}
+              style={{ fontSize: 11, fontWeight: 600, fill: 'var(--fl-fg)' }}
+            >
+              {d.shortName}
+            </text>
           )
         })}
       </svg>
