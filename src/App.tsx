@@ -15,7 +15,6 @@ import {
   Database,
   Wrench,
   TestTube2,
-  GitBranch,
   Code2,
   ShieldCheck,
   Briefcase,
@@ -27,6 +26,7 @@ import {
   Clock,
   Layers,
   Zap,
+  Radar,
 } from 'lucide-react'
 import { Linkedin, Github } from '@/components/brand-icons'
 import { cv, formatPeriod, formatDuration, monthsBetween } from '@/data/cv'
@@ -658,31 +658,30 @@ function ExperienceRow({ p, index }: { p: typeof cv.projects[number]; index: num
 const groupMeta: Record<string, { icon: typeof Cpu; label: string }> = {
   Backend: { icon: Cpu, label: 'Backend' },
   Frontend: { icon: Code2, label: 'Frontend' },
-  Database: { icon: Database, label: 'Database' },
+  Data: { icon: Database, label: 'Data' },
   Cloud: { icon: Cloud, label: 'Cloud' },
   DevOps: { icon: Wrench, label: 'DevOps' },
-  Testing: { icon: TestTube2, label: 'Testing' },
-  'Version Control': { icon: GitBranch, label: 'Version Control' },
+  Quality: { icon: TestTube2, label: 'Quality' },
 }
 
 function Skills() {
   const groups = [
     'Backend',
     'Frontend',
-    'Database',
+    'Data',
     'Cloud',
     'DevOps',
-    'Testing',
-    'Version Control',
+    'Quality',
   ] as const
 
-  const top = useMemo(
+  const densities = useMemo(
     () =>
-      cv.technologies
-        .filter((x) => x.source === 'production' && (x.years ?? 0) >= 2)
-        .sort((a, b) => (b.years ?? 0) - (a.years ?? 0))
-        .slice(0, 8),
+      computeCategoryDensity().sort((a, b) => b.totalYears - a.totalYears),
     [],
+  )
+  const maxYears = useMemo(
+    () => Math.max(...densities.map((c) => c.totalYears)),
+    [densities],
   )
 
   return (
@@ -695,87 +694,42 @@ function Skills() {
 
       <div className="grid grid-cols-12 gap-3">
         <Card className="col-span-12 lg:col-span-7 p-5 md:p-6" elevation={2}>
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-baseline justify-between mb-5">
             <h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
-              <Zap size={15} style={{ color: 'var(--fl-brand)' }} />
-              Top technologies
+              <Layers size={15} style={{ color: 'var(--fl-brand)' }} />
+              Toolkit density
             </h3>
-            <span className="text-[11.5px]" style={{ color: 'var(--fl-fg-muted)' }}>
-              years in production
+            <span
+              className="text-[10.5px]"
+              style={{ color: 'var(--fl-fg-subtle)', fontFamily: 'var(--font-mono)' }}
+            >
+              years across roles
             </span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3.5">
-            {top.map((t) => {
-              const pct = Math.min(100, ((t.years ?? 1) / 9) * 100)
-              return (
-                <div key={t.name}>
-                  <div className="flex items-baseline justify-between mb-1.5">
-                    <span className="text-[13px] font-medium tracking-tight">{t.name}</span>
-                    <span
-                      className="text-[11px] tabular-nums font-medium"
-                      style={{ color: 'var(--fl-fg-muted)' }}
-                    >
-                      {t.years} yr
-                    </span>
-                  </div>
-                  <ProgressBar value={pct} />
-                </div>
-              )
-            })}
+          <div className="space-y-5">
+            {densities.map((cat) => (
+              <CategoryRow key={cat.name} cat={cat} max={maxYears} />
+            ))}
           </div>
         </Card>
 
-        <div className="col-span-12 lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Card className="p-5" reveal hoverable>
-            <div className="flex items-center gap-2 mb-2">
-              <div
-                className="grid place-items-center h-7 w-7 rounded-md"
-                style={{ background: 'var(--fl-brand-subtle)', color: 'var(--fl-brand-hover)' }}
+        <Card className="col-span-12 lg:col-span-5 p-5 md:p-6" elevation={2}>
+          <div className="lg:sticky lg:top-20">
+            <div className="flex items-baseline justify-between mb-3">
+              <h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
+                <Radar size={15} style={{ color: 'var(--fl-brand)' }} />
+                Profile balance
+              </h3>
+              <span
+                className="text-[10.5px]"
+                style={{ color: 'var(--fl-fg-subtle)', fontFamily: 'var(--font-mono)' }}
               >
-                <Cpu size={14} />
-              </div>
-              <div className="text-[11.5px] font-semibold uppercase tracking-[0.12em]" style={{ color: 'var(--fl-fg-muted)' }}>
-                Core
-              </div>
+                years × recency
+              </span>
             </div>
-            <div className="text-[13.5px] leading-relaxed">
-              <strong>C#</strong>, <strong>.NET</strong>, <strong>ASP.NET Core</strong>,{' '}
-              <strong>Entity Framework</strong>, Dapper, SignalR.
-            </div>
-          </Card>
-          <Card className="p-5" reveal hoverable>
-            <div className="flex items-center gap-2 mb-2">
-              <div
-                className="grid place-items-center h-7 w-7 rounded-md"
-                style={{ background: 'var(--fl-brand-subtle)', color: 'var(--fl-brand-hover)' }}
-              >
-                <Cloud size={14} />
-              </div>
-              <div className="text-[11.5px] font-semibold uppercase tracking-[0.12em]" style={{ color: 'var(--fl-fg-muted)' }}>
-                Azure
-              </div>
-            </div>
-            <div className="text-[13.5px] leading-relaxed">
-              App Service, AKS, Service Bus, Functions, App Insights, API Management, Microsoft Fabric.
-            </div>
-          </Card>
-          <Card className="p-5 sm:col-span-2" reveal hoverable>
-            <div className="flex items-center gap-2 mb-2">
-              <div
-                className="grid place-items-center h-7 w-7 rounded-md"
-                style={{ background: 'var(--fl-brand-subtle)', color: 'var(--fl-brand-hover)' }}
-              >
-                <Wrench size={14} />
-              </div>
-              <div className="text-[11.5px] font-semibold uppercase tracking-[0.12em]" style={{ color: 'var(--fl-fg-muted)' }}>
-                Operations
-              </div>
-            </div>
-            <div className="text-[13.5px] leading-relaxed">
-              Helm, Kubernetes, Azure DevOps + GitHub Actions, PowerShell, YAML pipelines, EF migrations as code.
-            </div>
-          </Card>
-        </div>
+            <TechRadar />
+          </div>
+        </Card>
 
         <Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
           <div className="flex items-center justify-between mb-4">
@@ -830,6 +784,329 @@ function Skills() {
         </Card>
       </div>
     </Section>
+  )
+}
+
+/* ============================== Tech Radar + Density ============================== */
+
+const CATEGORY_COLORS: Record<string, string> = {
+  Backend: '#0F6CBD',
+  Data: '#059669',
+  Cloud: '#9333EA',
+  DevOps: '#EA580C',
+  Quality: '#DB2777',
+  Frontend: '#0891B2',
+}
+
+type CategoryDensity = {
+  name: string
+  color: string
+  techs: { name: string; years: number; source: 'production' | 'self-taught' }[]
+  totalYears: number
+  count: number
+}
+
+function computeCategoryDensity(): CategoryDensity[] {
+  return RADAR_ORDER.map((name) => {
+    const techs = cv.technologies
+      .filter((t) => t.group === name)
+      .map((t) => ({
+        name: t.name,
+        years: t.years ?? 0.5,
+        source: t.source,
+      }))
+      .sort((a, b) => b.years - a.years)
+    const totalYears = techs.reduce((acc, t) => acc + t.years, 0)
+    return {
+      name,
+      color: CATEGORY_COLORS[name] ?? '#0F6CBD',
+      techs,
+      totalYears: +totalYears.toFixed(1),
+      count: techs.length,
+    }
+  })
+}
+
+function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
+  const barPct = (cat.totalYears / max) * 100
+  return (
+    <div>
+      <div className="flex items-baseline justify-between mb-1.5">
+        <span className="text-[13.5px] font-semibold tracking-tight inline-flex items-center gap-2">
+          <span
+            className="inline-block h-2 w-2 rounded-full"
+            style={{ background: cat.color }}
+          />
+          {cat.name}
+        </span>
+        <span
+          className="text-[10.5px] tabular-nums"
+          style={{ fontFamily: 'var(--font-mono)', color: 'var(--fl-fg-muted)' }}
+        >
+          {cat.count} techs · {cat.totalYears}y
+        </span>
+      </div>
+      <div
+        className="flex h-3 rounded-sm overflow-hidden"
+        style={{
+          width: `${barPct}%`,
+          minWidth: 24,
+          gap: 1,
+          background: 'var(--fl-stroke-subtle)',
+        }}
+      >
+        {cat.techs.map((t, i) => {
+          const segPct = (t.years / cat.totalYears) * 100
+          const dim = Math.max(0.45, 1 - i * 0.07)
+          const isProd = t.source === 'production'
+          return (
+            <div
+              key={t.name}
+              title={`${t.name} · ${t.years}y${isProd ? '' : ' · self-taught'}`}
+              style={{
+                width: `${segPct}%`,
+                background: cat.color,
+                opacity: dim,
+                ...(isProd
+                  ? {}
+                  : {
+                      backgroundImage:
+                        'repeating-linear-gradient(45deg, rgba(255,255,255,0.45) 0 3px, transparent 3px 6px)',
+                    }),
+              }}
+            />
+          )
+        })}
+      </div>
+      <div
+        className="mt-2 text-[10.5px] leading-[1.65] flex flex-wrap gap-x-2 gap-y-0.5"
+        style={{ fontFamily: 'var(--font-mono)', color: 'var(--fl-fg-muted)' }}
+      >
+        {cat.techs.map((t, i) => (
+          <span key={t.name} className="whitespace-nowrap">
+            <span style={{ color: 'var(--fl-fg)' }}>{t.name}</span>{' '}
+            <span className="tabular-nums">{t.years}y</span>
+            {!isProdSrc(t.source) && (
+              <span style={{ color: cat.color }}>*</span>
+            )}
+            {i < cat.techs.length - 1 && (
+              <span style={{ color: 'var(--fl-stroke-strong)' }}> ·</span>
+            )}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function isProdSrc(s: 'production' | 'self-taught') {
+  return s === 'production'
+}
+
+type RadarPoint = {
+  name: string
+  shortName: string
+  rate: number
+  rawYears: number
+  count: number
+}
+
+const RADAR_SHORT_NAMES: Record<string, string> = {
+  Backend: 'Backend',
+  Frontend: 'Frontend',
+  Data: 'Data',
+  Cloud: 'Cloud',
+  DevOps: 'DevOps',
+  Quality: 'Quality',
+}
+
+const RADAR_ORDER = ['Backend', 'Data', 'Cloud', 'DevOps', 'Quality', 'Frontend']
+
+function computeGroupRates(): RadarPoint[] {
+  const currentYear = new Date().getFullYear()
+  const groups = new Map<string, { sum: number; years: number; count: number }>()
+
+  for (const t of cv.technologies) {
+    const yearsExp = t.years ?? 0.5
+    const yearsSinceUse = Math.max(0, currentYear - (t.lastUsed ?? currentYear))
+    // Legacy formula: years / (gap + 1) — recent + long-used tech weighs more.
+    const rate = yearsExp / (yearsSinceUse + 1)
+    const prev = groups.get(t.group) ?? { sum: 0, years: 0, count: 0 }
+    groups.set(t.group, {
+      sum: prev.sum + rate,
+      years: prev.years + yearsExp,
+      count: prev.count + 1,
+    })
+  }
+
+  const total = Array.from(groups.values()).reduce((acc, g) => acc + g.sum, 0) || 1
+  return Array.from(groups.entries())
+    .map(([name, g]) => ({
+      name,
+      shortName: RADAR_SHORT_NAMES[name] ?? name,
+      rate: +(((g.sum / total) * 100).toFixed(1)),
+      rawYears: +g.years.toFixed(1),
+      count: g.count,
+    }))
+    .sort((a, b) => RADAR_ORDER.indexOf(a.name) - RADAR_ORDER.indexOf(b.name))
+}
+
+function TechRadar() {
+  const data = useMemo(() => computeGroupRates(), [])
+  return <RadarChart data={data} />
+}
+
+function RadarChart({ data, size = 320 }: { data: RadarPoint[]; size?: number }) {
+  const cx = size / 2
+  const cy = size / 2
+  const r = size / 2 - 56
+  const N = data.length
+  const angleFor = (i: number) => -Math.PI / 2 + (i * 2 * Math.PI) / N
+  const point = (i: number, ratio: number): [number, number] => {
+    const a = angleFor(i)
+    return [cx + Math.cos(a) * r * ratio, cy + Math.sin(a) * r * ratio]
+  }
+  const labelPoint = (i: number, gap = 18): [number, number] => {
+    const a = angleFor(i)
+    return [cx + Math.cos(a) * (r + gap), cy + Math.sin(a) * (r + gap)]
+  }
+  const layoutFor = (i: number) => {
+    const a = angleFor(i)
+    const x = Math.cos(a)
+    const y = Math.sin(a)
+    const textAnchor: 'start' | 'middle' | 'end' =
+      Math.abs(x) < 0.2 ? 'middle' : x > 0 ? 'start' : 'end'
+    const baseline: 'auto' | 'middle' | 'hanging' =
+      Math.abs(y) < 0.2 ? 'middle' : y > 0 ? 'hanging' : 'auto'
+    return { textAnchor, baseline }
+  }
+
+  const grid = [0.25, 0.5, 0.75, 1]
+  const polygonAt = (ratio: number) =>
+    data.map((_, i) => point(i, ratio).join(',')).join(' ')
+
+  // Logarithmic-like compression: never show below 4% so vertices are visible
+  const max = Math.max(...data.map((d) => d.rate)) || 1
+  const dataPoints = data.map((d, i) => point(i, Math.max(0.06, d.rate / max)))
+  const dataPath =
+    dataPoints
+      .map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`)
+      .join(' ') + ' Z'
+
+  return (
+    <div className="flex flex-col">
+      <svg
+        viewBox={`0 0 ${size} ${size}`}
+        className="w-full h-auto"
+        role="img"
+        aria-label="Technology profile radar by group"
+      >
+        <defs>
+          <linearGradient id="radar-fill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="var(--fl-brand)" stopOpacity="0.32" />
+            <stop offset="100%" stopColor="var(--fl-brand-hover)" stopOpacity="0.08" />
+          </linearGradient>
+        </defs>
+
+        {/* Concentric grid polygons */}
+        {grid.map((g) => (
+          <polygon
+            key={g}
+            points={polygonAt(g)}
+            fill="none"
+            stroke="var(--fl-stroke)"
+            strokeOpacity={g === 1 ? 0.7 : 0.35}
+          />
+        ))}
+
+        {/* Axis lines */}
+        {data.map((d, i) => {
+          const [x, y] = point(i, 1)
+          return (
+            <line
+              key={d.name}
+              x1={cx}
+              y1={cy}
+              x2={x}
+              y2={y}
+              stroke="var(--fl-stroke)"
+              strokeOpacity={0.35}
+            />
+          )
+        })}
+
+        {/* Data polygon */}
+        <path
+          d={dataPath}
+          fill="url(#radar-fill)"
+          stroke="var(--fl-brand)"
+          strokeWidth={1.75}
+          strokeLinejoin="round"
+        />
+
+        {/* Vertices */}
+        {dataPoints.map(([x, y], i) => (
+          <circle
+            key={data[i].name}
+            cx={x}
+            cy={y}
+            r={4}
+            fill={CATEGORY_COLORS[data[i].name] ?? 'var(--fl-brand)'}
+            stroke="var(--fl-card)"
+            strokeWidth={2}
+          />
+        ))}
+
+        {/* Labels */}
+        {data.map((d, i) => {
+          const [lx, ly] = labelPoint(i)
+          const { textAnchor, baseline } = layoutFor(i)
+          const dy = baseline === 'auto' ? -2 : baseline === 'hanging' ? 2 : 0
+          return (
+            <g key={`l-${d.name}`}>
+              <text
+                x={lx}
+                y={ly + dy}
+                textAnchor={textAnchor}
+                dominantBaseline={baseline}
+                style={{ fontSize: 11, fontWeight: 600, fill: 'var(--fl-fg)' }}
+              >
+                {d.shortName}
+              </text>
+              <text
+                x={lx}
+                y={ly + dy + (baseline === 'auto' ? -13 : 13)}
+                textAnchor={textAnchor}
+                dominantBaseline={baseline}
+                style={{ fontSize: 10, fill: 'var(--fl-brand-hover)', fontWeight: 600 }}
+              >
+                {d.rate.toFixed(0)}%
+              </text>
+            </g>
+          )
+        })}
+      </svg>
+
+      <div
+        className="mt-3 pt-3 border-t grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]"
+        style={{ borderColor: 'var(--fl-stroke-subtle)', color: 'var(--fl-fg-muted)' }}
+      >
+        {data.map((d) => (
+          <div key={`row-${d.name}`} className="flex items-center justify-between tabular-nums">
+            <span className="inline-flex items-center gap-1.5 truncate">
+              <span
+                className="h-1.5 w-1.5 rounded-full shrink-0"
+                style={{ background: CATEGORY_COLORS[d.name] ?? 'var(--fl-brand)' }}
+              />
+              <span className="truncate">{d.name}</span>
+            </span>
+            <span className="tabular-nums" style={{ color: 'var(--fl-fg-muted)' }}>
+              {d.rate.toFixed(0)}%
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 
