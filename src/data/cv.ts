@@ -5,8 +5,7 @@ export type TechGroup =
 	| "Frontend"
 	| "Data"
 	| "Cloud"
-	| "DevOps"
-	| "Quality";
+	| "DevOps";
 
 export interface Tech {
 	name: string;
@@ -156,11 +155,11 @@ export const cv: CV = {
 		t("PowerShell", "DevOps", "production", 3, 2024),
 		t("YAML", "DevOps", "production", 3, 2026),
 		t("IIS", "DevOps", "production", 4, 2024),
-		t("xUnit", "Quality", "production", 6, 2026),
-		t("Moq", "Quality", "production", 4, 2024),
-		t("NUnit", "Quality", "production", 1, 2020),
-		t("JMeter", "Quality", "production", 1, 2024),
-		t("Sumo Logic", "Quality", "production", 1, 2024),
+		t("xUnit", "Backend", "production", 6, 2026),
+		t("Moq", "Backend", "production", 4, 2024),
+		t("NUnit", "Backend", "production", 1, 2020),
+		t("JMeter", "DevOps", "production", 1, 2024),
+		t("Sumo Logic", "Cloud", "production", 1, 2024),
 		t("Git", "DevOps", "production", 6, 2026),
 		t("SVN", "DevOps", "production", 1, 2024),
 		t("TfVC", "DevOps", "production", 2, 2022),
@@ -199,7 +198,7 @@ export const cv: CV = {
 				t("Azure Service Bus", "Cloud"),
 				t("Microsoft Fabric", "Cloud"),
 				t("Azure DevOps", "DevOps"),
-				t("xUnit", "Quality"),
+				t("xUnit", "Backend"),
 				t("Git", "DevOps"),
 			],
 		},
@@ -233,7 +232,7 @@ export const cv: CV = {
 				t("Azure API Management", "Cloud"),
 				t("Azure Service Bus", "Cloud"),
 				t("GitHub", "DevOps"),
-				t("xUnit", "Quality"),
+				t("xUnit", "Backend"),
 				t("Git", "DevOps"),
 			],
 		},
@@ -266,7 +265,7 @@ export const cv: CV = {
 				t("JavaScript", "Frontend"),
 				t("IIS", "DevOps"),
 				t("Azure DevOps", "DevOps"),
-				t("MS Test", "Quality"),
+				t("MS Test", "Backend"),
 				t("Git", "DevOps"),
 			],
 		},
@@ -300,10 +299,10 @@ export const cv: CV = {
 				t("HTML", "Frontend"),
 				t("CSS", "Frontend"),
 				t("SVN", "DevOps"),
-				t("xUnit", "Quality"),
-				t("Moq", "Quality"),
-				t("JMeter", "Quality"),
-				t("Sumo Logic", "Quality"),
+				t("xUnit", "Backend"),
+				t("Moq", "Backend"),
+				t("JMeter", "DevOps"),
+				t("Sumo Logic", "Cloud"),
 				t("IIS", "DevOps"),
 				t("Azure DevOps", "DevOps"),
 				t("PowerShell", "DevOps"),
@@ -345,7 +344,7 @@ export const cv: CV = {
 				t("HTML", "Frontend"),
 				t("Google BigQuery", "Cloud"),
 				t("TfVC", "DevOps"),
-				t("xUnit", "Quality"),
+				t("xUnit", "Backend"),
 				t("IIS", "DevOps"),
 				t("Azure DevOps", "DevOps"),
 			],
@@ -378,7 +377,7 @@ export const cv: CV = {
 				t("CSS", "Frontend"),
 				t("Git", "DevOps"),
 				t("Azure DevOps", "DevOps"),
-				t("NUnit", "Quality"),
+				t("NUnit", "Backend"),
 			],
 		},
 		{
@@ -410,7 +409,7 @@ export const cv: CV = {
 				t("CSS", "Frontend"),
 				t("Git", "DevOps"),
 				t("Azure DevOps", "DevOps"),
-				t("NUnit", "Quality"),
+				t("NUnit", "Backend"),
 			],
 		},
 	],
