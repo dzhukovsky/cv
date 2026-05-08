@@ -25,19 +25,19 @@ import {
 	Zap,
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
-import { Linkedin, Github } from "@/components/brand-icons";
+import { Github, Linkedin } from "@/components/brand-icons";
 import { SiteHeader } from "@/components/site-header";
 import {
 	Card,
-	PrimaryButton,
-	SubtleButton,
-	Tag,
+	Persona,
 	Pill,
+	PrimaryButton,
+	ProgressBar,
 	Section,
 	SectionHeader,
-	ProgressBar,
 	Stat,
-	Persona,
+	SubtleButton,
+	Tag,
 } from "@/components/ui/fluent";
 import { cv, formatDuration, formatPeriod } from "@/data/cv";
 import { useNow, useScrollSpy } from "@/lib/hooks";
@@ -660,7 +660,7 @@ function Skills() {
 			<SectionHeader
 				eyebrow="03 — Technologies"
 				title="The toolkit"
-				description="Years per category, with a profile snapshot. Filled = production, striped = self-taught."
+				description="Active toolkit (last 3 years), shown with full historical depth. Filled = production, striped = self-taught."
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -724,14 +724,14 @@ function Skills() {
 										border: "1px solid var(--fl-brand)",
 									}}
 								/>
-								Production
+								Active · last {RECENT_YEARS}y
 							</span>
 							<span className="inline-flex items-center gap-1.5">
 								<span
 									className="inline-block h-2.5 w-2.5 rounded"
 									style={{ border: "1px solid var(--fl-stroke-strong)" }}
 								/>
-								Self-taught
+								Historical
 							</span>
 						</div>
 					</div>
@@ -765,9 +765,7 @@ function Skills() {
 										{items.map((t) => (
 											<Tag
 												key={t.name}
-												variant={
-													t.source === "production" ? "brand" : "outline"
-												}
+												variant={isRecent(t) ? "brand" : "outline"}
 											>
 												{t.name}
 											</Tag>
@@ -805,10 +803,21 @@ type CategoryDensity = {
 	count: number;
 };
 
+// Density and radar are filter-then-score: only techs touched within the last
+// RECENT_YEARS years count, but their full lifetime years are used for sizing.
+// Older tools (e.g. WPF, SSRS) live on in the Grouped index but don't pad the
+// shape of the toolkit.
+const RECENT_YEARS = 3;
+
+function isRecent(t: { lastUsed?: number }): boolean {
+	const cutoff = new Date().getFullYear() - RECENT_YEARS;
+	return (t.lastUsed ?? 0) >= cutoff;
+}
+
 function computeCategoryDensity(): CategoryDensity[] {
 	return RADAR_ORDER.map((name) => {
 		const techs = cv.technologies
-			.filter((t) => t.group === name)
+			.filter((t) => t.group === name && isRecent(t))
 			.map((t) => ({
 				name: t.name,
 				years: t.years ?? 0.5,
@@ -940,6 +949,7 @@ function computeGroupRates(): RadarPoint[] {
 	>();
 
 	for (const t of cv.technologies) {
+		if (!isRecent(t)) continue;
 		const yearsExp = t.years ?? 0.5;
 		const yearsSinceUse = Math.max(
 			0,
@@ -1496,118 +1506,17 @@ function Footer() {
 				background: "var(--fl-canvas-2)",
 			}}
 		>
-			<div className="mx-auto max-w-[1180px] px-5 md:px-8 py-10 grid grid-cols-12 gap-6">
-				<div className="col-span-12 md:col-span-5">
-					<div className="flex items-center gap-2.5">
-						<div
-							className="grid h-9 w-9 place-items-center rounded-md text-[12px] font-semibold tracking-tight"
-							style={{
-								background:
-									"linear-gradient(135deg, var(--fl-brand) 0%, var(--fl-brand-hover) 100%)",
-								color: "white",
-							}}
-						>
-							DZ
-						</div>
-						<div>
-							<div className="text-[14px] font-semibold tracking-tight">
-								{cv.fullName}
-							</div>
-							<div
-								className="text-[12px]"
-								style={{ color: "var(--fl-fg-muted)" }}
-							>
-								{cv.position}
-							</div>
-						</div>
-					</div>
-					<p
-						className="mt-4 text-[13px] leading-relaxed max-w-md"
-						style={{ color: "var(--fl-fg-muted)" }}
-					>
-						Designed and built with React, Tailwind, and the Microsoft Fluent
-						design language.
-					</p>
-				</div>
-
-				<div className="col-span-6 md:col-span-3">
-					<div
-						className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-3"
-						style={{ color: "var(--fl-fg-subtle)" }}
-					>
-						Sections
-					</div>
-					<ul className="space-y-1.5 text-[13px]">
-						{SECTIONS.slice(1).map((s) => (
-							<li key={s.id}>
-								<a
-									href={`#${s.id}`}
-									className="hover:underline"
-									style={{ color: "var(--fl-fg-muted)" }}
-								>
-									{s.label}
-								</a>
-							</li>
-						))}
-					</ul>
-				</div>
-
-				<div className="col-span-6 md:col-span-4">
-					<div
-						className="text-[11px] font-semibold uppercase tracking-[0.14em] mb-3"
-						style={{ color: "var(--fl-fg-subtle)" }}
-					>
-						Connect
-					</div>
-					<ul className="space-y-1.5 text-[13px]">
-						<li>
-							<a
-								href={`mailto:${cv.email}`}
-								className="inline-flex items-center gap-1.5 hover:text-foreground"
-								style={{ color: "var(--fl-fg-muted)" }}
-							>
-								<Mail size={13} /> {cv.email}
-							</a>
-						</li>
-						<li>
-							<a
-								href={`https://${cv.linkedIn}`}
-								target="_blank"
-								rel="noreferrer"
-								className="inline-flex items-center gap-1.5 hover:text-foreground"
-								style={{ color: "var(--fl-fg-muted)" }}
-							>
-								<Linkedin size={13} /> {cv.linkedIn}
-							</a>
-						</li>
-						<li>
-							<a
-								href={`https://${cv.github}`}
-								target="_blank"
-								rel="noreferrer"
-								className="inline-flex items-center gap-1.5 hover:text-foreground"
-								style={{ color: "var(--fl-fg-muted)" }}
-							>
-								<Github size={13} /> {cv.github}
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<div
-					className="col-span-12 pt-6 border-t flex items-center justify-between text-[11.5px]"
-					style={{
-						borderColor: "var(--fl-stroke)",
-						color: "var(--fl-fg-subtle)",
-					}}
+			<div
+				className="mx-auto max-w-[1180px] px-5 md:px-8 py-6 flex items-center justify-between text-[11.5px]"
+				style={{ color: "var(--fl-fg-subtle)" }}
+			>
+				<span>© {new Date().getFullYear()} {cv.fullName}</span>
+				<a
+					href="#top"
+					className="inline-flex items-center gap-1 hover:text-foreground"
 				>
-					<span>
-						© {new Date().getFullYear()} {cv.fullName}. All rights reserved.
-					</span>
-					<span className="tabular-nums">
-						v 2.0 · Made in {cv.location.city}
-					</span>
-				</div>
+					↑ Back to top
+				</a>
 			</div>
 		</footer>
 	);
