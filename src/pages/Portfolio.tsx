@@ -862,10 +862,26 @@ type CategoryDensity = {
 };
 
 // Density and radar are filter-then-score: only techs touched within the last
-// RECENT_YEARS years count, but their full lifetime years are used for sizing.
-// Older tools (e.g. WPF, SSRS) live on in the Grouped index but don't pad the
-// shape of the toolkit.
+// RECENT_YEARS years count. The two charts then split angles: bars sum
+// lifetime years (breadth × depth of the toolkit), the radar weights by
+// recency (years / (gap + 1)) to show current focus. Same source data, two
+// different lenses — that's why both are kept.
 const RECENT_YEARS = 3;
+
+// Shared shaping for the toolkit bars and the radar polygon: compress with the
+// caller's curve, normalize against the strongest sample, floor so weak vectors
+// stay visible, and divide by HEADROOM so the strongest never kisses the outer
+// bound. Keeping FLOOR in the data layer means callers don't need a CSS guard.
+const SHAPE_FLOOR = 0.06;
+const SHAPE_HEADROOM = 1.15;
+function shapeRatio(
+	value: number,
+	max: number,
+	compress: (n: number) => number,
+): number {
+	const cMax = compress(max) || 1;
+	return Math.max(compress(value) / (cMax * SHAPE_HEADROOM), SHAPE_FLOOR);
+}
 
 function isRecent(t: { lastUsed: number }): boolean {
 	const cutoff = new Date().getFullYear() - RECENT_YEARS;
@@ -901,7 +917,10 @@ function computeCategoryDensity(): CategoryDensity[] {
 }
 
 function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
-	const barPct = (cat.totalYears / max) * 100;
+	// Shaped via the shared helper so density bars and the radar polygon use the
+	// same floor/headroom mechanism; sqrt is gentler than the radar's pow(0.7)
+	// because bars don't carry a polygon shape that needs extra compression.
+	const barPct = shapeRatio(cat.totalYears, max, Math.sqrt) * 100;
 	// At most two segments per row: one solid block for production years, one
 	// striped block for self-taught years. Adjacent same-source techs collapse
 	// into a single segment — no internal seams.
@@ -933,7 +952,7 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 			</div>
 			<div
 				className="flex h-3.5 rounded-sm overflow-hidden"
-				style={{ width: `${barPct}%`, minWidth: 24 }}
+				style={{ width: `${barPct}%` }}
 			>
 				{prodPct > 0 && (
 					<div
@@ -1078,9 +1097,14 @@ function RadarChart({
 	const polygonAt = (ratio: number) =>
 		data.map((_, i) => point(i, ratio).join(",")).join(" ");
 
-	// Logarithmic-like compression: never show below 4% so vertices are visible
-	const max = Math.max(...data.map((d) => d.rate)) || 1;
-	const dataPoints = data.map((d, i) => point(i, Math.max(0.06, d.rate / max)));
+	// Same shaping helper as the toolkit bars. pow(0.7) is gentler than sqrt:
+	// the polygon has 5 vertices, so weak ones already inflate the visual area
+	// quadratically — we need less compression here than for linear bars.
+	const compress = (r: number) => r ** 0.7;
+	const maxRate = Math.max(...data.map((d) => d.rate)) || 1;
+	const dataPoints = data.map((d, i) =>
+		point(i, shapeRatio(d.rate, maxRate, compress)),
+	);
 	const dataPath =
 		dataPoints
 			.map(
