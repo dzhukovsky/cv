@@ -792,7 +792,7 @@ function Skills() {
 }
 
 const PREFERRED_STACK: { group: string; items: string[] }[] = [
-	{ group: "Backend", items: [".NET", "ASP .NET Core", "Aspire"] },
+	{ group: "Backend", items: [".NET", "ASP.NET Core", "Aspire"] },
 	{ group: "Cloud", items: ["Azure-native", "Microsoft Fabric"] },
 	{ group: "Data", items: ["MS-SQL", "Cosmos DB", "Redis", "Kusto"] },
 	{ group: "DevOps", items: ["Azure DevOps", "GitHub", "Helm", "Bicep"] },
@@ -967,7 +967,9 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 				{cat.techs.map((t, i) => (
 					<span key={t.name} className="whitespace-nowrap">
 						<span style={{ color: "var(--fl-fg)" }}>{t.name}</span>{" "}
-						<span className="tabular-nums">{formatYears(t.years, "short")}</span>
+						<span className="tabular-nums">
+							{formatYears(t.years, "short")}
+						</span>
 						{!isProdSrc(t.source) && (
 							<span style={{ color: cat.color }}>*</span>
 						)}

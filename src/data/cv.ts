@@ -131,7 +131,7 @@ export const cv: CV = {
 		t("SCSS", "Frontend", "production", 2, 2024),
 		t("Blazor", "Frontend", "self-taught", 1, 2020),
 		t("WPF", "Frontend", "self-taught", 4, 2021),
-		t("WinUI 3", "Frontend", "self-taught", 1, 2024),
+		t("WinUI 3", "Frontend", "self-taught", 1, 2022),
 		t("Microsoft Fluent 2", "Frontend", "self-taught", 1, 2024),
 		t("Azure DevOps SDK", "Frontend", "self-taught", 1, 2023),
 		t("MS-SQL", "Data", "production", 9, 2026),
@@ -160,7 +160,6 @@ export const cv: CV = {
 		t("Moq", "Backend", "production", 4, 2024),
 		t("NUnit", "Backend", "production", 1, 2020),
 		t("JMeter", "DevOps", "production", 1, 2024),
-		t("Sumo Logic", "Cloud", "production", 1, 2024),
 		t("Git", "DevOps", "production", 6, 2026),
 		t("SVN", "DevOps", "production", 1, 2024),
 		t("TfVC", "DevOps", "production", 2, 2022),
@@ -177,11 +176,11 @@ export const cv: CV = {
 			description:
 				"Enterprise SaaS ecosystem for unified customer communications and digital telephony. Integrates voice, messaging, workflow automation, compliance controls, and analytics into Microsoft-based business environments. Focus on secure operations, interoperability, and scalable customer engagement at global enterprise level.",
 			contributions: [
-				"Established a reputation as a reliable engineer through strong ownership and attention to detail, becoming responsible for planning and executing production deployments.",
-				"Developed core infrastructure NuGet packages to standardize baseline configuration across .NET microservices, significantly reducing misconfigurations and setup effort.",
-				"Architected a secure Power BI integration (KQL per-tenant shortcuts and a dedicated connector) enabling customers to work directly with their data in a multi-tenant environment.",
-				"Implemented a custom EF Core migrations management tool that enabled independent CI/CD for database schema changes.",
-				"Drove major improvements to CI/CD by shaping Helm templates and Azure DevOps pipelines, centralizing configuration in Azure DevOps Library.",
+				"Owned planning and execution of production deployments — became the team's go-to for release management.",
+				"Architected per-tenant KQL shortcut integration with Microsoft Fabric, giving customers direct query access to their data without breaking multi-tenant isolation.",
+				"Built shared NuGet packages standardizing .NET microservice baselines — fewer misconfigurations, faster setup.",
+				"Built a custom EF Core migrations tool, decoupling database deploys from application releases.",
+				"Centralized CI/CD config across services through Helm templates, Azure DevOps pipelines, and shared Library variables.",
 			],
 			tech: [
 				t("C#", "Backend"),
@@ -214,10 +213,10 @@ export const cv: CV = {
 			description:
 				"Distributed backend platform for automated financial allocations and rules-driven calculations. Processes structured datasets, applies configurable business logic, and generates standardized reporting outputs for enterprise use. Emphasizes performance, accuracy, and maintainability for long-term scalability in regulated environments.",
 			contributions: [
-				"Developed the core data import functionality that became the foundation of the service, meeting strict performance requirements while keeping the system easy to extend.",
-				"Built a reputation as a reliable engineer with a low defect rate and minimal post-development effort on new features.",
-				"Quickly became a go-to person for knowledge and support on the project despite holding a standard developer role.",
-				"Demonstrated strong ownership and team support, actively participating in key architectural discussions.",
+				"Built the core data import service — performance-critical, extensible through a plugin model.",
+				"Designed a reflection-free fluent mapping system (Excel-to-DTO) — chosen over a parallel team's reflection-based approach.",
+				"Implemented async streaming and chunking to handle large datasets within Kubernetes pod memory limits.",
+				"Onboarded 3 engineers and authored the project's primary documentation",
 			],
 			tech: [
 				t("C#", "Backend"),
@@ -242,18 +241,16 @@ export const cv: CV = {
 			company: "Lightpoint Global",
 			companyUrl: "https://lightpointglobal.com",
 			companyLogo: "/lightpoint-global-logo.png",
-			position: "Senior .NET Software Engineer",
+			position: "Middle .NET Software Engineer",
 			start: "2024-03",
 			end: "2024-07",
 			areas: ["Digital Publishing"],
 			description:
 				"Flexible software for subscription management, audience analytics, and monetization, with self-service portals and advertising sales workflows. Pre-built integrations with widely used CRMs, marketing tools, and payment providers (Salesforce, HubSpot, Verifone, Google Ad Manager), plus comprehensive APIs and a plugin/widget architecture.",
 			contributions: [
-				"Spearheaded the generation of backlog items, designed new features, and managed the product roadmap.",
-				"Architected and implemented the overall product architecture, ensuring scalability, maintainability, and performance.",
-				"Engineered robust database schemas to support complex business requirements and enhance data integrity.",
-				"Established and maintained CI/CD pipelines to streamline development and continuous deployment.",
-				"Developed comprehensive unit and integration tests to ensure software reliability and security.",
+				"Built a HubSpot integration end-to-end (frontend, backend, database) — custom fields, extensible field types, UI-configurable, with multi-system data sync.",
+				"Designed the integration's data model within a legacy monolith, with a config-sharing endpoint to avoid coupling on core libraries.",
+				"Owned the integration delivery — design, implementation, demos — within a small cross-functional team.",
 			],
 			tech: [
 				t("C#", "Backend"),
@@ -282,11 +279,11 @@ export const cv: CV = {
 			description:
 				"Non-card payment platform used by 100+ authorized banks worldwide, allowing consumers to pay in local currencies without exposing personal or financial data. Integrates with bank APIs, SAP, internal databases, and third-party services for fast, secure, cost-efficient transactions.",
 			contributions: [
-				"Played a crucial role in developing a multi-component electronic payment system focused on speed, security, and cost-efficiency.",
-				"Instrumental in integrating APIs with various banks and tertiary services, significantly enhancing system functionality.",
-				"Tasked with managing efficient data processes within the electronic payment system.",
-				"Actively participated in conceptualizing and implementing new features.",
-				"Conducted comprehensive unit testing of backend components.",
+				"Integrated 7 bank APIs on a 100+ integration payment platform — HTTP, SOAP, webhooks, with per-bank encryption and signature schemes.",
+				"Owned end-to-end integration patterns — idempotency, retries via cron workers, and async reconciliation alongside real-time webhook processing.",
+				"Replaced Enterprise Architect with Mermaid for sequence diagrams — cut licensing cost, simplified source control, eased adoption.",
+				"Standardized logging and exception handling in a shared library — fixed latent bugs across integrations beyond my own.",
+				"Built bank integration backends and payment-page frontends within a team of 13 engineers.",
 			],
 			tech: [
 				t("C#", "Backend"),
@@ -321,10 +318,9 @@ export const cv: CV = {
 			description:
 				"Customizable multi-module engagement platform for leading publishers (NYT, Chicago Tribune, USA Today), covering the full subscription lifecycle from acquisition and conversion to retention, churn prevention, and analytics. Extensive integrations with billing/payment providers and Google Analytics.",
 			contributions: [
-				"Drove the implementation of automated feature updates, resulting in a 20% reduction in development time for new functionalities.",
-				"Developed essential modules targeting key business operations from user engagement to subscription conversion.",
-				"Actively participated in development of a comprehensive platform enhancing subscription management, pricing optimization, and revenue generation.",
-				"Provided consistent technical support, tackling challenges and collaborating with cross-functional teams.",
+				"Built an Azure DevOps extension to cascade pipeline updates across 20 customers and 70+ services — UI for overriding, cloning, and comparing pipelines.",
+				"Built a public-facing import/export system for migrating from the legacy product — entity selection, progress tracking, live logs, and per-entity mapping.",
+				"Owned production releases — preparation, monitoring, post-deploy investigation, and SQL DACPAC management.",
 			],
 			tech: [
 				t("C#", "Backend"),
@@ -365,11 +361,9 @@ export const cv: CV = {
 			description:
 				"Tailored for management and reporting of workspace rentals. Integrates a designer for accounting rental space, CRM, cash register, reporting module, warehouse, and logistics. Streamlines rental processes, enhances reporting accuracy, improves operational efficiency.",
 			contributions: [
-				"Instrumental in developing the system, integrating key features for workspace rental management.",
-				"Designed and implemented the project architecture for scalable, efficient development.",
-				"Developed comprehensive database structure for intricate calculations and rental space accounting.",
-				"Collaborated closely with stakeholders to align with priorities.",
-				"Conducted thorough unit testing of backend components.",
+				"Built features across the workspace rental platform — backend services, reporting, and database design.",
+				"Worked across the stack on CRM and reporting modules within a small team.",
+				"Reused architectural patterns and shared utilities from previous projects on the same platform stack.",
 			],
 			tech: [
 				t("C#", "Backend"),
@@ -399,11 +393,10 @@ export const cv: CV = {
 			description:
 				"Furniture manufacturing organization platform with assembly services and material supplies. Sophisticated system for material cutting dimensions, material usage, work performance, and salary computations. Includes CRM, cash register, reporting, warehouse, and logistics.",
 			contributions: [
-				"Personally developed the material cutting designer — a crucial component of the multifaceted system.",
-				"Solved complex business problems with innovative solutions and strategic development practices.",
-				"Engaged in both backend and frontend development, ensuring seamless feature integration.",
-				"Created robust backend solutions for data processing and storage with intuitive frontend.",
-				"Communicated directly with clients to refine the platform's functionality.",
+				"Built the material cutting designer end-to-end — visual SVG editor with curve calculations, line operations, and dimension management.",
+				"Implemented SVG-to-PDF rendering with material-specific offset calculations for production-ready cut plans.",
+				"Built a fluent builder for PDF generation, replacing scattered ad-hoc PDF code across the platform.",
+				"Worked with clients to refine functionality based on production-floor feedback.",
 			],
 			tech: [
 				t("C#", "Backend"),
