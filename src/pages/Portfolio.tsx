@@ -42,12 +42,17 @@ import {
 	Tag,
 } from "@/components/ui/fluent";
 import {
+	aggregateTechnologies,
 	cv,
 	formatDuration,
+	formatMonths,
 	formatPeriod,
 	formatYears,
 	pickLogo,
 } from "@/data/cv";
+
+const ALL_TECHNOLOGIES = aggregateTechnologies(cv);
+
 import { useNow, useScrollSpy, useThemeMode } from "@/lib/hooks";
 
 const SECTIONS = [
@@ -236,8 +241,8 @@ function Hero() {
 					<Stat
 						icon={Layers}
 						label="Technologies"
-						value={String(cv.technologies.length)}
-						caption={`${cv.technologies.filter((t) => t.source === "production").length} in production`}
+						value={String(ALL_TECHNOLOGIES.length)}
+						caption={`${ALL_TECHNOLOGIES.filter((t) => t.source === "production").length} in production`}
 					/>
 					<Stat
 						icon={Award}
@@ -650,7 +655,7 @@ function Skills() {
 			<SectionHeader
 				eyebrow="03 — Technologies"
 				title="The toolkit"
-				description="Active toolkit (last 3 years) with full historical depth. Filled = production, striped = self-taught."
+				description="Density, balance, and current preferences. Filled = production, striped = self-taught."
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -696,7 +701,7 @@ function Skills() {
 					<TechRadar />
 				</Card>
 
-				<Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
+				{/* <Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
 					<div className="flex items-center justify-between mb-4">
 						<h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
 							<Layers size={15} style={{ color: "var(--fl-brand)" }} />
@@ -728,7 +733,7 @@ function Skills() {
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-5">
 						{groups.map((g) => {
-							const items = cv.technologies.filter(
+							const items = ALL_TECHNOLOGIES.filter(
 								(t) => t.group === g && !VCS_NAMES.has(t.name),
 							);
 							if (!items.length) return null;
@@ -765,7 +770,7 @@ function Skills() {
 							);
 						})}
 					</div>
-				</Card>
+				</Card> */}
 
 				<PreferredStack />
 			</div>
@@ -857,18 +862,19 @@ type CategoryDensity = {
 // shape of the toolkit.
 const RECENT_YEARS = 3;
 
-function isRecent(t: { lastUsed?: number }): boolean {
+function isRecent(t: { lastUsed: number }): boolean {
 	const cutoff = new Date().getFullYear() - RECENT_YEARS;
-	return (t.lastUsed ?? 0) >= cutoff;
+	return t.lastUsed >= cutoff;
 }
 
 function computeCategoryDensity(): CategoryDensity[] {
 	return RADAR_ORDER.map((name) => {
-		const techs = cv.technologies
-			.filter((t) => t.group === name && isRecent(t))
+		const techs = ALL_TECHNOLOGIES.filter(
+			(t) => t.group === name && isRecent(t),
+		)
 			.map((t) => ({
 				name: t.name,
-				years: t.years ?? 0.5,
+				years: t.years,
 				source: t.source,
 			}))
 			.sort((a, b) => {
@@ -950,7 +956,9 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 					<span key={t.name} className="whitespace-nowrap">
 						<span style={{ color: "var(--fl-fg)" }}>{t.name}</span>{" "}
 						<span className="tabular-nums">
-							{formatYears(t.years, "short")}
+							{t.years < 1
+								? formatMonths(Math.max(1, Math.round(t.years * 12)), "short")
+								: formatYears(Math.round(t.years), "short")}
 						</span>
 						{!isProdSrc(t.source) && (
 							<span style={{ color: cat.color }}>*</span>
@@ -998,13 +1006,10 @@ function computeGroupRates(): RadarPoint[] {
 		{ sum: number; years: number; count: number }
 	>();
 
-	for (const t of cv.technologies) {
+	for (const t of ALL_TECHNOLOGIES) {
 		if (!isRecent(t)) continue;
-		const yearsExp = t.years ?? 0.5;
-		const yearsSinceUse = Math.max(
-			0,
-			currentYear - (t.lastUsed ?? currentYear),
-		);
+		const yearsExp = t.years;
+		const yearsSinceUse = Math.max(0, currentYear - t.lastUsed);
 		// Legacy formula: years / (gap + 1) — recent + long-used tech weighs more.
 		const rate = yearsExp / (yearsSinceUse + 1);
 		const prev = groups.get(t.group) ?? { sum: 0, years: 0, count: 0 };

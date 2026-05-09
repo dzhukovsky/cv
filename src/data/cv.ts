@@ -2,14 +2,31 @@ export type LanguageLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "Native";
 
 export type TechGroup = "Backend" | "Frontend" | "Data" | "Cloud" | "DevOps";
 
+export type TechSource = "production" | "self-taught";
+
 export type LogoSrc = string | { light: string; dark: string };
 
 export interface Tech {
 	name: string;
 	group: TechGroup;
-	years?: number;
-	source: "production" | "self-taught";
-	lastUsed?: number;
+	// Omitted on project tech (production is implied by being inside a project).
+	// Set to "self-taught" only on the top-level `technologies` list, which
+	// holds things never tied to a real project.
+	source?: "self-taught";
+	// Optional period overrides. For project tech, omitted fields inherit from
+	// the project's start/end — keeps the data DRY for techs used the entire
+	// project. `end` is the last month of usage. For top-level self-taught,
+	// `start` is required; missing `end` means ongoing.
+	start?: string;
+	end?: string;
+}
+
+export interface AggregatedTech {
+	name: string;
+	group: TechGroup;
+	source: TechSource;
+	years: number;
+	lastUsed: number;
 }
 
 export interface Project {
@@ -81,13 +98,20 @@ export interface CV {
 
 export type DurationFormat = "short" | "long";
 
-const t = (
+const t = (name: string, group: TechGroup, lastUsed?: string): Tech =>
+	lastUsed !== undefined
+		? { name, group, end: lastUsed }
+		: { name, group };
+
+const ts = (
 	name: string,
 	group: TechGroup,
-	source: Tech["source"] = "production",
-	years?: number,
-	lastUsed?: number,
-): Tech => ({ name, group, source, years, lastUsed });
+	start: string,
+	lastUsed?: string,
+): Tech =>
+	lastUsed !== undefined
+		? { name, group, source: "self-taught", start, end: lastUsed }
+		: { name, group, source: "self-taught", start };
 
 export const cv: CV = {
 	fullName: "Dmitry Zhukovsky",
@@ -117,51 +141,15 @@ export const cv: CV = {
 		{ code: "ru", name: "Russian", level: "Native" },
 	],
 	technologies: [
-		t("C#", "Backend", "production", 9, 2026),
-		t(".NET", "Backend", "production", 9, 2026),
-		t("ASP.NET Core", "Backend", "production", 6, 2026),
-		t("Entity Framework", "Backend", "production", 6, 2026),
-		t("Dapper", "Backend", "production", 3, 2024),
-		t("SignalR", "Backend", "production", 1, 2026),
-		t("Python 3", "Backend", "self-taught", 2, 2025),
-		t("Node.js", "Backend", "production", 1, 2022),
-		t("Roslyn Analyzers", "Backend", "self-taught", 1, 2023),
-		t("React", "Frontend", "production", 3, 2026),
-		t("TypeScript", "Frontend", "production", 3, 2026),
-		t("SCSS", "Frontend", "production", 2, 2024),
-		t("Blazor", "Frontend", "self-taught", 1, 2020),
-		t("WPF", "Frontend", "self-taught", 4, 2021),
-		t("WinUI 3", "Frontend", "self-taught", 1, 2022),
-		t("Microsoft Fluent 2", "Frontend", "self-taught", 1, 2024),
-		t("Azure DevOps SDK", "Frontend", "self-taught", 1, 2023),
-		t("MS-SQL", "Data", "production", 9, 2026),
-		t("Redis", "Data", "production", 4, 2026),
-		t("Kusto", "Data", "production", 1, 2026),
-		t("MySQL", "Data", "production", 1, 2019),
-		t("SSAS", "Data", "production", 2, 2022),
-		t("SSRS", "Data", "production", 1, 2020),
-		t("Azure App Service", "Cloud", "production", 3, 2026),
-		t("Azure Service Bus", "Cloud", "production", 2, 2026),
-		t("Azure Functions", "Cloud", "self-taught", 1, 2024),
-		t("Azure Storage", "Cloud", "production", 2, 2026),
-		t("Application Insights", "Cloud", "production", 2, 2026),
-		t("Microsoft Fabric", "Cloud", "production", 1, 2026),
-		t("Kubernetes", "Cloud", "production", 2, 2026),
-		t("Azure API Management", "Cloud", "production", 1, 2026),
-		t("Azure Static Web Apps", "Cloud", "self-taught", 1, 2024),
-		t("Azure DevOps", "DevOps", "production", 6, 2026),
-		t("GitHub", "DevOps", "production", 3, 2026),
-		t("Helm", "DevOps", "production", 2, 2026),
-		t("PowerShell", "DevOps", "production", 3, 2024),
-		t("YAML", "DevOps", "production", 3, 2026),
-		t("IIS", "DevOps", "production", 4, 2024),
-		t("xUnit", "Backend", "production", 6, 2026),
-		t("Moq", "Backend", "production", 4, 2024),
-		t("NUnit", "Backend", "production", 1, 2020),
-		t("k6", "DevOps", "production", 1, 2024),
-		t("Git", "DevOps", "production", 6, 2026),
-		t("SVN", "DevOps", "production", 1, 2024),
-		t("TfVC", "DevOps", "production", 2, 2022),
+		ts("Python 3", "Backend", "2024-01", "2025-12"),
+		ts("Roslyn Analyzers", "Backend", "2023-01", "2023-12"),
+		ts("Blazor", "Frontend", "2020-01", "2020-12"),
+		ts("WPF", "Frontend", "2018-01", "2021-12"),
+		ts("WinUI 3", "Frontend", "2022-01", "2022-12"),
+		ts("Microsoft Fluent 2", "Frontend", "2024-01", "2024-12"),
+		ts("Azure DevOps SDK", "Frontend", "2023-01", "2023-12"),
+		ts("Azure Functions", "Cloud", "2024-01", "2024-12"),
+		ts("Azure Static Web Apps", "Cloud", "2024-01", "2024-12"),
 	],
 	projects: [
 		{
@@ -192,9 +180,11 @@ export const cv: CV = {
 				t("Redis", "Data"),
 				t("Kubernetes", "Cloud"),
 				t("Helm", "DevOps"),
+				t("YAML", "DevOps", "2025-10"),
 				t("Application Insights", "Cloud"),
 				t("Azure App Service", "Cloud"),
 				t("Azure Service Bus", "Cloud"),
+				t("Azure Storage", "Cloud", "2025-10"),
 				t("Microsoft Fabric", "Cloud"),
 				t("Azure DevOps", "DevOps"),
 				t("xUnit", "Backend"),
@@ -227,6 +217,7 @@ export const cv: CV = {
 				t("Redis", "Data"),
 				t("Kubernetes", "Cloud"),
 				t("Helm", "DevOps"),
+				t("YAML", "DevOps", "2025-10"),
 				t("Application Insights", "Cloud"),
 				t("Azure API Management", "Cloud"),
 				t("Azure Service Bus", "Cloud"),
@@ -328,17 +319,16 @@ export const cv: CV = {
 				t("Entity Framework", "Backend"),
 				t(".NET Framework", "Backend"),
 				t(".NET", "Backend"),
-				t("Node.js", "Backend"),
-				t("Dapper", "Backend"),
+				t("Node.js", "Backend", "2021-01"),
 				t("MS-SQL", "Data"),
 				t("Redis", "Data"),
-				t("SSAS", "Data"),
+				t("SSAS", "Data", "2022-01"),
 				t("React", "Frontend"),
-				t("Angular", "Frontend"),
+				t("Angular", "Frontend", "2020-07"),
 				t("TypeScript", "Frontend"),
 				t("SCSS", "Frontend"),
 				t("HTML", "Frontend"),
-				t("Google BigQuery", "Cloud"),
+				t("Google BigQuery", "Cloud", "2020-07"),
 				t("TfVC", "DevOps"),
 				t("xUnit", "Backend"),
 				t("IIS", "DevOps"),
@@ -543,4 +533,97 @@ export const formatDuration = (
 	if (y === 0) return formatMonths(mm, format);
 	if (mm === 0) return formatYears(y, format);
 	return `${formatYears(y, format)} ${formatMonths(mm, format)}`;
+};
+
+const ymToOrd = (s: string): number => {
+	const [y, m] = s.split("-").map(Number);
+	return y * 12 + (m ?? 1) - 1;
+};
+
+const currentOrd = (): number => {
+	const d = new Date();
+	return d.getFullYear() * 12 + d.getMonth();
+};
+
+// Union of inclusive monthly intervals — sorts, merges adjacent/overlapping
+// runs, returns total months covered. Two parallel projects that share a tech
+// over the same window count once, not twice.
+const coverageMonths = (
+	intervals: { start: number; end: number }[],
+): number => {
+	if (!intervals.length) return 0;
+	const sorted = [...intervals].sort((a, b) => a.start - b.start);
+	let total = 0;
+	let curStart = sorted[0].start;
+	let curEnd = sorted[0].end;
+	for (let i = 1; i < sorted.length; i++) {
+		const next = sorted[i];
+		if (next.start <= curEnd + 1) {
+			curEnd = Math.max(curEnd, next.end);
+		} else {
+			total += curEnd - curStart + 1;
+			curStart = next.start;
+			curEnd = next.end;
+		}
+	}
+	total += curEnd - curStart + 1;
+	return total;
+};
+
+export const aggregateTechnologies = (data: CV): AggregatedTech[] => {
+	const cur = currentOrd();
+	type Bucket = {
+		group: TechGroup;
+		source: TechSource;
+		intervals: { start: number; end: number }[];
+		lastUsed: number;
+	};
+	const map = new Map<string, Bucket>();
+
+	const add = (
+		name: string,
+		group: TechGroup,
+		source: TechSource,
+		start: number,
+		end: number,
+	) => {
+		const existing = map.get(name);
+		if (existing) {
+			if (source === "production") existing.source = "production";
+			existing.intervals.push({ start, end });
+			if (end > existing.lastUsed) existing.lastUsed = end;
+		} else {
+			map.set(name, {
+				group,
+				source,
+				intervals: [{ start, end }],
+				lastUsed: end,
+			});
+		}
+	};
+
+	for (const project of data.projects) {
+		const projStart = ymToOrd(project.start);
+		const projEnd = project.end ? ymToOrd(project.end) : cur;
+		for (const tech of project.tech) {
+			const start = tech.start ? ymToOrd(tech.start) : projStart;
+			const end = tech.end ? ymToOrd(tech.end) : projEnd;
+			add(tech.name, tech.group, tech.source ?? "production", start, end);
+		}
+	}
+
+	for (const tech of data.technologies) {
+		if (!tech.start) continue;
+		const start = ymToOrd(tech.start);
+		const end = tech.end ? ymToOrd(tech.end) : cur;
+		add(tech.name, tech.group, tech.source ?? "self-taught", start, end);
+	}
+
+	return Array.from(map.entries()).map(([name, b]) => ({
+		name,
+		group: b.group,
+		source: b.source,
+		years: +(coverageMonths(b.intervals) / 12).toFixed(1),
+		lastUsed: Math.floor(b.lastUsed / 12),
+	}));
 };
