@@ -504,15 +504,15 @@ function ExperienceRow({
 				<button
 					type="button"
 					onClick={() => setOpen((v) => !v)}
-					className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-start gap-4 cursor-pointer"
+					className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-center gap-4 cursor-pointer"
 				>
 					<img
 						src={pickLogo(p.companyLogo, theme)}
 						alt={p.company}
-						className="mt-0.5 h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
+						className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 					/>
 					<div className="flex-1 min-w-0 flex flex-col">
-						<div className="flex items-center flex-wrap gap-x-2 gap-y-1.5">
+						<div className="flex items-baseline flex-wrap gap-x-2 gap-y-1.5">
 							<a
 								href={p.companyUrl}
 								target="_blank"
@@ -522,7 +522,12 @@ function ExperienceRow({
 							>
 								{p.company}
 							</a>
-							<span style={{ color: "var(--fl-fg-muted)" }}>·</span>
+							<span
+								className="text-[12.5px]"
+								style={{ color: "var(--fl-fg-muted)" }}
+							>
+								·
+							</span>
 							<span
 								className="text-[12.5px]"
 								style={{ color: "var(--fl-fg-muted)" }}
@@ -553,7 +558,7 @@ function ExperienceRow({
 					</div>
 					<ChevronDown
 						size={18}
-						className="mt-2 transition-transform shrink-0"
+						className="transition-transform shrink-0"
 						style={{
 							color: "var(--fl-fg-muted)",
 							transform: open ? "rotate(180deg)" : "rotate(0)",
@@ -1295,7 +1300,7 @@ function Certifications() {
 									</div>
 								) : (
 									<div
-										className="mt-4 pt-3 border-t flex items-center justify-between text-[11px] tabular-nums"
+										className="mt-4 pt-3 border-t flex items-baseline justify-between text-[11px] tabular-nums"
 										style={{
 											borderColor: "var(--fl-stroke-subtle)",
 											color: "var(--fl-fg-muted)",

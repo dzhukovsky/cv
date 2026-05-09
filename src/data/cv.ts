@@ -161,8 +161,8 @@ export const cv: CV = {
 			description:
 				"Enterprise SaaS ecosystem for unified customer communications and digital telephony. Integrates voice, messaging, workflow automation, compliance controls, and analytics into Microsoft-based business environments. Focus on secure operations, interoperability, and scalable customer engagement at global enterprise level.",
 			contributions: [
+				"Architected an end-to-end shift in analytics delivery — events to ADX through dynamic routing, real-time dashboards via managed SignalR, per-tenant Fabric shortcuts for customer query access without breaking multi-tenant isolation.",
 				"Owned planning and execution of production deployments — became the team's go-to for release management.",
-				"Architected per-tenant KQL Database shortcut integration with Microsoft Fabric, giving customers query access to their data without breaking multi-tenant isolation.",
 				"Built shared NuGet packages standardizing .NET microservice baselines — fewer misconfigurations, faster setup.",
 				"Built a custom EF Core migrations tool, decoupling database deploys from application releases.",
 				"Centralized CI/CD config across services through Helm templates, Azure DevOps pipelines, and shared Library variables.",
@@ -452,11 +452,11 @@ export const cv: CV = {
 		{
 			name: "Initiatives beyond scope",
 			description: `
-				Proposed and architected a Microsoft Fabric integration giving customers
-				native access to their analytics data — the kind of thing usually outside
-				a dev's scope. The same architecture moved internal reports to zero-cache,
-				real-time dashboards. Demoed it to a customer who said they're hard to
-				impress; this one impressed them.
+				Proposed and architected an end-to-end overhaul of our analytics
+				delivery — events streamed to ADX through dynamic routing, real-time
+				dashboards via managed SignalR, per-tenant Fabric shortcuts for direct
+				customer access. Demoed to a customer who said they're hard to impress;
+				this one impressed them.
 			`,
 		},
 		{

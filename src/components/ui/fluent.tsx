@@ -215,7 +215,7 @@ export function Tag({
   }
   return (
     <span
-      className={`inline-flex items-center h-6 px-2 rounded text-[11.5px] font-medium leading-none ${className}`}
+      className={`inline-flex items-center px-2 py-1.5 rounded text-[11.5px] font-medium leading-3 ${className}`}
       style={styles[variant]}
     >
       {children}
