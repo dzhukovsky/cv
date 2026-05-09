@@ -1,11 +1,8 @@
 export type LanguageLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "Native";
 
-export type TechGroup =
-	| "Backend"
-	| "Frontend"
-	| "Data"
-	| "Cloud"
-	| "DevOps";
+export type TechGroup = "Backend" | "Frontend" | "Data" | "Cloud" | "DevOps";
+
+export type LogoSrc = string | { light: string; dark: string };
 
 export interface Tech {
 	name: string;
@@ -19,7 +16,7 @@ export interface Project {
 	name: string;
 	company: string;
 	companyUrl: string;
-	companyLogo: string;
+	companyLogo: LogoSrc;
 	position: string;
 	start: string;
 	end?: string;
@@ -33,7 +30,7 @@ export interface Certification {
 	name: string;
 	code: string;
 	issuer: string;
-	issuerLogo: string;
+	issuerLogo: LogoSrc;
 	about: string;
 	issued: string;
 	expires?: string;
@@ -44,7 +41,7 @@ export interface Certification {
 export interface Education {
 	school: string;
 	schoolUrl: string;
-	schoolLogo: string;
+	schoolLogo: LogoSrc;
 	degree: string;
 	field: string;
 	start: string;
@@ -169,7 +166,7 @@ export const cv: CV = {
 			name: "Cloud Contact-Center & Communications Platform",
 			company: "Fotando Global",
 			companyUrl: "https://www.fotando.global",
-			companyLogo: "/fotando_global_logo.jpg",
+			companyLogo: "/fotando-logo.png",
 			position: "Senior .NET Backend Engineer",
 			start: "2024-11",
 			areas: ["Telecom", "Cloud Communications"],
@@ -206,7 +203,7 @@ export const cv: CV = {
 			name: "Enterprise Tax Allocation Platform",
 			company: "Exadel",
 			companyUrl: "https://exadel.com",
-			companyLogo: "/exadel_logo.png",
+			companyLogo: "/exadel-logo.svg",
 			position: "Senior .NET Backend Engineer",
 			start: "2024-11",
 			areas: ["Fintech"],
@@ -240,7 +237,7 @@ export const cv: CV = {
 			name: "Software Solutions for Media & Subscription Businesses",
 			company: "Lightpoint Global",
 			companyUrl: "https://lightpointglobal.com",
-			companyLogo: "/lightpoint_global_logo.jpg",
+			companyLogo: "/lightpoint-global-logo.png",
 			position: "Senior .NET Software Engineer",
 			start: "2024-03",
 			end: "2024-07",
@@ -273,7 +270,7 @@ export const cv: CV = {
 			name: "ePayment Solution",
 			company: "Lightpoint Global",
 			companyUrl: "https://lightpointglobal.com",
-			companyLogo: "/lightpoint_global_logo.jpg",
+			companyLogo: "/lightpoint-global-logo.png",
 			position: "Middle .NET Software Engineer",
 			start: "2022-11",
 			end: "2024-02",
@@ -312,7 +309,7 @@ export const cv: CV = {
 			name: "Customer Engagement Platform",
 			company: "Lightpoint Global",
 			companyUrl: "https://lightpointglobal.com",
-			companyLogo: "/lightpoint_global_logo.jpg",
+			companyLogo: "/lightpoint-global-logo.png",
 			position: "Junior .NET Software Engineer",
 			start: "2020-02",
 			end: "2022-10",
@@ -353,7 +350,10 @@ export const cv: CV = {
 			name: "Rental Accounting System",
 			company: "Caspel LLC",
 			companyUrl: "https://caspel.com",
-			companyLogo: "/caspel_logo.jpg",
+			companyLogo: {
+				light: "/caspel-logo-light.png",
+				dark: "/caspel-logo-dark.png",
+			},
 			position: "Junior .NET Full-Stack Developer",
 			start: "2019-08",
 			end: "2020-01",
@@ -384,7 +384,10 @@ export const cv: CV = {
 			name: "Customer Manufacturing Platform",
 			company: "Caspel LLC",
 			companyUrl: "https://caspel.com",
-			companyLogo: "/caspel_logo.jpg",
+			companyLogo: {
+				light: "/caspel-logo-light.png",
+				dark: "/caspel-logo-dark.png",
+			},
 			position: "Junior .NET Full-Stack Developer",
 			start: "2019-02",
 			end: "2019-07",
@@ -418,7 +421,7 @@ export const cv: CV = {
 			name: "Microsoft Certified: Azure Developer Associate",
 			code: "AZ-204",
 			issuer: "Microsoft",
-			issuerLogo: "/microsoft_logo.jpg",
+			issuerLogo: "/microsoft-logo.ico",
 			about:
 				"Build end-to-end solutions in Microsoft Azure: Azure Functions, web apps, storage solutions, and more.",
 			issued: "2025-11",
@@ -431,7 +434,7 @@ export const cv: CV = {
 			name: "Microsoft Certified: Azure Fundamentals",
 			code: "AZ-900",
 			issuer: "Microsoft",
-			issuerLogo: "/microsoft_logo.jpg",
+			issuerLogo: "/microsoft-logo.ico",
 			about: "Understanding of Azure fundamentals.",
 			issued: "2023-11",
 			credentialId: "C4BD0FCD8D69A8C1",
@@ -442,7 +445,7 @@ export const cv: CV = {
 			name: "Microsoft Certified: Azure AI Fundamentals",
 			code: "AI-900",
 			issuer: "Microsoft",
-			issuerLogo: "/microsoft_logo.jpg",
+			issuerLogo: "/microsoft-logo.ico",
 			about: "Understanding of Azure AI solutions.",
 			issued: "2023-09",
 			credentialId: "E2CBCF6AEE7B238E",
@@ -454,7 +457,7 @@ export const cv: CV = {
 		{
 			school: "Belarusian National Technical University",
 			schoolUrl: "https://bntu.by/en",
-			schoolLogo: "/bntu_logo.jpg",
+			schoolLogo: "/bntu-logo.png",
 			degree: "Bachelor's degree",
 			field: "Information Technology",
 			start: "2017-09",
@@ -479,6 +482,9 @@ export const cv: CV = {
 		},
 	],
 };
+
+export const pickLogo = (logo: LogoSrc, theme: "light" | "dark"): string =>
+	typeof logo === "string" ? logo : logo[theme];
 
 export const yearsOfExperience = (): number => {
 	const start = new Date("2016-01-01");

@@ -24,6 +24,25 @@ export function useTheme(): [Theme, (next: Theme) => void, () => void] {
   return [theme, setTheme, toggle]
 }
 
+export function useThemeMode(): Theme {
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof document === 'undefined') return 'light'
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  })
+
+  useEffect(() => {
+    const root = document.documentElement
+    const sync = () =>
+      setTheme(root.classList.contains('dark') ? 'dark' : 'light')
+    sync()
+    const obs = new MutationObserver(sync)
+    obs.observe(root, { attributes: true, attributeFilter: ['class'] })
+    return () => obs.disconnect()
+  }, [])
+
+  return theme
+}
+
 export function useScrollSpy(ids: string[], rootMargin = '-40% 0px -55% 0px'): string | null {
   const [active, setActive] = useState<string | null>(ids[0] ?? null)
 

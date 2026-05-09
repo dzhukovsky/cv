@@ -39,8 +39,8 @@ import {
 	SubtleButton,
 	Tag,
 } from "@/components/ui/fluent";
-import { cv, formatDuration, formatPeriod } from "@/data/cv";
-import { useNow, useScrollSpy } from "@/lib/hooks";
+import { cv, formatDuration, formatPeriod, pickLogo } from "@/data/cv";
+import { useNow, useScrollSpy, useThemeMode } from "@/lib/hooks";
 
 const SECTIONS = [
 	{ id: "top", label: "Overview", icon: Sparkles },
@@ -483,6 +483,7 @@ function ExperienceRow({
 	index: number;
 }) {
 	const [open, setOpen] = useState(index === 0);
+	const theme = useThemeMode();
 	const seniority = p.position.includes("Senior")
 		? "Senior"
 		: p.position.includes("Middle")
@@ -508,13 +509,12 @@ function ExperienceRow({
 				<button
 					type="button"
 					onClick={() => setOpen((v) => !v)}
-					className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-start gap-4"
+					className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-start gap-4 cursor-pointer"
 				>
 					<img
-						src={p.companyLogo}
+						src={pickLogo(p.companyLogo, theme)}
 						alt={p.company}
-						className="mt-0.5 h-10 w-10 md:h-11 md:w-11 rounded-md object-cover bg-white border"
-						style={{ borderColor: "var(--fl-stroke-subtle)" }}
+						className="mt-0.5 h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 					/>
 					<div className="flex-1 min-w-0">
 						<div className="flex items-center flex-wrap gap-x-2 gap-y-1.5">
@@ -527,7 +527,7 @@ function ExperienceRow({
 							>
 								{p.company}
 							</a>
-							<span style={{ color: "var(--fl-stroke-strong)" }}>·</span>
+							<span style={{ color: "var(--fl-fg-muted)" }}>·</span>
 							<span
 								className="text-[12.5px]"
 								style={{ color: "var(--fl-fg-muted)" }}
@@ -552,7 +552,7 @@ function ExperienceRow({
 							<span className="inline-flex items-center gap-1">
 								<Clock size={12} /> {formatPeriod(p.start, p.end)}
 							</span>
-							<span style={{ color: "var(--fl-stroke)" }}>·</span>
+							<span style={{ color: "var(--fl-fg-muted)" }}>·</span>
 							<span>{formatDuration(p.start, p.end)}</span>
 						</div>
 					</div>
@@ -776,8 +776,66 @@ function Skills() {
 						})}
 					</div>
 				</Card>
+
+				<PreferredStack />
 			</div>
 		</Section>
+	);
+}
+
+const PREFERRED_STACK: { group: string; items: string[] }[] = [
+	{ group: "Backend", items: [".NET", "ASP .NET Core", "Aspire"] },
+	{ group: "Cloud", items: ["Azure-native"] },
+	{ group: "Data", items: ["MS-SQL", "Cosmos DB", "Redis", "Kusto"] },
+	{ group: "DevOps", items: ["Azure DevOps", "GitHub", "Helm"] },
+	{
+		group: "Frontend",
+		items: ["React", "TypeScript", "Vite", "Bun"],
+	},
+];
+
+function PreferredStack() {
+	return (
+		<Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
+			<div className="mb-4">
+				<h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
+					<Sparkles size={15} style={{ color: "var(--fl-brand)" }} />
+					Preferred stack
+				</h3>
+				<p
+					className="mt-1 text-[12.5px] leading-relaxed"
+					style={{ color: "var(--fl-fg-muted)" }}
+				>
+					What I reach for when I get to choose.
+				</p>
+			</div>
+			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-5">
+				{PREFERRED_STACK.map(({ group, items }) => {
+					const meta = groupMeta[group];
+					const Icon = meta?.icon ?? Cpu;
+					return (
+						<div key={group}>
+							<div
+								className="flex items-center gap-2 mb-2 pb-1.5 border-b"
+								style={{ borderColor: "var(--fl-stroke-subtle)" }}
+							>
+								<Icon size={13} style={{ color: "var(--fl-fg-muted)" }} />
+								<h4 className="text-[12px] font-semibold tracking-tight">
+									{group}
+								</h4>
+							</div>
+							<div className="flex flex-wrap gap-1.5">
+								{items.map((it) => (
+									<Tag key={it} variant="outline">
+										{it}
+									</Tag>
+								))}
+							</div>
+						</div>
+					);
+				})}
+			</div>
+		</Card>
 	);
 }
 
@@ -906,7 +964,7 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 							<span style={{ color: cat.color }}>*</span>
 						)}
 						{i < cat.techs.length - 1 && (
-							<span style={{ color: "var(--fl-stroke-strong)" }}> ·</span>
+							<span style={{ color: "var(--fl-fg-muted)" }}> ·</span>
 						)}
 					</span>
 				))}
@@ -1153,6 +1211,7 @@ function RadarChart({
 
 function Certifications() {
 	const today = new Date();
+	const theme = useThemeMode();
 	return (
 		<Section id="certifications">
 			<SectionHeader
@@ -1183,10 +1242,9 @@ function Certifications() {
 								<div className="flex items-start justify-between">
 									<div className="flex items-center gap-2.5">
 										<img
-											src={c.issuerLogo}
+											src={pickLogo(c.issuerLogo, theme)}
 											alt={c.issuer}
-											className="h-9 w-9 rounded object-cover bg-white border"
-											style={{ borderColor: "var(--fl-stroke-subtle)" }}
+											className="h-8 w-8 rounded object-cover"
 										/>
 										<div>
 											<div
@@ -1267,6 +1325,7 @@ function parseYM(s: string): Date {
 /* ============================== Education + Languages ============================== */
 
 function EducationLanguages() {
+	const theme = useThemeMode();
 	return (
 		<Section id="education">
 			<SectionHeader
@@ -1295,10 +1354,9 @@ function EducationLanguages() {
 					{cv.education.map((e) => (
 						<div key={e.school} className="flex items-start gap-4">
 							<img
-								src={e.schoolLogo}
+								src={pickLogo(e.schoolLogo, theme)}
 								alt={e.school}
-								className="h-12 w-12 rounded-lg object-cover bg-white border"
-								style={{ borderColor: "var(--fl-stroke-subtle)" }}
+								className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 							/>
 							<div className="flex-1 min-w-0">
 								<a
@@ -1510,7 +1568,9 @@ function Footer() {
 				className="mx-auto max-w-[1180px] px-5 md:px-8 py-6 flex items-center justify-between text-[11.5px]"
 				style={{ color: "var(--fl-fg-subtle)" }}
 			>
-				<span>© {new Date().getFullYear()} {cv.fullName}</span>
+				<span>
+					© {new Date().getFullYear()} {cv.fullName}
+				</span>
 				<a
 					href="#top"
 					className="inline-flex items-center gap-1 hover:text-foreground"
