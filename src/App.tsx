@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react'
 import Portfolio from '@/pages/Portfolio'
 import Work from '@/pages/Work'
 import MatchJob from '@/pages/MatchJob'
+import Augmented from '@/pages/Augmented'
 
-type Route = 'portfolio' | 'work' | 'match'
+type Route = 'portfolio' | 'work' | 'match' | 'augmented'
 
 function getRoute(): Route {
   if (typeof window === 'undefined') return 'portfolio'
   const p = window.location.pathname.replace(/\/$/, '')
   if (p === '/work') return 'work'
   if (p === '/match') return 'match'
+  if (p === '/augmented') return 'augmented'
   return 'portfolio'
 }
 
@@ -50,5 +52,6 @@ export default function App() {
 
   if (route === 'work') return <Work />
   if (route === 'match') return <MatchJob />
+  if (route === 'augmented') return <Augmented />
   return <Portfolio />
 }

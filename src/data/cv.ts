@@ -514,7 +514,8 @@ export const monthsBetween = (start: string, end?: string): number => {
 	const startDate = new Date(sy, (sm ?? 1) - 1);
 	return (
 		(endDate.getFullYear() - startDate.getFullYear()) * 12 +
-		(endDate.getMonth() - startDate.getMonth())
+		(endDate.getMonth() - startDate.getMonth()) +
+		1
 	);
 };
 

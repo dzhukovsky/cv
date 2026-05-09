@@ -785,9 +785,9 @@ function Skills() {
 
 const PREFERRED_STACK: { group: string; items: string[] }[] = [
 	{ group: "Backend", items: [".NET", "ASP .NET Core", "Aspire"] },
-	{ group: "Cloud", items: ["Azure-native"] },
+	{ group: "Cloud", items: ["Azure-native", "Microsoft Fabric"] },
 	{ group: "Data", items: ["MS-SQL", "Cosmos DB", "Redis", "Kusto"] },
-	{ group: "DevOps", items: ["Azure DevOps", "GitHub", "Helm"] },
+	{ group: "DevOps", items: ["Azure DevOps", "GitHub", "Helm", "Bicep"] },
 	{
 		group: "Frontend",
 		items: ["React", "TypeScript", "Vite", "Bun"],

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Mail, Download, Sun, Moon, Briefcase, Wand2 } from 'lucide-react'
+import { Mail, Download, Sun, Moon, Briefcase, Wand2, Sparkles } from 'lucide-react'
 import { cv } from '@/data/cv'
 import {
   PrimaryButton,
@@ -10,6 +10,7 @@ import { useTheme } from '@/lib/hooks'
 
 const NAV: { href: string; label: string; icon: typeof Briefcase }[] = [
   { href: '/work', label: 'Work', icon: Briefcase },
+  { href: '/augmented', label: 'Augmented', icon: Sparkles },
   { href: '/match', label: 'Match a job', icon: Wand2 },
 ]
 
