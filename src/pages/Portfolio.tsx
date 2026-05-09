@@ -511,7 +511,7 @@ function ExperienceRow({
 						alt={p.company}
 						className="mt-0.5 h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 					/>
-					<div className="flex-1 min-w-0">
+					<div className="flex-1 min-w-0 flex flex-col">
 						<div className="flex items-center flex-wrap gap-x-2 gap-y-1.5">
 							<a
 								href={p.companyUrl}
@@ -1355,7 +1355,7 @@ function EducationLanguages() {
 								alt={e.school}
 								className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 							/>
-							<div className="flex-1 min-w-0">
+							<div className="flex-1 min-w-0 flex flex-col items-start">
 								<a
 									href={e.schoolUrl}
 									target="_blank"
@@ -1370,10 +1370,7 @@ function EducationLanguages() {
 								>
 									{e.degree} · {e.field}
 								</div>
-								<div
-									className="mt-2 flex items-center flex-wrap gap-2 text-[11.5px] tabular-nums"
-									style={{ color: "var(--fl-fg-subtle)" }}
-								>
+								<div className="mt-2 flex items-center flex-wrap gap-2">
 									<Tag variant="outline">{formatPeriod(e.start, e.end)}</Tag>
 									<Tag variant="outline">{formatDuration(e.start, e.end)}</Tag>
 									<Tag variant="brand">Bachelor</Tag>
@@ -1449,8 +1446,8 @@ function SoftSkills() {
 		<Section id="soft">
 			<SectionHeader
 				eyebrow="06 — Strengths"
-				title="How I work, off the clock"
-				description="Three traits I rely on, illustrated with stories from real projects."
+				title="Patterns from real projects"
+				description="Three habits that keep showing up."
 			/>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 				{cv.softSkills.map((s, i) => (
@@ -1503,15 +1500,15 @@ function CTA() {
 							className="text-[34px] md:text-[48px] font-semibold tracking-tight leading-[1.05]"
 							style={{ letterSpacing: "-0.025em" }}
 						>
-							Got a backend that needs an extra pair of hands?
+							Work alongside someone who'll own outcomes?
 						</h2>
 						<p
 							className="mt-3 max-w-xl text-[14px] leading-relaxed"
 							style={{ color: "var(--fl-fg-muted)" }}
 						>
-							{/* TODO: Not extra pair of hands but have a business problem that needs solving, or a project that needs ownership.  */}
-							Currently open to senior backend / staff engineering roles, fully
-							remote. Quickest reply via email; LinkedIn works too.
+							Available for senior backend and platform engineering
+							partnerships. B2B, fully remote. Quickest reply via email;
+							LinkedIn works too.
 						</p>
 					</div>
 					<div className="col-span-12 lg:col-span-4 flex flex-col gap-2">

@@ -99,9 +99,7 @@ export interface CV {
 export type DurationFormat = "short" | "long";
 
 const t = (name: string, group: TechGroup, lastUsed?: string): Tech =>
-	lastUsed !== undefined
-		? { name, group, end: lastUsed }
-		: { name, group };
+	lastUsed !== undefined ? { name, group, end: lastUsed } : { name, group };
 
 const ts = (
 	name: string,
@@ -452,19 +450,32 @@ export const cv: CV = {
 	],
 	softSkills: [
 		{
-			name: "Critical Thinking",
-			description:
-				"Serving as a DevOps engineer, I anticipated a significant deployment challenge before it became apparent to the team. I proactively developed a custom Azure DevOps extension to manage multiple release definitions simultaneously. By the time the issue was recognized by senior members, I already had a ready-made solution. It later proved so effective that it was reused on another project, instantly solving a similar issue.",
+			name: "Initiatives beyond scope",
+			description: `
+				Proposed and architected a Microsoft Fabric integration giving customers
+				native access to their analytics data — the kind of thing usually outside
+				a dev's scope. The same architecture moved internal reports to zero-cache,
+				real-time dashboards. Demoed it to a customer who said they're hard to
+				impress; this one impressed them.
+			`,
 		},
 		{
-			name: "Reliability",
-			description:
-				"Reliable development saves substantial resources long-term. While bug-free code is impossible, aiming for the highest quality is crucial. Even in junior roles, responsibility extends beyond ourselves to the team, project, and client. Transparency about existing problems is essential. Teamwork can preserve and enhance the client's impression through timely problem resolution.",
+			name: "Anticipated problems early",
+			description: `
+			Saw a deployment-management problem coming weeks before it surfaced —
+			built the Azure DevOps extension on my own initiative. By the time
+			senior engineers raised the issue formally, the tool was already in use.
+			Later adopted by another team facing the same pattern.
+			`,
 		},
 		{
-			name: "Perseverance",
-			description:
-				"On a challenging project, we encountered a significant problem with data stream loss — critical given the project's heavy reliance on data analysis. We undertook a multifaceted approach: log statistics, time-specific charts, in-depth code investigation. We created two detailed diagrams: one of the algorithm as coded, one as intended. Through teamwork and steadfast belief in our capabilities, we successfully rectified the problem.",
+			name: "Mapped intent vs reality",
+			description: `
+			Hit a data-stream loss issue critical to the project's analytics layer.
+			Combined log statistics, time-correlated charts, and code investigation —
+			then drew two diagrams: the algorithm as-coded and the algorithm as-intended.
+			The gap between them showed where the loss was happening.
+			`,
 		},
 	],
 };
