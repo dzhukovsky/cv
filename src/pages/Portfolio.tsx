@@ -10,6 +10,7 @@ import {
 	Cpu,
 	Database,
 	Download,
+	GitBranch,
 	Globe,
 	GraduationCap,
 	HeartHandshake,
@@ -21,6 +22,7 @@ import {
 	Radar,
 	ShieldCheck,
 	Sparkles,
+	Workflow,
 	Wrench,
 	Zap,
 } from "lucide-react";
@@ -39,7 +41,13 @@ import {
 	SubtleButton,
 	Tag,
 } from "@/components/ui/fluent";
-import { cv, formatDuration, formatPeriod, pickLogo } from "@/data/cv";
+import {
+	cv,
+	formatDuration,
+	formatPeriod,
+	formatYears,
+	pickLogo,
+} from "@/data/cv";
 import { useNow, useScrollSpy, useThemeMode } from "@/lib/hooks";
 
 const SECTIONS = [
@@ -132,17 +140,10 @@ function Hero() {
 							className="mt-5 max-w-[640px] text-[15px] leading-[1.7]"
 							style={{ color: "var(--fl-fg-muted)" }}
 						>
-							{yearsTotal}+ years engineering .NET systems — production-grade
-							web apps with C#, ASP.NET Core, Entity Framework, and Azure.
-							Currently shipping enterprise telephony at{" "}
-							<strong style={{ color: "var(--fl-fg)", fontWeight: 600 }}>
-								Fotando Global
-							</strong>{" "}
-							and a tax-allocation backend at{" "}
-							<strong style={{ color: "var(--fl-fg)", fontWeight: 600 }}>
-								Exadel
-							</strong>
-							.
+							{yearsTotal}+ years engineering .NET systems — distributed
+							architectures, multi-tenant SaaS, and platform engineering.
+							Pragmatic over clever, written down over discussed. Currently
+							focused on cloud-native data platforms.
 						</p>
 
 						<div className="mt-6 flex flex-wrap items-center gap-2">
@@ -333,23 +334,28 @@ function About() {
 					"MS-SQL, Redis, KQL, Microsoft Fabric. Banks, payment providers, SAP, Salesforce.",
 				icon: Database,
 			},
+			// {
+			// 	title: "Reliability mindset",
+			// 	description:
+			// 		"xUnit, integration tests, performance work with JMeter, observability with App Insights.",
+			// 	icon: ShieldCheck,
+			// },
+			// {
+			// 	title: "CI/CD ownership",
+			// 	description:
+			// 		"Helm templates, Azure DevOps pipelines, secret/config maps, EF migrations as code.",
+			// 	icon: Wrench,
+			// },
+			// {
+			// 	title: "Collaboration",
+			// 	description:
+			// 		"Production-deployment ownership, code reviews, support across cross-functional teams.",
+			// 	icon: HeartHandshake,
+			// },
 			{
-				title: "Reliability mindset",
-				description:
-					"xUnit, integration tests, performance work with JMeter, observability with App Insights.",
-				icon: ShieldCheck,
-			},
-			{
-				title: "CI/CD ownership",
-				description:
-					"Helm templates, Azure DevOps pipelines, secret/config maps, EF migrations as code.",
-				icon: Wrench,
-			},
-			{
-				title: "Collaboration",
-				description:
-					"Production-deployment ownership, code reviews, support across cross-functional teams.",
-				icon: HeartHandshake,
+				title: "CI/CD & deployment ownership",
+				description: "Pipelines, automation, production-deployment ownership.",
+				icon: Workflow,
 			},
 		];
 
@@ -358,7 +364,7 @@ function About() {
 			<SectionHeader
 				eyebrow="01 — About"
 				title="Built quietly. Ships loudly."
-				description="Senior .NET engineer with deep production track record across telecom, fintech, publishing, and martech. Strong on backend, comfortable across the stack, ergonomic with operations."
+				description="Engineer for the kind of backend that runs on a Sunday morning."
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -380,12 +386,14 @@ function About() {
 							</div>
 						</div>
 					</div>
-					<p
-						className="text-[14px] leading-[1.7]"
+					<div
+						className="text-[14px] leading-[1.7] space-y-3"
 						style={{ color: "var(--fl-fg)" }}
 					>
-						{cv.summary}
-					</p>
+						{cv.summary.map((p) => (
+							<p key={p}>{p}</p>
+						))}
+					</div>
 					<div
 						className="mt-5 pt-4 border-t flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px]"
 						style={{
@@ -959,7 +967,7 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 				{cat.techs.map((t, i) => (
 					<span key={t.name} className="whitespace-nowrap">
 						<span style={{ color: "var(--fl-fg)" }}>{t.name}</span>{" "}
-						<span className="tabular-nums">{t.years}y</span>
+						<span className="tabular-nums">{formatYears(t.years, "short")}</span>
 						{!isProdSrc(t.source) && (
 							<span style={{ color: cat.color }}>*</span>
 						)}
@@ -1512,6 +1520,7 @@ function CTA() {
 							className="mt-3 max-w-xl text-[14px] leading-relaxed"
 							style={{ color: "var(--fl-fg-muted)" }}
 						>
+							{/* TODO: Not extra pair of hands but have a business problem that needs solving, or a project that needs ownership.  */}
 							Currently open to senior backend / staff engineering roles, fully
 							remote. Quickest reply via email; LinkedIn works too.
 						</p>

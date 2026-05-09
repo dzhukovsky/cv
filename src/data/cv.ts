@@ -69,7 +69,7 @@ export interface CV {
 	linkedIn: string;
 	github: string;
 	portfolio: string;
-	summary: string;
+	summary: string[];
 	highlights: string[];
 	languages: Language[];
 	technologies: Tech[];
@@ -78,6 +78,8 @@ export interface CV {
 	education: Education[];
 	softSkills: SoftSkill[];
 }
+
+export type DurationFormat = "short" | "long";
 
 const t = (
 	name: string,
@@ -97,8 +99,10 @@ export const cv: CV = {
 	linkedIn: "linkedin.com/in/dmitry-zhukovsky",
 	github: "github.com/dzhukovsky",
 	portfolio: "cv.dzhukovsky.me",
-	summary:
-		"Highly motivated and inquisitive .NET Software Engineer with over 9 years of experience, including 6+ years in production. Specializing in high-performance web applications using C#, ASP.NET Core, .NET, and React. Proficient in designing and implementing RESTful APIs and microservices architecture for scalable systems.",
+	summary: [
+		"I build production .NET systems on Azure — across telecom, fintech, publishing, and martech. Strong on backend, reach across the stack.",
+		"I'm invested in the systems I build, not just in the tickets I close — what holds up under load, what's painful to maintain, what the next engineer will curse me for.",
+	],
 	highlights: [
 		"Leveraging Azure for cloud services, deployment, management, and scaling",
 		"Managing data access using Dapper and Entity Framework",
@@ -512,18 +516,39 @@ export const monthsBetween = (start: string, end?: string): number => {
 			})()
 		: new Date();
 	const startDate = new Date(sy, (sm ?? 1) - 1);
-	return (
+	const months =
 		(endDate.getFullYear() - startDate.getFullYear()) * 12 +
-		(endDate.getMonth() - startDate.getMonth()) +
-		1
-	);
+		(endDate.getMonth() - startDate.getMonth());
+
+	// Dates are month-granular (YYYY-MM), so count both boundary months.
+	return Math.max(0, months + 1);
 };
 
-export const formatDuration = (start: string, end?: string): string => {
+export const formatYears = (
+	value: number,
+	format: DurationFormat = "long",
+): string => {
+	if (format === "short") return `${value}y`;
+	return `${value} ${value === 1 ? "yr" : "yrs"}`;
+};
+
+export const formatMonths = (
+	value: number,
+	format: DurationFormat = "long",
+): string => {
+	if (format === "short") return `${value}m`;
+	return `${value} ${value === 1 ? "mo" : "mos"}`;
+};
+
+export const formatDuration = (
+	start: string,
+	end?: string,
+	format: DurationFormat = "long",
+): string => {
 	const m = monthsBetween(start, end);
 	const y = Math.floor(m / 12);
 	const mm = m % 12;
-	if (y === 0) return `${mm} mo`;
-	if (mm === 0) return `${y} yr`;
-	return `${y} yr ${mm} mo`;
+	if (y === 0) return formatMonths(mm, format);
+	if (mm === 0) return formatYears(y, format);
+	return `${formatYears(y, format)} ${formatMonths(mm, format)}`;
 };
