@@ -334,24 +334,6 @@ function About() {
 					"MS-SQL, Redis, KQL, Microsoft Fabric. Banks, payment providers, SAP, Salesforce.",
 				icon: Database,
 			},
-			// {
-			// 	title: "Reliability mindset",
-			// 	description:
-			// 		"xUnit, integration tests, performance work with JMeter, observability with App Insights.",
-			// 	icon: ShieldCheck,
-			// },
-			// {
-			// 	title: "CI/CD ownership",
-			// 	description:
-			// 		"Helm templates, Azure DevOps pipelines, secret/config maps, EF migrations as code.",
-			// 	icon: Wrench,
-			// },
-			// {
-			// 	title: "Collaboration",
-			// 	description:
-			// 		"Production-deployment ownership, code reviews, support across cross-functional teams.",
-			// 	icon: HeartHandshake,
-			// },
 			{
 				title: "CI/CD & deployment ownership",
 				description: "Pipelines, automation, production-deployment ownership.",
@@ -668,7 +650,7 @@ function Skills() {
 			<SectionHeader
 				eyebrow="03 — Technologies"
 				title="The toolkit"
-				description="Active toolkit (last 3 years), shown with full historical depth. Filled = production, striped = self-taught."
+				description="Active toolkit (last 3 years) with full historical depth. Filled = production, striped = self-taught."
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
