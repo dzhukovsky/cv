@@ -52,6 +52,13 @@ import {
 } from "@/data/cv";
 
 const ALL_TECHNOLOGIES = aggregateTechnologies(cv);
+const MAX_PRODUCTION_YEARS = Math.floor(
+	Math.max(
+		...ALL_TECHNOLOGIES.filter((t) => t.source === "production").map(
+			(t) => t.years,
+		),
+	),
+);
 
 import { useNow, useScrollSpy, useThemeMode } from "@/lib/hooks";
 
@@ -230,7 +237,7 @@ function Hero() {
 						label="Experience"
 						value={String(yearsTotal)}
 						suffix="+ yrs"
-						caption="6+ in production"
+						caption={`${MAX_PRODUCTION_YEARS}+ yrs in production`}
 					/>
 					<Stat
 						icon={Zap}
@@ -1529,15 +1536,15 @@ function CTA() {
 							className="text-[34px] md:text-[48px] font-semibold tracking-tight leading-[1.05]"
 							style={{ letterSpacing: "-0.025em" }}
 						>
-							Work alongside someone who'll own outcomes?
+							Looking for someone <br /> who'll own outcomes?
 						</h2>
 						<p
 							className="mt-3 max-w-xl text-[14px] leading-relaxed"
 							style={{ color: "var(--fl-fg-muted)" }}
 						>
 							Available for senior backend and platform engineering
-							partnerships. B2B, fully remote. Quickest reply via email;
-							LinkedIn works too.
+							partnerships. B2B, fully remote. Drop a line if you've got
+							something interesting.
 						</p>
 					</div>
 					<div className="col-span-12 lg:col-span-4 flex flex-col gap-2">
