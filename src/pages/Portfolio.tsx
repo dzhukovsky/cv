@@ -3,6 +3,7 @@ import {
 	ArrowUpRight,
 	Award,
 	Briefcase,
+	Check,
 	ChevronDown,
 	Clock,
 	Cloud,
@@ -337,13 +338,13 @@ function About() {
 			{
 				title: "Cloud & DevOps",
 				description:
-					"Azure App Service, AKS, Service Bus, Functions. Helm, Azure DevOps, GitHub Actions.",
+					"AKS, Service Bus, Azure App Service, Application Insights. Azure DevOps, Helm.",
 				icon: Cloud,
 			},
 			{
 				title: "Data & integrations",
 				description:
-					"MS-SQL, Redis, KQL, Microsoft Fabric. Banks, payment providers, SAP, Salesforce.",
+					"MS-SQL, Redis, Kusto, Microsoft Fabric. Banks and payment providers.",
 				icon: Database,
 			},
 			{
@@ -415,18 +416,14 @@ function About() {
 						const Icon = s.icon;
 						return (
 							<Card key={s.title} className="p-5" hoverable reveal>
-								<div
-									className="grid place-items-center h-9 w-9 rounded-md mb-3"
-									style={{
-										background: "var(--fl-brand-subtle)",
-										color: "var(--fl-brand-hover)",
-									}}
-								>
-									<Icon size={16} />
-								</div>
-								<div className="text-[14px] font-semibold tracking-tight">
+								<Icon
+									size={22}
+									className="mb-3"
+									style={{ color: "var(--fl-brand)" }}
+								/>
+								<h3 className="text-[14px] font-semibold tracking-tight">
 									{s.title}
-								</div>
+								</h3>
 								<div
 									className="mt-1.5 text-[12.5px] leading-relaxed"
 									style={{ color: "var(--fl-fg-muted)" }}
@@ -504,7 +501,7 @@ function ExperienceRow({
 					boxShadow: "var(--fl-elev-2)",
 				}}
 			>
-				<Briefcase size={14} />
+				{isCurrent ? <Briefcase size={14} /> : <Check size={16} strokeWidth={2.5} />}
 			</div>
 
 			<Card hoverable reveal className="overflow-hidden">
@@ -1367,23 +1364,10 @@ function EducationLanguages() {
 			/>
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 				<Card className="lg:col-span-2 p-5 md:p-6" reveal>
-					<div className="flex items-center gap-2 mb-4">
-						<div
-							className="grid place-items-center h-7 w-7 rounded-md"
-							style={{
-								background: "var(--fl-brand-subtle)",
-								color: "var(--fl-brand-hover)",
-							}}
-						>
-							<GraduationCap size={14} />
-						</div>
-						<h3
-							className="text-[12px] font-semibold uppercase tracking-[0.14em]"
-							style={{ color: "var(--fl-fg-muted)" }}
-						>
-							Education
-						</h3>
-					</div>
+					<h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2 mb-4">
+						<GraduationCap size={15} style={{ color: "var(--fl-brand)" }} />
+						Education
+					</h3>
 					{cv.education.map((e) => (
 						<div key={e.school} className="flex items-start gap-4">
 							<img
@@ -1417,23 +1401,10 @@ function EducationLanguages() {
 				</Card>
 
 				<Card className="p-5 md:p-6" reveal>
-					<div className="flex items-center gap-2 mb-4">
-						<div
-							className="grid place-items-center h-7 w-7 rounded-md"
-							style={{
-								background: "var(--fl-brand-subtle)",
-								color: "var(--fl-brand-hover)",
-							}}
-						>
-							<LanguagesIcon size={14} />
-						</div>
-						<h3
-							className="text-[12px] font-semibold uppercase tracking-[0.14em]"
-							style={{ color: "var(--fl-fg-muted)" }}
-						>
-							Languages
-						</h3>
-					</div>
+					<h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2 mb-4">
+						<LanguagesIcon size={15} style={{ color: "var(--fl-brand)" }} />
+						Languages
+					</h3>
 					<div className="space-y-3.5">
 						{cv.languages.map((l) => {
 							const pct = levelPct(l.level);
@@ -1441,7 +1412,7 @@ function EducationLanguages() {
 								<div key={l.code}>
 									<div className="flex items-baseline justify-between mb-1">
 										<span className="text-[13.5px] font-medium">{l.name}</span>
-										<Tag variant={l.level === "Native" ? "brand" : "subtle"}>
+										<Tag variant={l.level === "Native" ? "brand" : "outline"}>
 											{l.level}
 										</Tag>
 									</div>
