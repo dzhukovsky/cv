@@ -833,7 +833,7 @@ function PreferredStack() {
 							</div>
 							<div className="flex flex-wrap gap-1.5">
 								{items.map((it) => (
-									<Tag key={it} variant="outline">
+									<Tag key={it} variant="brand">
 										{it}
 									</Tag>
 								))}
