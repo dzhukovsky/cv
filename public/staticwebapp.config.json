@@ -1,0 +1,21 @@
+{
+  "routes": [
+    {
+      "route": "/match",
+      "rewrite": "/index.html",
+      "headers": {
+        "X-Robots-Tag": "noindex, noarchive, nofollow"
+      }
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/assets/*",
+      "/*.{png,jpg,jpeg,svg,ico,webp,gif,css,js,map,txt,xml,json,woff,woff2,ttf,otf}"
+    ]
+  },
+  "globalHeaders": {
+    "X-Robots-Tag": "index, follow, noarchive"
+  }
+}

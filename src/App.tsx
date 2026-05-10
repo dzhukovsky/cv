@@ -6,6 +6,8 @@ import Augmented from '@/pages/Augmented'
 
 type Route = 'portfolio' | 'work' | 'match' | 'augmented'
 
+const GATED: ReadonlySet<Route> = new Set(['match'])
+
 function getRoute(): Route {
   if (typeof window === 'undefined') return 'portfolio'
   const p = window.location.pathname.replace(/\/$/, '')
@@ -15,8 +17,24 @@ function getRoute(): Route {
   return 'portfolio'
 }
 
+function applyRouteMeta(route: Route) {
+  if (typeof document === 'undefined') return
+  const content = GATED.has(route) ? 'noindex, noarchive, nofollow' : 'index, follow'
+  let tag = document.querySelector<HTMLMetaElement>('meta[name="robots"]')
+  if (!tag) {
+    tag = document.createElement('meta')
+    tag.name = 'robots'
+    document.head.appendChild(tag)
+  }
+  tag.content = content
+}
+
 export default function App() {
   const [route, setRoute] = useState<Route>(getRoute)
+
+  useEffect(() => {
+    applyRouteMeta(route)
+  }, [route])
 
   useEffect(() => {
     const onPop = () => {

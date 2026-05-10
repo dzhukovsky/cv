@@ -1,8 +1,9 @@
-import path from 'node:path'
-import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import YAML from 'yaml'
+import { cvMetaPlugin } from './vite-plugins/cv-meta'
 
 // `import data from './foo.yml'` → parsed object, anchors/aliases resolved at build time.
 function yamlPlugin(): Plugin {
@@ -20,7 +21,7 @@ function yamlPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), yamlPlugin()],
+  plugins: [react(), tailwindcss(), yamlPlugin(), cvMetaPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
