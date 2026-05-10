@@ -54,8 +54,8 @@ import {
 	type ExpertiseIcon,
 	sections,
 } from "@/data/sections";
+import { useNow, useScrollSpy, useThemeMode } from "@/lib/hooks";
 
-// Icon-key (from sections.yml `about.expertise[].icon`) → lucide component.
 const ABOUT_EXPERTISE_ICONS: Record<ExpertiseIcon, typeof Cpu> = {
 	cpu: Cpu,
 	cloud: Cloud,
@@ -71,8 +71,6 @@ const MAX_PRODUCTION_YEARS = Math.floor(
 		),
 	),
 );
-
-import { useNow, useScrollSpy, useThemeMode } from "@/lib/hooks";
 
 const SECTIONS = [
 	{ id: "top", label: "Overview", icon: Sparkles },
@@ -104,8 +102,6 @@ export default function Portfolio() {
 	);
 }
 
-/* ============================== Hero ============================== */
-
 function Hero() {
 	const now = useNow(60_000);
 	const warsawTime = useMemo(
@@ -124,9 +120,6 @@ function Hero() {
 	const certCodes = cv.certifications.map((c) => c.code).join(" · ");
 
 	return (
-		// Pull the hero up under the sticky header (h-14 = 56px) so its mica
-		// gradient extends behind the header — the acrylic blur has tinted
-		// content to sample at scroll = 0, no visible cut line.
 		<section id="top" className="fl-mica relative no-print -mt-14 pt-14">
 			<div className="absolute inset-0 fl-grid-bg pointer-events-none" />
 			<div className="relative mx-auto max-w-[1180px] px-5 md:px-8 pt-10 pb-14 md:pt-16 md:pb-20">
@@ -238,7 +231,6 @@ function Hero() {
 					</div>
 				</div>
 
-				{/* Stats strip */}
 				<Card
 					className="mt-10 md:mt-14 px-5 md:px-7 py-5 md:py-6 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-5"
 					elevation={4}
@@ -273,8 +265,6 @@ function Hero() {
 		</section>
 	);
 }
-
-/* ============================== Side Rail (Scroll Spy) ============================== */
 
 function SideRail() {
 	const ids = useMemo(() => SECTIONS.map((s) => s.id), []);
@@ -333,8 +323,6 @@ function SideRail() {
 		</nav>
 	);
 }
-
-/* ============================== About ============================== */
 
 function About() {
 	return (
@@ -421,8 +409,6 @@ function About() {
 		</Section>
 	);
 }
-
-/* ============================== Experience ============================== */
 
 function Experience() {
 	return (
@@ -613,9 +599,6 @@ function ExperienceRow({
 	);
 }
 
-/* ============================== Skills ============================== */
-
-// Keyed by tech-group id (matches `cv.techGroups` keys and `Skill.group`).
 const groupMeta: Record<string, { icon: typeof Cpu }> = {
 	backend: { icon: Cpu },
 	frontend: { icon: Code2 },
@@ -685,77 +668,6 @@ function Skills() {
 					<TechRadar />
 				</Card>
 
-				{/* <Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
-					<div className="flex items-center justify-between mb-4">
-						<h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
-							<Layers size={15} style={{ color: "var(--fl-brand)" }} />
-							Grouped index
-						</h3>
-						<div
-							className="flex items-center gap-3 text-[11px]"
-							style={{ color: "var(--fl-fg-muted)" }}
-						>
-							<span className="inline-flex items-center gap-1.5">
-								<span
-									className="inline-block h-2.5 w-2.5 rounded"
-									style={{
-										background: "var(--fl-brand-subtle)",
-										border: "1px solid var(--fl-brand)",
-									}}
-								/>
-								Active · last {RECENT_YEARS}y
-							</span>
-							<span className="inline-flex items-center gap-1.5">
-								<span
-									className="inline-block h-2.5 w-2.5 rounded"
-									style={{ border: "1px solid var(--fl-stroke-strong)" }}
-								/>
-								Historical
-							</span>
-						</div>
-					</div>
-
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-5">
-						{groups.map((g) => {
-							const items = ALL_TECHNOLOGIES.filter(
-								(t) => t.group === g && !VCS_NAMES.has(t.name),
-							);
-							if (!items.length) return null;
-							const meta = groupMeta[g];
-							const Icon = meta.icon;
-							return (
-								<div key={g}>
-									<div
-										className="flex items-center gap-2 mb-2 pb-1.5 border-b"
-										style={{ borderColor: "var(--fl-stroke-subtle)" }}
-									>
-										<Icon size={13} style={{ color: "var(--fl-fg-muted)" }} />
-										<h4 className="text-[12px] font-semibold tracking-tight">
-											{meta.label}
-										</h4>
-										<span
-											className="ml-auto text-[10.5px] tabular-nums"
-											style={{ color: "var(--fl-fg-subtle)" }}
-										>
-											{items.length}
-										</span>
-									</div>
-									<div className="flex flex-wrap gap-1.5">
-										{items.map((t) => (
-											<Tag
-												key={t.name}
-												variant={isRecent(t) ? "brand" : "outline"}
-											>
-												{t.name}
-											</Tag>
-										))}
-									</div>
-								</div>
-							);
-						})}
-					</div>
-				</Card> */}
-
 				<PreferredStack />
 			</div>
 		</Section>
@@ -778,7 +690,7 @@ function PreferredStack() {
 				</p>
 			</div>
 			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-5">
-				{cv.preferredStack.map(({ group, items }) => {
+				{Object.entries(cv.preferredStack).map(([group, items]) => {
 					const Icon = groupMeta[group]?.icon ?? Cpu;
 					return (
 						<div key={group}>
@@ -806,9 +718,6 @@ function PreferredStack() {
 	);
 }
 
-/* ============================== Tech Radar + Density ============================== */
-
-// Keyed by tech-group id (matches `Skill.group` / `AggregatedSkill.group`).
 const CATEGORY_COLORS: Record<string, string> = {
 	backend: "#0F6CBD",
 	data: "#059669",
@@ -1092,7 +1001,6 @@ function RadarChart({
 					</linearGradient>
 				</defs>
 
-				{/* Concentric grid polygons */}
 				{grid.map((g) => (
 					<polygon
 						key={g}
@@ -1103,7 +1011,6 @@ function RadarChart({
 					/>
 				))}
 
-				{/* Axis lines */}
 				{data.map((d, i) => {
 					const [x, y] = point(i, 1);
 					return (
@@ -1119,7 +1026,6 @@ function RadarChart({
 					);
 				})}
 
-				{/* Data polygon */}
 				<path
 					d={dataPath}
 					fill="url(#radar-fill)"
@@ -1128,7 +1034,6 @@ function RadarChart({
 					strokeLinejoin="round"
 				/>
 
-				{/* Vertices */}
 				{dataPoints.map(([x, y], i) => (
 					<circle
 						key={data[i].name}
@@ -1141,7 +1046,6 @@ function RadarChart({
 					/>
 				))}
 
-				{/* Labels — names only; percentages live in the legend */}
 				{data.map((d, i) => {
 					const [lx, ly] = labelPoint(i);
 					const { textAnchor, baseline } = layoutFor(i);
@@ -1193,8 +1097,6 @@ function RadarChart({
 		</div>
 	);
 }
-
-/* ============================== Certifications ============================== */
 
 function Certifications() {
 	const today = new Date();
@@ -1303,8 +1205,6 @@ function Certifications() {
 	);
 }
 
-/* ============================== Education + Languages ============================== */
-
 function EducationLanguages() {
 	const theme = useThemeMode();
 	return (
@@ -1401,8 +1301,6 @@ function levelPct(level: string): number {
 	}
 }
 
-/* ============================== Soft Skills ============================== */
-
 function SoftSkills() {
 	return (
 		<Section id="soft">
@@ -1435,8 +1333,6 @@ function SoftSkills() {
 		</Section>
 	);
 }
-
-/* ============================== CTA ============================== */
 
 function CTA() {
 	const ref = useRef<HTMLDivElement>(null);
@@ -1514,8 +1410,6 @@ function CTA() {
 		</Section>
 	);
 }
-
-/* ============================== Footer ============================== */
 
 function Footer() {
 	return (

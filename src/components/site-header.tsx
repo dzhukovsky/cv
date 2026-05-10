@@ -29,8 +29,7 @@ export function SiteHeader() {
     const onPop = () => setPath(normalizePath(window.location.pathname))
     window.addEventListener('popstate', onPop)
 
-    // Internal route changes don't fire popstate — we listen to a custom event
-    // emitted by the router in App.tsx.
+    // Internal route changes don't fire popstate — listen to App.tsx's custom event.
     const onRouteChange = () => setPath(normalizePath(window.location.pathname))
     window.addEventListener('cv:routechange', onRouteChange)
 

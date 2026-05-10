@@ -4,8 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, type Plugin } from 'vite'
 import YAML from 'yaml'
 
-// Inline YAML loader — `import data from './foo.yml'` returns the parsed object.
-// Resolves anchors/aliases at build time, no runtime parser in the bundle.
+// `import data from './foo.yml'` → parsed object, anchors/aliases resolved at build time.
 function yamlPlugin(): Plugin {
   return {
     name: 'yaml-loader',
@@ -20,7 +19,6 @@ function yamlPlugin(): Plugin {
   }
 }
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), yamlPlugin()],
   resolve: {

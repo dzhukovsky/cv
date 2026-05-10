@@ -81,12 +81,8 @@
       "description": "Multi-paragraph intro text. Use a YAML literal block (`|`) — each line becomes a paragraph."
     },
     "preferredStack": {
-      "type": "array",
-      "description": "Curated `Preferred stack` — each entry's `group` must match a tech-group id.",
-      "items": {
-        "$ref": "#/$defs/PreferredStackEntry"
-      },
-      "minItems": 1
+      "$ref": "#/$defs/PreferredStackGroup",
+      "description": "Curated preferred stack, keyed by tech-group id."
     },
     "languages": {
       "type": "array",
@@ -551,18 +547,45 @@
         }
       }
     },
-    "PreferredStackEntry": {
+    "PreferredStackGroup": {
       "type": "object",
+      "description": "Preferred-stack picks keyed by tech-group id; each value is the curated list. id-key slots auto-synced from cv.yml.",
       "additionalProperties": false,
-      "required": [
-        "group",
-        "items"
-      ],
+      "minProperties": 1,
       "properties": {
-        "group": {
-          "$ref": "#/$defs/TechGroupId"
+        "backend": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
         },
-        "items": {
+        "frontend": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "cloud": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "devops": {
           "type": "array",
           "items": {
             "type": "string",

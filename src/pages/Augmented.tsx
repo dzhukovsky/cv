@@ -17,8 +17,6 @@ import {
 import { SiteHeader } from '@/components/site-header'
 import { Card, Pill, Section, SectionHeader, Tag } from '@/components/ui/fluent'
 
-/* ----------------------------- Page ----------------------------- */
-
 export default function Augmented() {
   return (
     <div className="min-h-svh bg-background text-foreground">
@@ -37,8 +35,6 @@ export default function Augmented() {
     </div>
   )
 }
-
-/* ----------------------------- Hero ----------------------------- */
 
 function Hero() {
   return (
@@ -69,8 +65,6 @@ function Hero() {
   )
 }
 
-/* ----------------------------- Stance ----------------------------- */
-
 function Stance() {
   return (
     <Section id="stance">
@@ -99,8 +93,6 @@ function Stance() {
     </Section>
   )
 }
-
-/* ----------------------------- Use cases ----------------------------- */
 
 interface UseCase {
   icon: LucideIcon
@@ -195,8 +187,6 @@ function UseCases() {
     </Section>
   )
 }
-
-/* ----------------------------- Tools ----------------------------- */
 
 interface Tool {
   name: string
@@ -338,8 +328,6 @@ function Tools() {
   )
 }
 
-/* ----------------------------- Boundaries ----------------------------- */
-
 interface Rule {
   text: string
   why: string
@@ -465,8 +453,6 @@ function RulesCard({
     </Card>
   )
 }
-
-/* ----------------------------- Footer ----------------------------- */
 
 function Footer() {
   return (

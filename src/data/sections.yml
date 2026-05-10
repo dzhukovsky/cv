@@ -1,12 +1,4 @@
 # yaml-language-server: $schema=./sections.schema.json
-#
-# UI text for portfolio page sections — titles, descriptions, CTA copy.
-# Lives separately from cv.yml (which holds the actual CV data).
-#
-# Tokens like `{projects.count}` and `{projects.areas}` are replaced at render
-# time via applyTemplate() (see sections.ts). Available tokens:
-#   {projects.count} — number of projects in cv.yml
-#   {projects.areas} — naturally-joined list of unique `areas` across projects
 
 hero:
   availableTooltip: Available
@@ -19,9 +11,6 @@ hero:
 about:
   title: Built quietly. Ships loudly.
   description: Engineer for the kind of backend that runs on a Sunday morning.
-  # Four expertise-area highlights. `icon` is a string key resolved to a
-  # lucide-react icon in the React layer (see ABOUT_EXPERTISE_ICONS in
-  # Portfolio.tsx).
   expertise:
     - title: Backend architecture
       description: C#, ASP.NET Core, EF Core. Modular monoliths and microservices that survive production.
@@ -58,7 +47,6 @@ strengths:
   title: Patterns from real projects
   description: Three habits that keep showing up.
 
-# `title` may use a YAML literal block (`|`) for an explicit line break.
 cta:
   eyebrow: Let's talk
   title: |

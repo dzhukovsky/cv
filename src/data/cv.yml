@@ -14,8 +14,6 @@ portfolio: cv.dzhukovsky.me
 photo: /me.jpg
 availability: Open to Senior .NET roles
 
-# Hero subtitle. `{years}` is replaced at render time with the value computed
-# from the earliest project start.
 tagline: >
   {years}+ years engineering .NET systems — distributed architectures,
   multi-tenant SaaS, and platform engineering. Pragmatic over clever, written
@@ -25,36 +23,29 @@ summary: |
   I build production .NET systems on Azure — across telecom, fintech, publishing, and martech. Strong on backend, reach across the stack.
   I'm invested in the systems I build, not just in the tickets I close — what holds up under load, what's painful to maintain, what the next engineer will curse me for.
 
-# The curated "Preferred stack" — `group` must match a tech-group id
-# (see `techGroups`).
 preferredStack:
-  - group: backend
-    items:
-      - .NET
-      - ASP.NET Core
-      - Aspire
-  - group: cloud
-    items:
-      - Azure-native
-      - Microsoft Fabric
-  - group: data
-    items:
-      - MS-SQL
-      - Cosmos DB
-      - Redis
-      - Kusto
-  - group: devops
-    items:
-      - Azure DevOps
-      - GitHub
-      - Helm
-      - Bicep
-  - group: frontend
-    items:
-      - React
-      - TypeScript
-      - Vite
-      - Bun
+  backend:
+    - .NET
+    - ASP.NET Core
+    - Aspire
+  cloud:
+    - Azure-native
+    - Microsoft Fabric
+  data:
+    - MS-SQL
+    - Cosmos DB
+    - Redis
+    - Kusto
+  devops:
+    - Azure DevOps
+    - GitHub
+    - Helm
+    - Bicep
+  frontend:
+    - React
+    - TypeScript
+    - Vite
+    - Bun
 
 languages:
   - name: English
@@ -64,10 +55,6 @@ languages:
   - name: Russian
     level: Native
 
-# Single source of truth for organizations (companies, universities, cert issuers).
-# Each entry has a YAML anchor (`&id`); `projects[].company`, `education[].school`,
-# `certifications[].issuer` reference these via aliases (`*id`) — the parser inlines
-# the full object, so no runtime lookup is needed.
 orgs:
   - &fotando
     name: Fotando Global
@@ -100,8 +87,6 @@ orgs:
     name: Microsoft
     logo: /microsoft-logo.ico
 
-# Single source of truth for tech-group id → display name.
-# Referenced by id-key in `skills` (top-level) and project `skills`.
 techGroups:
   backend:  Backend
   frontend: Frontend
@@ -109,9 +94,6 @@ techGroups:
   cloud:    Cloud
   devops:   DevOps
 
-# Top-level self-taught skills — never tied to a real project.
-# `source: self-taught` is implicit by virtue of being here.
-# `since` is required; missing `duration` means ongoing.
 skills:
   backend:
     - name: Python 3

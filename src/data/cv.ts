@@ -1,23 +1,4 @@
-// CV data — single normalized source for all consumers (React page, PDF,
-// LLMs file, page metadata). The YAML is the authoring format; this module
-// loads it through the Vite YAML plugin, resolves anchors, normalizes the
-// shape (plain-string skills → objects, since/duration → start/end as Date,
-// summary `|` block → paragraph array), and pre-computes aggregates.
-//
-// Shape highlights vs the raw YAML:
-//   - All periods are `Date` / `Date | null` (not YYYY-MM strings)
-//   - `cv.projects[].skills` is a flat `Skill[]`, each carrying `group: <id>`
-//   - Tech-group display names live only in `cv.techGroups` (id → name) —
-//     skills/aggregates carry the id, consumers look up the name when needed
-//   - `cv.summary` is `string[]` (paragraphs from the `|` block)
-//   - `cv.allSkills` is the aggregated skills list
-//   - `cv.initials` is computed from `fullName`
-
 import rawData from "./cv.yml";
-
-// =============================================================================
-// Public types (normalized)
-// =============================================================================
 
 export type LogoSrc = string | { light: string; dark: string };
 
@@ -31,12 +12,10 @@ export type Language = { name: string; level: LanguageLevel };
 
 export type Skill = {
 	name: string;
-	/** Tech-group id (lowercase, e.g. `"backend"`); look up display name via `cv.techGroups[id]`. */
 	group: string;
 	source: SkillSource;
 	start: Date;
 	end: Date | null;
-	/** Inclusive month count covered by this skill instance. */
 	months: number;
 };
 
@@ -78,19 +57,13 @@ export type Strength = { name: string; description: string };
 
 export type Seniority = "Junior" | "Middle" | "Senior";
 
-export type PreferredStackEntry = {
-	/** Tech-group id (matches `cv.techGroups` keys). */
-	group: string;
-	items: string[];
-};
+export type PreferredStack = Record<string, string[]>;
 
 export type AggregatedSkill = {
 	name: string;
 	group: string;
 	source: SkillSource;
-	/** Total years (deduped union of intervals across projects + self-taught). */
 	years: number;
-	/** Calendar year the skill was last used. */
 	lastUsed: number;
 };
 
@@ -110,10 +83,9 @@ export type CV = {
 	availability: string;
 	tagline: string;
 	summary: string[];
-	preferredStack: PreferredStackEntry[];
+	preferredStack: PreferredStack;
 	languages: Language[];
 	orgs: Org[];
-	/** Lookup: tech-group id (e.g. `"backend"`) → display name (e.g. `"Backend"`). */
 	techGroups: Record<string, string>;
 	selfTaughtSkills: Skill[];
 	projects: Project[];
@@ -122,10 +94,6 @@ export type CV = {
 	strengths: Strength[];
 	allSkills: AggregatedSkill[];
 };
-
-// =============================================================================
-// Raw types (mirror the YAML shape after anchor resolution)
-// =============================================================================
 
 type YearMonth = `${number}-${number}`;
 
@@ -180,7 +148,7 @@ type RawCV = {
 	availability: string;
 	tagline: string;
 	summary: string;
-	preferredStack: PreferredStackEntry[];
+	preferredStack: PreferredStack;
 	languages: Language[];
 	orgs: Org[];
 	techGroups: Record<string, string>;
@@ -193,10 +161,6 @@ type RawCV = {
 
 const raw = rawData as RawCV;
 
-// =============================================================================
-// Date arithmetic
-// =============================================================================
-
 const parseYM = (ym: YearMonth): Date => {
 	const [y, m] = ym.split("-").map(Number);
 	return new Date(y, (m ?? 1) - 1, 1);
@@ -205,7 +169,6 @@ const parseYM = (ym: YearMonth): Date => {
 const addMonths = (d: Date, months: number): Date =>
 	new Date(d.getFullYear(), d.getMonth() + months, 1);
 
-/** Inclusive month count between two dates (null end = present). */
 export const monthsBetween = (start: Date, end: Date | null): number => {
 	const e = end ?? new Date();
 	const months =
@@ -214,7 +177,6 @@ export const monthsBetween = (start: Date, end: Date | null): number => {
 	return Math.max(0, months + 1);
 };
 
-/** Parses `1y6m`, `1y`, `6m`, `2y 3m` → total months. Whitespace ignored. */
 const parseDuration = (d: string): number => {
 	let months = 0;
 	const y = d.match(/(\d+)\s*y/);
@@ -223,10 +185,6 @@ const parseDuration = (d: string): number => {
 	if (m) months += +m[1];
 	return months;
 };
-
-// =============================================================================
-// Normalization
-// =============================================================================
 
 const initialsOf = (name: string): string =>
 	name
@@ -308,10 +266,8 @@ const normalizeSelfTaughtSkills = (bygroup: RawSkillsByGroup): Skill[] => {
 	return out;
 };
 
-// Union of inclusive monthly intervals — sorts, merges adjacent/overlapping
-// runs, returns total months covered. Two parallel projects sharing a tech
-// over the same window count once, not twice. Operates on month ordinals
-// (year * 12 + month) so the math stays integer.
+// Union of inclusive monthly intervals — overlapping runs across parallel
+// projects count once. Operates on month ordinals (year * 12 + month).
 const coverageMonths = (intervals: { s: number; e: number }[]): number => {
 	if (!intervals.length) return 0;
 	const sorted = [...intervals].sort((a, b) => a.s - b.s);
@@ -352,7 +308,6 @@ const buildAggregatedSkills = (
 		const eOrd = s.end ? dateToOrd(s.end) : curOrd;
 		const existing = map.get(s.name);
 		if (existing) {
-			// Production wins over self-taught for the bucket's source label.
 			if (s.source === "production") existing.source = "production";
 			existing.intervals.push({ s: sOrd, e: eOrd });
 			if (eOrd > existing.lastUsed) existing.lastUsed = eOrd;
@@ -378,17 +333,11 @@ const buildAggregatedSkills = (
 	}));
 };
 
-// =============================================================================
-// Build & export the normalized CV
-// =============================================================================
-
 const projects: Project[] = raw.projects.map(normalizeProject);
 const selfTaughtSkills: Skill[] = normalizeSelfTaughtSkills(raw.skills);
 
-// Earliest start across all skills (production + self-taught) — single source
-// for total years-of-experience. Project-skills inherit project start, so
-// they're covered by `projects[].start`; self-taught skills can predate the
-// earliest project (e.g. WPF in 2018 vs first project in 2019).
+// Self-taught skills can predate the earliest project (e.g. WPF in 2018 vs
+// first project in 2019), so they participate in careerStart.
 const careerStart = new Date(
 	Math.min(
 		...projects.map((p) => p.start.getTime()),
@@ -447,10 +396,6 @@ export const cv: CV = {
 	allSkills: buildAggregatedSkills(projects, selfTaughtSkills),
 };
 
-// =============================================================================
-// Public helpers
-// =============================================================================
-
 export type DurationFormat = "short" | "long";
 
 export const pickLogo = (logo: LogoSrc, theme: "light" | "dark"): string =>
@@ -461,7 +406,6 @@ export const yearsOfExperience = (): number => {
 	return Math.floor(ms / (1000 * 60 * 60 * 24 * 365.25));
 };
 
-/** "Nov 2024" — month-year for display. */
 export const formatYearMonth = (d: Date): string =>
 	d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 

@@ -3,8 +3,6 @@ import { useReveal } from '@/lib/hooks'
 
 type IconC = ComponentType<{ size?: number; className?: string; strokeWidth?: number }>
 
-/* ---------------- Card ---------------- */
-
 export function Card({
   children,
   className = '',
@@ -53,8 +51,6 @@ export function Card({
     </div>
   )
 }
-
-/* ---------------- Buttons ---------------- */
 
 type BtnProps = {
   children: ReactNode
@@ -179,8 +175,6 @@ export function IconButton({
   )
 }
 
-/* ---------------- Tags / Pills ---------------- */
-
 export function Tag({
   children,
   variant = 'subtle',
@@ -264,8 +258,6 @@ export function Pill({
   )
 }
 
-/* ---------------- Section ---------------- */
-
 export function SectionHeader({
   eyebrow,
   title,
@@ -321,8 +313,6 @@ export function Section({
   )
 }
 
-/* ---------------- Progress ---------------- */
-
 export function ProgressBar({
   value,
   max = 100,
@@ -352,8 +342,6 @@ export function ProgressBar({
     </div>
   )
 }
-
-/* ---------------- Stat ---------------- */
 
 export function Stat({
   label,
@@ -393,8 +381,6 @@ export function Stat({
     </div>
   )
 }
-
-/* ---------------- Persona Avatar ---------------- */
 
 export function Persona({
   name,

@@ -20,8 +20,6 @@ import {
   CircleDot,
 } from 'lucide-react'
 
-/* cloudpad.dev favicon — two overlapping rounded squares (outline + filled).
-   Uses currentColor so it picks up text colour from the parent. */
 function CloudpadMark({ size = 22, ...rest }: SVGProps<SVGSVGElement> & { size?: number }) {
   return (
     <svg
@@ -50,10 +48,7 @@ import { Github } from '@/components/brand-icons'
 import { SiteHeader } from '@/components/site-header'
 import { Card, Section, SectionHeader, Tag, Pill } from '@/components/ui/fluent'
 
-/* ----------------------------- Sample data -----------------------------
- * NOTE: These are illustrative entries. Replace with real PRs / packages
- * when this page goes live.
- * ---------------------------------------------------------------------- */
+// TODO: replace illustrative PRS / NUGETS entries with real data before launch.
 
 type PRState = 'merged' | 'open' | 'closed'
 
@@ -144,8 +139,6 @@ const NUGETS: NuGetItem[] = [
   },
 ]
 
-/* ----------------------------- Page ----------------------------- */
-
 export default function Work() {
   return (
     <div className="min-h-svh bg-background text-foreground">
@@ -164,8 +157,6 @@ export default function Work() {
     </div>
   )
 }
-
-/* ----------------------------- Hero ----------------------------- */
 
 function Hero() {
   return (
@@ -193,8 +184,6 @@ function Hero() {
     </section>
   )
 }
-
-/* ----------------------------- Featured project ----------------------------- */
 
 const CLOUDPAD_TECH = [
   'React 19',
@@ -247,7 +236,6 @@ function FeaturedProject() {
       />
 
       <Card className="overflow-hidden" elevation={4} reveal>
-        {/* Banner */}
         <div
           className="relative px-6 md:px-8 pt-6 pb-7 md:pt-8 md:pb-9 fl-mica"
           style={{ borderBottom: '1px solid var(--fl-stroke)' }}
@@ -316,7 +304,6 @@ function FeaturedProject() {
           </div>
         </div>
 
-        {/* Body */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 px-6 md:px-8 py-6 md:py-7">
           <div className="lg:col-span-7">
             <div
@@ -443,8 +430,6 @@ function FeaturedProject() {
     </Section>
   )
 }
-
-/* ----------------------------- Pull Requests ----------------------------- */
 
 function PullRequests() {
   return (
@@ -589,8 +574,6 @@ function stateInfo(s: PRState) {
   }
 }
 
-/* ----------------------------- NuGet packages ----------------------------- */
-
 function Packages() {
   return (
     <Section id="nugets">
@@ -703,8 +686,6 @@ function NuGetCard({ p }: { p: NuGetItem }) {
   )
 }
 
-/* ----------------------------- More ----------------------------- */
-
 function MoreContributions() {
   return (
     <Section id="more">
@@ -751,8 +732,6 @@ function MoreContributions() {
     </Section>
   )
 }
-
-/* ----------------------------- Footer ----------------------------- */
 
 function Footer() {
   return (

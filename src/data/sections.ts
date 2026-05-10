@@ -1,14 +1,5 @@
-// UI text for portfolio page sections — separate from cv.ts (which holds CV
-// data). Strings in sections.yml may contain `{path.to.value}` tokens;
-// applyTemplate() resolves them. Use applyTemplate() on any string read from
-// `sections` that might contain tokens (titles, descriptions).
-
 import { cv, yearsOfExperience } from "./cv";
 import rawSections from "./sections.yml";
-
-// =============================================================================
-// Public types
-// =============================================================================
 
 type TitleDescription = { title: string; description: string };
 
@@ -43,11 +34,7 @@ export type Sections = {
 
 export const sections: Sections = rawSections as Sections;
 
-// =============================================================================
-// Template engine
-// =============================================================================
-
-// Naturally-joined English list: "a", "a and b", "a, b, and c".
+// "a", "a and b", "a, b, and c"
 const joinNatural = (items: string[]): string => {
 	if (items.length === 0) return "";
 	if (items.length === 1) return items[0];
@@ -55,8 +42,6 @@ const joinNatural = (items: string[]): string => {
 	return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
 };
 
-// Unique-preserving flat list of all project `areas`, in original order
-// (first occurrence wins; comparison is case-insensitive).
 const uniqueProjectAreas = (): string[] => {
 	const seen = new Set<string>();
 	const out: string[] = [];
@@ -71,15 +56,11 @@ const uniqueProjectAreas = (): string[] => {
 	return out;
 };
 
-// Token registry — each entry resolves a `{path.to.value}` token from
-// sections.yml to a runtime string. Add tokens here as new placeholders are
-// introduced; keep names descriptive (prefer `projects.count` over `count`).
 const tokens: Record<string, () => string> = {
 	years: () => String(yearsOfExperience()),
 	"projects.count": () => String(cv.projects.length),
 	"projects.areas": () => joinNatural(uniqueProjectAreas()),
 };
 
-/** Replace `{token}` placeholders in a template string. Unknown tokens pass through. */
 export const applyTemplate = (template: string): string =>
 	template.replace(/\{([^}]+)\}/g, (_match, key) => tokens[key]?.() ?? `{${key}}`);

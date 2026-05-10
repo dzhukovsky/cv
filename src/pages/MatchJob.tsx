@@ -25,7 +25,6 @@ export default function MatchJob() {
 	const onTrim = () => {
 		if (!ready || busy) return;
 		setBusy(true);
-		// No-op for now — this hook will run the real adapter later.
 		window.setTimeout(() => setBusy(false), 700);
 	};
 
@@ -142,8 +141,6 @@ export default function MatchJob() {
 	);
 }
 
-/* ----------------------------- Hero ----------------------------- */
-
 function Hero() {
 	return (
 		<section className="fl-mica relative no-print -mt-14 pt-14">
@@ -170,8 +167,6 @@ function Hero() {
 		</section>
 	);
 }
-
-/* ----------------------------- How it works ----------------------------- */
 
 function HowItWorks() {
 	const steps: { icon: typeof ScanSearch; title: string; desc: string }[] = [
@@ -238,8 +233,6 @@ function HowItWorks() {
 		</div>
 	);
 }
-
-/* ----------------------------- Footer ----------------------------- */
 
 function Footer() {
 	return (

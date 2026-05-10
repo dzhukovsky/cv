@@ -25,9 +25,7 @@ export default function App() {
     }
     window.addEventListener('popstate', onPop)
 
-    // Internal link clicks: any <a data-route> navigates without full reload.
     const onClick = (e: MouseEvent) => {
-      // Ignore modifier-clicks (open in new tab etc.)
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
       const target = e.target as HTMLElement | null
       const link = target?.closest('a[data-route]') as HTMLAnchorElement | null
