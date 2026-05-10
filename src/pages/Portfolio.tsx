@@ -40,16 +40,16 @@ import {
 	Tag,
 } from "@/components/ui/fluent";
 import {
-	aggregateTechnologies,
 	cv,
 	formatDuration,
 	formatMonths,
 	formatPeriod,
+	formatYearMonth,
 	formatYears,
 	pickLogo,
 } from "@/data/cv";
 
-const ALL_TECHNOLOGIES = aggregateTechnologies(cv);
+const ALL_TECHNOLOGIES = cv.allSkills;
 const MAX_PRODUCTION_YEARS = Math.floor(
 	Math.max(
 		...ALL_TECHNOLOGIES.filter((t) => t.source === "production").map(
@@ -637,12 +637,13 @@ function ExperienceRow({
 
 /* ============================== Skills ============================== */
 
-const groupMeta: Record<string, { icon: typeof Cpu; label: string }> = {
-	Backend: { icon: Cpu, label: "Backend" },
-	Frontend: { icon: Code2, label: "Frontend" },
-	Data: { icon: Database, label: "Data" },
-	Cloud: { icon: Cloud, label: "Cloud" },
-	DevOps: { icon: Wrench, label: "DevOps" },
+// Keyed by tech-group id (matches `cv.techGroups` keys and `Skill.group`).
+const groupMeta: Record<string, { icon: typeof Cpu }> = {
+	backend: { icon: Cpu },
+	frontend: { icon: Code2 },
+	data: { icon: Database },
+	cloud: { icon: Cloud },
+	devops: { icon: Wrench },
 };
 
 function Skills() {
@@ -783,15 +784,13 @@ function Skills() {
 	);
 }
 
+// Group key matches the tech-group id; display name comes from `cv.techGroups[id]`.
 const PREFERRED_STACK: { group: string; items: string[] }[] = [
-	{ group: "Backend", items: [".NET", "ASP.NET Core", "Aspire"] },
-	{ group: "Cloud", items: ["Azure-native", "Microsoft Fabric"] },
-	{ group: "Data", items: ["MS-SQL", "Cosmos DB", "Redis", "Kusto"] },
-	{ group: "DevOps", items: ["Azure DevOps", "GitHub", "Helm", "Bicep"] },
-	{
-		group: "Frontend",
-		items: ["React", "TypeScript", "Vite", "Bun"],
-	},
+	{ group: "backend", items: [".NET", "ASP.NET Core", "Aspire"] },
+	{ group: "cloud", items: ["Azure-native", "Microsoft Fabric"] },
+	{ group: "data", items: ["MS-SQL", "Cosmos DB", "Redis", "Kusto"] },
+	{ group: "devops", items: ["Azure DevOps", "GitHub", "Helm", "Bicep"] },
+	{ group: "frontend", items: ["React", "TypeScript", "Vite", "Bun"] },
 ];
 
 function PreferredStack() {
@@ -811,8 +810,7 @@ function PreferredStack() {
 			</div>
 			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-5">
 				{PREFERRED_STACK.map(({ group, items }) => {
-					const meta = groupMeta[group];
-					const Icon = meta?.icon ?? Cpu;
+					const Icon = groupMeta[group]?.icon ?? Cpu;
 					return (
 						<div key={group}>
 							<div
@@ -821,7 +819,7 @@ function PreferredStack() {
 							>
 								<Icon size={13} style={{ color: "var(--fl-fg-muted)" }} />
 								<h4 className="text-[12px] font-semibold tracking-tight">
-									{group}
+									{cv.techGroups[group] ?? group}
 								</h4>
 							</div>
 							<div className="flex flex-wrap gap-1.5">
@@ -841,12 +839,13 @@ function PreferredStack() {
 
 /* ============================== Tech Radar + Density ============================== */
 
+// Keyed by tech-group id (matches `Skill.group` / `AggregatedSkill.group`).
 const CATEGORY_COLORS: Record<string, string> = {
-	Backend: "#0F6CBD",
-	Data: "#059669",
-	Cloud: "#9333EA",
-	DevOps: "#EA580C",
-	Frontend: "#0891B2",
+	backend: "#0F6CBD",
+	data: "#059669",
+	cloud: "#9333EA",
+	devops: "#EA580C",
+	frontend: "#0891B2",
 };
 
 type CategoryDensity = {
@@ -938,7 +937,7 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 						className="inline-block h-2 w-2 rounded-full"
 						style={{ background: cat.color }}
 					/>
-					{cat.name}
+					{cv.techGroups[cat.name] ?? cat.name}
 				</span>
 				<span
 					className="text-[10.5px] tabular-nums"
@@ -1009,19 +1008,12 @@ type RadarPoint = {
 	count: number;
 };
 
-const RADAR_SHORT_NAMES: Record<string, string> = {
-	Backend: "Backend",
-	Frontend: "Frontend",
-	Data: "Data",
-	Cloud: "Cloud",
-	DevOps: "DevOps",
-};
-
 // Sorted so the two strongest vectors (Backend, DevOps) sit adjacent at top —
 // the polygon leans into one quadrant instead of forming a symmetric pentagon.
 // Frontend goes at lower-left (more horizontal room) and Data at upper-left
-// (cramped — short label fits there).
-const RADAR_ORDER = ["Backend", "DevOps", "Cloud", "Frontend", "Data"];
+// (cramped — short label fits there). Tech-group ids; display names come
+// from `cv.techGroups[id]`.
+const RADAR_ORDER = ["backend", "devops", "cloud", "frontend", "data"];
 
 function computeGroupRates(): RadarPoint[] {
 	const currentYear = new Date().getFullYear();
@@ -1049,7 +1041,7 @@ function computeGroupRates(): RadarPoint[] {
 	return Array.from(groups.entries())
 		.map(([name, g]) => ({
 			name,
-			shortName: RADAR_SHORT_NAMES[name] ?? name,
+			shortName: cv.techGroups[name] ?? name,
 			rate: +((g.sum / total) * 100).toFixed(1),
 			rawYears: +g.years.toFixed(1),
 			count: g.count,
@@ -1218,7 +1210,7 @@ function RadarChart({
 									background: CATEGORY_COLORS[d.name] ?? "var(--fl-brand)",
 								}}
 							/>
-							<span className="truncate">{d.name}</span>
+							<span className="truncate">{d.shortName}</span>
 						</span>
 						<span
 							className="tabular-nums"
@@ -1247,13 +1239,11 @@ function Certifications() {
 			/>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 				{cv.certifications.map((c) => {
-					const issued = parseYM(c.issued);
-					const expires = c.expires ? parseYM(c.expires) : null;
-					const valid = !expires || expires >= today;
+					const valid = !c.expires || c.expires >= today;
 					let pct = 100;
-					if (issued && expires) {
-						const total = expires.getTime() - issued.getTime();
-						const used = today.getTime() - issued.getTime();
+					if (c.expires) {
+						const total = c.expires.getTime() - c.issued.getTime();
+						const used = today.getTime() - c.issued.getTime();
 						pct = Math.max(0, Math.min(100, ((total - used) / total) * 100));
 					}
 					return (
@@ -1302,7 +1292,7 @@ function Certifications() {
 								>
 									{c.about}
 								</p>
-								{expires ? (
+								{c.expires ? (
 									<div className="mt-4">
 										<div
 											className="flex items-center justify-between text-[10.5px] uppercase tracking-[0.12em] mb-1.5 font-medium"
@@ -1310,7 +1300,7 @@ function Certifications() {
 										>
 											<span>{valid ? "Validity" : "Expired"}</span>
 											<span className="tabular-nums">
-												{c.issued} → {c.expires}
+												{formatYearMonth(c.issued)} → {formatYearMonth(c.expires)}
 											</span>
 										</div>
 										<ProgressBar
@@ -1330,7 +1320,7 @@ function Certifications() {
 											color: "var(--fl-fg-muted)",
 										}}
 									>
-										<span>Issued {c.issued}</span>
+										<span>Issued {formatYearMonth(c.issued)}</span>
 										<Tag variant="success">No expiration</Tag>
 									</div>
 								)}
@@ -1341,11 +1331,6 @@ function Certifications() {
 			</div>
 		</Section>
 	);
-}
-
-function parseYM(s: string): Date {
-	const [y, m] = s.split("-").map(Number);
-	return new Date(y, (m ?? 1) - 1, 1);
 }
 
 /* ============================== Education + Languages ============================== */
