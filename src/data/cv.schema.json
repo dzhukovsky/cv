@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cv.dzhukovsky.me/schemas/cv.schema.json",
   "title": "CV",
-  "description": "Schema for Dmitry Zhukovsky's CV data file (cv.yml).",
+  "description": "Schema for Dmitry Zhukovsky's CV data file (cv.yml). Org/group enums and related properties are auto-synced from cv.yml by scripts/sync-cv-schema.mjs (bun run gen:schema, also auto-runs on dev/build).",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -18,25 +18,48 @@
     "languages",
     "orgs",
     "techGroups",
-    "technologies",
+    "skills",
     "projects",
     "certifications",
     "education",
-    "softSkills"
+    "strengths"
   ],
   "properties": {
-    "fullName": { "type": "string", "minLength": 1 },
-    "position": { "type": "string", "minLength": 1 },
-    "location": { "$ref": "#/$defs/Location" },
+    "fullName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "position": {
+      "type": "string",
+      "minLength": 1
+    },
+    "location": {
+      "$ref": "#/$defs/Location"
+    },
     "contractTypes": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 },
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
       "minItems": 1
     },
-    "email": { "type": "string", "format": "email" },
-    "linkedIn": { "type": "string", "minLength": 1 },
-    "github": { "type": "string", "minLength": 1 },
-    "portfolio": { "type": "string", "minLength": 1 },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "linkedIn": {
+      "type": "string",
+      "minLength": 1
+    },
+    "github": {
+      "type": "string",
+      "minLength": 1
+    },
+    "portfolio": {
+      "type": "string",
+      "minLength": 1
+    },
     "summary": {
       "type": "string",
       "minLength": 1,
@@ -44,46 +67,77 @@
     },
     "languages": {
       "type": "array",
-      "items": { "$ref": "#/$defs/Language" },
+      "items": {
+        "$ref": "#/$defs/Language"
+      },
       "minItems": 1
     },
     "orgs": {
       "type": "array",
       "description": "Single source of truth for organizations (companies, universities, cert issuers). Each entry has one id-key whose value is the display name, plus a `logo` and optional `url`. Referenced by id from `projects[].company`, `education[].school`, `certifications[].issuer`.",
-      "items": { "$ref": "#/$defs/OrgDef" },
+      "items": {
+        "$ref": "#/$defs/OrgDef"
+      },
       "minItems": 1
     },
     "techGroups": {
       "type": "object",
-      "description": "Single source of truth for tech-group id → display name. Referenced by id-key in `technologies[]` and project `tech[]`.",
+      "description": "Single source of truth for tech-group id → display name. Referenced by id-key in `technologies[]` and project `tech[]`. Properties auto-synced from cv.yml.",
       "additionalProperties": false,
-      "minProperties": 1,
-      "patternProperties": {
-        "^[a-z][a-z0-9-]*$": { "type": "string", "minLength": 1 }
+      "required": [
+        "backend",
+        "frontend",
+        "data",
+        "cloud",
+        "devops"
+      ],
+      "properties": {
+        "backend": {
+          "const": "Backend"
+        },
+        "frontend": {
+          "const": "Frontend"
+        },
+        "data": {
+          "const": "Data"
+        },
+        "cloud": {
+          "const": "Cloud"
+        },
+        "devops": {
+          "const": "DevOps"
+        }
       }
     },
-    "technologies": {
-      "type": "array",
-      "description": "Top-level self-taught technologies, grouped by tech group. Each entry has `group: <id>` and `items`.",
-      "items": { "$ref": "#/$defs/SelfTaughtTechGroup" }
+    "skills": {
+      "$ref": "#/$defs/SelfTaughtTechGroup",
+      "description": "Top-level self-taught skills, grouped by tech-group id."
     },
     "projects": {
       "type": "array",
-      "items": { "$ref": "#/$defs/Project" },
+      "items": {
+        "$ref": "#/$defs/Project"
+      },
       "minItems": 1
     },
     "certifications": {
       "type": "array",
-      "items": { "$ref": "#/$defs/Certification" }
+      "items": {
+        "$ref": "#/$defs/Certification"
+      }
     },
     "education": {
       "type": "array",
-      "items": { "$ref": "#/$defs/Education" },
+      "items": {
+        "$ref": "#/$defs/Education"
+      },
       "minItems": 1
     },
-    "softSkills": {
+    "strengths": {
       "type": "array",
-      "items": { "$ref": "#/$defs/SoftSkill" }
+      "items": {
+        "$ref": "#/$defs/Strength"
+      }
     }
   },
   "$defs": {
@@ -92,26 +146,57 @@
       "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
       "description": "Year-month in YYYY-MM format (month-granular)."
     },
-    "OrgId": {
+    "Duration": {
       "type": "string",
-      "pattern": "^[a-z][a-z0-9-]*$",
-      "description": "Lowercase id referencing an organization defined in `orgs`. Schema only validates the format; existence of the reference must be checked at load time."
+      "pattern": "^\\s*(\\d+\\s*y\\s*\\d+\\s*m|\\d+\\s*y|\\d+\\s*m)\\s*$",
+      "description": "Duration in `Ny` and/or `Nm` format. Whitespace ignored. Examples: `1y`, `6m`, `1y6m`, `2y 3m`."
+    },
+    "TechGroupId": {
+      "type": "string",
+      "enum": [
+        "backend",
+        "frontend",
+        "data",
+        "cloud",
+        "devops"
+      ],
+      "description": "Id of a tech group defined in `techGroups`. Enum auto-synced from cv.yml."
     },
     "LanguageLevel": {
       "type": "string",
-      "enum": ["A1", "A2", "B1", "B2", "C1", "C2", "Native"]
+      "enum": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "Native"
+      ]
     },
     "LogoSrc": {
       "description": "Either a single image path, or per-theme paths for light/dark.",
       "oneOf": [
-        { "type": "string", "minLength": 1 },
+        {
+          "type": "string",
+          "minLength": 1
+        },
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["light", "dark"],
+          "required": [
+            "light",
+            "dark"
+          ],
           "properties": {
-            "light": { "type": "string", "minLength": 1 },
-            "dark": { "type": "string", "minLength": 1 }
+            "light": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dark": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         }
       ]
@@ -119,92 +204,193 @@
     "Location": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["city", "country", "countryCode"],
+      "required": [
+        "city",
+        "country"
+      ],
       "properties": {
-        "city": { "type": "string", "minLength": 1 },
-        "country": { "type": "string", "minLength": 1 },
-        "countryCode": {
+        "city": {
           "type": "string",
-          "pattern": "^[A-Z]{2}$",
-          "description": "ISO 3166-1 alpha-2 country code."
+          "minLength": 1
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1
         }
       }
     },
     "Language": {
       "type": "object",
-      "description": "One entry has the ISO 639-1 code as the property name (its value is the language name in English), plus a `level`.",
-      "required": ["level"],
-      "properties": {
-        "level": { "$ref": "#/$defs/LanguageLevel" }
-      },
-      "patternProperties": {
-        "^[a-z]{2}$": { "type": "string", "minLength": 1 }
-      },
       "additionalProperties": false,
-      "minProperties": 2,
-      "maxProperties": 2
+      "required": [
+        "name",
+        "level"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "$ref": "#/$defs/LanguageLevel"
+        }
+      }
     },
     "OrgDef": {
       "type": "object",
-      "description": "One organization entry — single id-key (e.g. `fotando`) whose value is the display name (e.g. `Fotando Global`), plus a `logo` and optional `url`.",
+      "description": "Organization definition — display name, logo, optional url. In `orgs[]` each entry carries a YAML anchor (`&id`); fields that reference an org use aliases (`*id`) and the parser inlines this object.",
       "additionalProperties": false,
-      "required": ["logo"],
+      "required": [
+        "name",
+        "logo"
+      ],
       "properties": {
-        "url": { "type": "string", "format": "uri" },
-        "logo": { "$ref": "#/$defs/LogoSrc" }
-      },
-      "patternProperties": {
-        "^(?!url$|logo$)[a-z][a-z0-9-]*$": { "type": "string", "minLength": 1 }
-      },
-      "minProperties": 2,
-      "maxProperties": 3
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "logo": {
+          "$ref": "#/$defs/LogoSrc"
+        }
+      }
     },
     "ProjectTechItem": {
-      "type": "object",
-      "description": "A technology used inside a project. Group is implied by the parent entry. Missing start/end inherit from the project's start/end.",
-      "additionalProperties": false,
-      "required": ["name"],
-      "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "start": { "$ref": "#/$defs/YearMonth" },
-        "end": { "$ref": "#/$defs/YearMonth" }
-      }
+      "description": "A technology used inside a project. Group is implied by the parent entry. Missing start/end inherit from the project's start/end. Shorthand: a plain string is treated as `{ name: <string> }`.",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "since": {
+              "$ref": "#/$defs/YearMonth",
+              "description": "Optional override of the project's `start` for this skill. Must be within the project's bounds (validated at load time)."
+            },
+            "duration": {
+              "$ref": "#/$defs/Duration",
+              "description": "Optional override of the project's `end` for this skill — how long it was used. Must keep the resulting period within the project's bounds (validated at load time)."
+            }
+          }
+        }
+      ]
     },
     "SelfTaughtTechItem": {
       "type": "object",
-      "description": "A self-taught technology inside a top-level tech-group entry. `start` is required; missing `end` means ongoing. Group is implied by the parent entry; source is implicitly `self-taught`.",
+      "description": "A self-taught skill inside a top-level tech-group entry. `since` is required; missing `duration` means ongoing. Group is implied by the parent entry; source is implicitly `self-taught`.",
       "additionalProperties": false,
-      "required": ["name", "start"],
+      "required": [
+        "name",
+        "since"
+      ],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "start": { "$ref": "#/$defs/YearMonth" },
-        "end": { "$ref": "#/$defs/YearMonth" }
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "since": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "duration": {
+          "$ref": "#/$defs/Duration"
+        }
       }
     },
     "ProjectTechGroup": {
       "type": "object",
-      "description": "Project techs grouped under one tech-group id (must match an entry in `techGroups`). Single id-key whose value is the list of techs.",
+      "description": "Project techs keyed by tech-group id; each value is the list of techs in that group. id-key slots auto-synced from cv.yml.",
       "additionalProperties": false,
       "minProperties": 1,
-      "maxProperties": 1,
-      "patternProperties": {
-        "^[a-z][a-z0-9-]*$": {
+      "properties": {
+        "backend": {
           "type": "array",
-          "items": { "$ref": "#/$defs/ProjectTechItem" },
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "frontend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "cloud": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "devops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
           "minItems": 1
         }
       }
     },
     "SelfTaughtTechGroup": {
       "type": "object",
-      "description": "Self-taught techs grouped under one tech-group id (must match an entry in `techGroups`). Single id-key whose value is the list of techs.",
+      "description": "Self-taught techs keyed by tech-group id; each value is the list of techs in that group. id-key slots auto-synced from cv.yml.",
       "additionalProperties": false,
       "minProperties": 1,
-      "maxProperties": 1,
-      "patternProperties": {
-        "^[a-z][a-z0-9-]*$": {
+      "properties": {
+        "backend": {
           "type": "array",
-          "items": { "$ref": "#/$defs/SelfTaughtTechItem" },
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "frontend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "cloud": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "devops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
           "minItems": 1
         }
       }
@@ -220,29 +406,48 @@
         "areas",
         "description",
         "contributions",
-        "tech"
+        "skills"
       ],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "company": { "$ref": "#/$defs/OrgId" },
-        "position": { "type": "string", "minLength": 1 },
-        "start": { "$ref": "#/$defs/YearMonth" },
-        "end": { "$ref": "#/$defs/YearMonth" },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company": {
+          "$ref": "#/$defs/OrgDef"
+        },
+        "position": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "end": {
+          "$ref": "#/$defs/YearMonth"
+        },
         "areas": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "minItems": 1
         },
-        "description": { "type": "string", "minLength": 1 },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
         "contributions": {
           "type": "array",
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "minItems": 1
         },
-        "tech": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/ProjectTechGroup" },
-          "minItems": 1
+        "skills": {
+          "$ref": "#/$defs/ProjectTechGroup"
         }
       }
     },
@@ -259,35 +464,82 @@
         "credentialUrl"
       ],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "code": { "type": "string", "minLength": 1 },
-        "issuer": { "$ref": "#/$defs/OrgId" },
-        "about": { "type": "string", "minLength": 1 },
-        "issued": { "$ref": "#/$defs/YearMonth" },
-        "expires": { "$ref": "#/$defs/YearMonth" },
-        "credentialId": { "type": "string", "minLength": 1 },
-        "credentialUrl": { "type": "string", "format": "uri" }
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuer": {
+          "$ref": "#/$defs/OrgDef"
+        },
+        "about": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "expires": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "credentialId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "credentialUrl": {
+          "type": "string",
+          "format": "uri"
+        }
       }
     },
     "Education": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["school", "degree", "field", "start"],
+      "required": [
+        "school",
+        "degree",
+        "field",
+        "start"
+      ],
       "properties": {
-        "school": { "$ref": "#/$defs/OrgId" },
-        "degree": { "type": "string", "minLength": 1 },
-        "field": { "type": "string", "minLength": 1 },
-        "start": { "$ref": "#/$defs/YearMonth" },
-        "end": { "$ref": "#/$defs/YearMonth" }
+        "school": {
+          "$ref": "#/$defs/OrgDef"
+        },
+        "degree": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "end": {
+          "$ref": "#/$defs/YearMonth"
+        }
       }
     },
-    "SoftSkill": {
+    "Strength": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "description"],
+      "required": [
+        "name",
+        "description"
+      ],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 }
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     }
   }
