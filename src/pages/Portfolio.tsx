@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/fluent";
 import {
 	cv,
+	type ExpertiseIcon,
 	formatDuration,
 	formatMonths,
 	formatPeriod,
@@ -49,6 +50,14 @@ import {
 	pickLogo,
 	yearsOfExperience,
 } from "@/data/cv";
+
+// Icon-key (from cv.yml `about.expertise[].icon`) → lucide component.
+const ABOUT_EXPERTISE_ICONS: Record<ExpertiseIcon, typeof Cpu> = {
+	cpu: Cpu,
+	cloud: Cloud,
+	database: Database,
+	workflow: Workflow,
+};
 
 const ALL_TECHNOLOGIES = cv.allSkills;
 const MAX_PRODUCTION_YEARS = Math.floor(
@@ -324,39 +333,14 @@ function SideRail() {
 /* ============================== About ============================== */
 
 function About() {
-	const strengths: { title: string; description: string; icon: typeof Cpu }[] =
-		[
-			{
-				title: "Backend architecture",
-				description:
-					"C#, ASP.NET Core, EF Core. Modular monoliths and microservices that survive production.",
-				icon: Cpu,
-			},
-			{
-				title: "Cloud & DevOps",
-				description:
-					"AKS, Service Bus, Azure App Service, Application Insights. Azure DevOps, Helm.",
-				icon: Cloud,
-			},
-			{
-				title: "Data & integrations",
-				description:
-					"MS-SQL, Redis, Kusto, Microsoft Fabric. Banks and payment providers.",
-				icon: Database,
-			},
-			{
-				title: "CI/CD & deployment ownership",
-				description: "Pipelines, automation, production-deployment ownership.",
-				icon: Workflow,
-			},
-		];
+	const { title, description, expertise } = cv.about;
 
 	return (
 		<Section id="about">
 			<SectionHeader
 				eyebrow="01 — About"
-				title="Built quietly. Ships loudly."
-				description="Engineer for the kind of backend that runs on a Sunday morning."
+				title={title}
+				description={description}
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -409,8 +393,8 @@ function About() {
 				</Card>
 
 				<div className="col-span-12 md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
-					{strengths.map((s) => {
-						const Icon = s.icon;
+					{expertise.map((s) => {
+						const Icon = ABOUT_EXPERTISE_ICONS[s.icon];
 						return (
 							<Card key={s.title} className="p-5" hoverable reveal>
 								<Icon

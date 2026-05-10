@@ -18,6 +18,7 @@
     "availability",
     "tagline",
     "summary",
+    "about",
     "languages",
     "orgs",
     "techGroups",
@@ -82,6 +83,10 @@
       "type": "string",
       "minLength": 1,
       "description": "Multi-paragraph intro text. Use a YAML literal block (`|`) — each line becomes a paragraph."
+    },
+    "about": {
+      "$ref": "#/$defs/AboutSection",
+      "description": "About section — heading copy + four expertise-area highlights."
     },
     "languages": {
       "type": "array",
@@ -539,6 +544,51 @@
         },
         "end": {
           "$ref": "#/$defs/YearMonth"
+        }
+      }
+    },
+    "ExpertiseIcon": {
+      "type": "string",
+      "enum": ["cpu", "cloud", "database", "workflow"],
+      "description": "Icon key — resolved to a lucide-react component by the React layer."
+    },
+    "ExpertiseCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "description", "icon"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "$ref": "#/$defs/ExpertiseIcon"
+        }
+      }
+    },
+    "AboutSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "description", "expertise"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expertise": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExpertiseCard"
+          },
+          "minItems": 1
         }
       }
     },

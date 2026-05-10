@@ -27,6 +27,26 @@ summary: |
   I build production .NET systems on Azure — across telecom, fintech, publishing, and martech. Strong on backend, reach across the stack.
   I'm invested in the systems I build, not just in the tickets I close — what holds up under load, what's painful to maintain, what the next engineer will curse me for.
 
+# About section — heading copy + the four expertise-area highlights.
+# `icon` is a string key resolved to a lucide-react icon in the React layer
+# (see ABOUT_EXPERTISE_ICONS in Portfolio.tsx).
+about:
+  title: Built quietly. Ships loudly.
+  description: Engineer for the kind of backend that runs on a Sunday morning.
+  expertise:
+    - title: Backend architecture
+      description: C#, ASP.NET Core, EF Core. Modular monoliths and microservices that survive production.
+      icon: cpu
+    - title: Cloud & DevOps
+      description: AKS, Service Bus, Azure App Service, Application Insights. Azure DevOps, Helm.
+      icon: cloud
+    - title: Data & integrations
+      description: MS-SQL, Redis, Kusto, Microsoft Fabric. Banks and payment providers.
+      icon: database
+    - title: CI/CD & deployment ownership
+      description: Pipelines, automation, production-deployment ownership.
+      icon: workflow
+
 languages:
   - name: English
     level: B2

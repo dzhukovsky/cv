@@ -75,6 +75,20 @@ export type Education = {
 
 export type Strength = { name: string; description: string };
 
+export type ExpertiseIcon = "cpu" | "cloud" | "database" | "workflow";
+
+export type ExpertiseCard = {
+	title: string;
+	description: string;
+	icon: ExpertiseIcon;
+};
+
+export type AboutSection = {
+	title: string;
+	description: string;
+	expertise: ExpertiseCard[];
+};
+
 export type AggregatedSkill = {
 	name: string;
 	group: string;
@@ -101,6 +115,7 @@ export type CV = {
 	availability: string;
 	tagline: string;
 	summary: string[];
+	about: AboutSection;
 	languages: Language[];
 	orgs: Org[];
 	/** Lookup: tech-group id (e.g. `"backend"`) → display name (e.g. `"Backend"`). */
@@ -169,6 +184,7 @@ type RawCV = {
 	availability: string;
 	tagline: string;
 	summary: string;
+	about: AboutSection;
 	languages: Language[];
 	orgs: Org[];
 	techGroups: Record<string, string>;
@@ -402,6 +418,7 @@ export const cv: CV = {
 		.split("\n")
 		.map((s) => s.trim())
 		.filter(Boolean),
+	about: raw.about,
 	languages: raw.languages,
 	orgs: raw.orgs,
 	techGroups: raw.techGroups,
