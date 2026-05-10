@@ -10,7 +10,6 @@ import {
 	Cpu,
 	Database,
 	Download,
-	GitBranch,
 	Globe,
 	GraduationCap,
 	HeartHandshake,
@@ -20,7 +19,6 @@ import {
 	Mail,
 	MapPin,
 	Radar,
-	ShieldCheck,
 	Sparkles,
 	Workflow,
 	Wrench,
@@ -462,7 +460,7 @@ function Experience() {
 				<div className="space-y-3">
 					{cv.projects.map((p, i) => (
 						<ExperienceRow
-							key={`${p.company}-${p.start}-${p.name}`}
+							key={`${p.company.name}-${p.start}-${p.name}`}
 							p={p}
 							index={i}
 						/>
@@ -514,20 +512,20 @@ function ExperienceRow({
 					className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-center gap-4 cursor-pointer"
 				>
 					<img
-						src={pickLogo(p.companyLogo, theme)}
-						alt={p.company}
+						src={pickLogo(p.company.logo, theme)}
+						alt={p.company.name}
 						className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 					/>
 					<div className="flex-1 min-w-0 flex flex-col">
 						<div className="flex items-baseline flex-wrap gap-x-2 gap-y-1.5">
 							<a
-								href={p.companyUrl}
+								href={p.company.url}
 								target="_blank"
 								rel="noreferrer"
 								onClick={(e) => e.stopPropagation()}
 								className="text-[13px] font-semibold hover:underline"
 							>
-								{p.company}
+								{p.company.name}
 							</a>
 							<span
 								className="text-[12.5px]"
@@ -610,24 +608,24 @@ function ExperienceRow({
 							className="mt-5 text-[10.5px] uppercase tracking-[0.16em] font-semibold"
 							style={{ color: "var(--fl-brand-hover)" }}
 						>
-							Stack ({p.tech.length})
+							Stack ({p.skills.length})
 						</div>
 						<div className="mt-2.5 flex flex-wrap gap-1.5">
-							{p.tech.map((t) => (
-								<Tag key={t.name} variant="outline">
-									{t.name}
+							{p.skills.map((s) => (
+								<Tag key={s.name} variant="outline">
+									{s.name}
 								</Tag>
 							))}
 						</div>
 
 						<a
-							href={p.companyUrl}
+							href={p.company.url}
 							target="_blank"
 							rel="noreferrer"
 							className="mt-5 inline-flex items-center gap-1 text-[12.5px] font-medium hover:underline"
 							style={{ color: "var(--fl-brand-hover)" }}
 						>
-							Visit {p.company}
+							Visit {p.company.name}
 							<ArrowUpRight size={13} />
 						</a>
 					</div>
@@ -647,16 +645,11 @@ const groupMeta: Record<string, { icon: typeof Cpu; label: string }> = {
 	DevOps: { icon: Wrench, label: "DevOps" },
 };
 
-// VCS noise — Git is universal, SVN/TfVC are historical. Bars still sum their
-// years, but the chip-cloud index hides them so DevOps doesn't read inflated.
-const VCS_NAMES = new Set(["Git", "SVN", "TfVC"]);
-
 function Skills() {
 	const densities = useMemo(
 		() => computeCategoryDensity().sort((a, b) => b.totalYears - a.totalYears),
 		[],
 	);
-	const groups = useMemo(() => densities.map((d) => d.name), [densities]);
 	const maxYears = useMemo(
 		() => Math.max(...densities.map((c) => c.totalYears)),
 		[densities],
@@ -1275,8 +1268,8 @@ function Certifications() {
 								<div className="flex items-start justify-between">
 									<div className="flex items-center gap-2.5">
 										<img
-											src={pickLogo(c.issuerLogo, theme)}
-											alt={c.issuer}
+											src={pickLogo(c.issuer.logo, theme)}
+											alt={c.issuer.name}
 											className="h-8 w-8 rounded object-cover"
 										/>
 										<div>
@@ -1284,7 +1277,7 @@ function Certifications() {
 												className="text-[11px]"
 												style={{ color: "var(--fl-fg-muted)" }}
 											>
-												{c.issuer}
+												{c.issuer.name}
 											</div>
 											<div
 												className="text-[12.5px] font-semibold tabular-nums"
@@ -1372,20 +1365,20 @@ function EducationLanguages() {
 						Education
 					</h3>
 					{cv.education.map((e) => (
-						<div key={e.school} className="flex items-start gap-4">
+						<div key={e.school.name} className="flex items-start gap-4">
 							<img
-								src={pickLogo(e.schoolLogo, theme)}
-								alt={e.school}
+								src={pickLogo(e.school.logo, theme)}
+								alt={e.school.name}
 								className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 							/>
 							<div className="flex-1 min-w-0 flex flex-col items-start">
 								<a
-									href={e.schoolUrl}
+									href={e.school.url}
 									target="_blank"
 									rel="noreferrer"
 									className="text-[15px] font-semibold tracking-tight hover:underline"
 								>
-									{e.school}
+									{e.school.name}
 								</a>
 								<div
 									className="text-[13px] mt-0.5"
@@ -1412,7 +1405,7 @@ function EducationLanguages() {
 						{cv.languages.map((l) => {
 							const pct = levelPct(l.level);
 							return (
-								<div key={l.code}>
+								<div key={l.name}>
 									<div className="flex items-baseline justify-between mb-1">
 										<span className="text-[13.5px] font-medium">{l.name}</span>
 										<Tag variant={l.level === "Native" ? "brand" : "outline"}>
@@ -1460,7 +1453,7 @@ function SoftSkills() {
 				description="Three habits that keep showing up."
 			/>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-				{cv.softSkills.map((s, i) => (
+				{cv.strengths.map((s, i) => (
 					<Card key={s.name} className="p-6 h-full" reveal hoverable>
 						<div
 							className="text-[11px] font-semibold tracking-[0.18em] uppercase tabular-nums"
