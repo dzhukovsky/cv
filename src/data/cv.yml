@@ -1,0 +1,439 @@
+# yaml-language-server: $schema=./cv.schema.json
+
+fullName: Dmitry Zhukovsky
+position: .NET Software Engineer
+location:
+  city: Warsaw
+  country: Poland
+  countryCode: PL
+contractTypes:
+  - Remote
+email: dmitry.zhukovsky@outlook.com
+linkedIn: linkedin.com/in/dmitry-zhukovsky
+github: github.com/dzhukovsky
+portfolio: cv.dzhukovsky.me
+
+summary: |
+  I build production .NET systems on Azure — across telecom, fintech, publishing, and martech. Strong on backend, reach across the stack.
+  I'm invested in the systems I build, not just in the tickets I close — what holds up under load, what's painful to maintain, what the next engineer will curse me for.
+
+languages:
+  - en: English
+    level: B2
+  - pl: Polish
+    level: A1
+  - ru: Russian
+    level: Native
+
+# Single source of truth for organizations (companies, universities, cert issuers).
+# Referenced by id from `projects[].company`, `education[].school`, `certifications[].issuer`.
+orgs:
+  - fotando: Fotando Global
+    url: https://www.fotando.global
+    logo: /fotando-logo.png
+
+  - exadel: Exadel
+    url: https://exadel.com
+    logo: /exadel-logo.svg
+
+  - lightpoint: Lightpoint Global
+    url: https://lightpointglobal.com
+    logo: /lightpoint-global-logo.png
+
+  - caspel: Caspel LLC
+    url: https://caspel.com
+    logo:
+      light: /caspel-logo-light.png
+      dark:  /caspel-logo-dark.png
+
+  - bntu: Belarusian National Technical University
+    url: https://bntu.by/en
+    logo: /bntu-logo.png
+
+  - microsoft: Microsoft
+    logo: /microsoft-logo.ico
+
+# Single source of truth for tech-group id → display name.
+# Referenced by id-key in `technologies[]` and project `tech[]`.
+techGroups:
+  backend:  Backend
+  frontend: Frontend
+  data:     Data
+  cloud:    Cloud
+  devops:   DevOps
+
+# Top-level self-taught technologies — never tied to a real project.
+# `source: self-taught` is implicit by virtue of being here.
+# `start` is required; missing `end` means ongoing.
+technologies:
+  - backend:
+      - name: Python 3
+        start: 2024-01
+        end: 2025-12
+      - name: Roslyn Analyzers
+        start: 2023-01
+        end: 2023-12
+
+  - frontend:
+      - name: Blazor
+        start: 2020-01
+        end: 2020-12
+      - name: WPF
+        start: 2018-01
+        end: 2021-12
+      - name: WinUI 3
+        start: 2022-01
+        end: 2022-12
+      - name: Microsoft Fluent 2
+        start: 2024-01
+        end: 2024-12
+      - name: Azure DevOps SDK
+        start: 2023-01
+        end: 2023-12
+
+  - cloud:
+      - name: Azure Functions
+        start: 2024-01
+        end: 2024-12
+      - name: Azure Static Web Apps
+        start: 2024-01
+        end: 2024-12
+
+projects:
+  - name: Cloud Contact-Center & Communications Platform
+    company: fotando
+    position: Senior .NET Backend Engineer
+    start: 2024-11
+    areas: 
+      - Telecom
+      - Cloud Communications
+    description: >
+      Enterprise SaaS ecosystem for unified customer communications and digital
+      telephony. Integrates voice, messaging, workflow automation, compliance
+      controls, and analytics into Microsoft-based business environments. Focus
+      on secure operations, interoperability, and scalable customer engagement
+      at global enterprise level.
+    contributions:
+      - Architected an end-to-end shift in analytics delivery — events to ADX through dynamic routing, real-time dashboards via managed SignalR, per-tenant Fabric shortcuts for customer query access without breaking multi-tenant isolation.
+      - Owned planning and execution of production deployments — became the team's go-to for release management.
+      - Built shared NuGet packages standardizing .NET microservice baselines — fewer misconfigurations, faster setup.
+      - Built a custom EF Core migrations tool, decoupling database deploys from application releases.
+      - Centralized CI/CD config across services through Helm templates, Azure DevOps pipelines, and shared Library variables.
+    tech:
+      - backend:
+          - name: C#
+          - name: .NET
+          - name: ASP.NET Core
+          - name: Entity Framework
+          - name: SignalR
+          - name: xUnit
+      - data:
+          - name: MS-SQL
+          - name: Kusto
+          - name: Redis
+      - cloud:
+          - name: Kubernetes
+          - name: Application Insights
+          - name: Azure App Service
+          - name: Azure Service Bus
+          - name: Azure Storage
+            end: 2025-10
+          - name: Microsoft Fabric
+      - devops:
+          - name: Helm
+          - name: YAML
+            end: 2025-10
+          - name: Azure DevOps
+          - name: Git
+
+  - name: Enterprise Tax Allocation Platform
+    company: exadel
+    position: Senior .NET Backend Engineer
+    start: 2024-11
+    areas: 
+      - Fintech
+    description: >
+      Distributed backend platform for automated financial allocations and
+      rules-driven calculations. Processes structured datasets, applies
+      configurable business logic, and generates standardized reporting outputs
+      for enterprise use. Emphasizes performance, accuracy, and maintainability
+      for long-term scalability in regulated environments.
+    contributions:
+      - Built the core data import service — performance-critical, extensible through a plugin model.
+      - Designed a reflection-free fluent mapping system (Excel-to-DTO) — chosen over a parallel team's reflection-based approach.
+      - Implemented async streaming and chunking to handle large datasets within Kubernetes pod memory limits.
+      - Onboarded 3 engineers and authored the project's primary documentation
+    tech:
+      - backend:
+          - name: C#
+          - name: .NET
+          - name: ASP.NET Core
+          - name: Entity Framework
+          - name: Python 3
+          - name: xUnit
+      - data:
+          - name: MS-SQL
+          - name: Redis
+      - cloud:
+          - name: Kubernetes
+          - name: Application Insights
+          - name: Azure API Management
+          - name: Azure Service Bus
+      - devops:
+          - name: Helm
+          - name: YAML
+            end: 2025-10
+          - name: GitHub
+          - name: Git
+
+  - name: Software Solutions for Media & Subscription Businesses
+    company: lightpoint
+    position: Middle .NET Software Engineer
+    start: 2024-03
+    end: 2024-07
+    areas: 
+      - Digital Publishing
+    description: >
+      Flexible software for subscription management, audience analytics, and
+      monetization, with self-service portals and advertising sales workflows.
+      Pre-built integrations with widely used CRMs, marketing tools, and payment
+      providers (Salesforce, HubSpot, Verifone, Google Ad Manager), plus
+      comprehensive APIs and a plugin/widget architecture.
+    contributions:
+      - Built a HubSpot integration end-to-end (frontend, backend, database) — custom fields, extensible field types, UI-configurable, with multi-system data sync.
+      - Designed the integration's data model within a legacy monolith, with a config-sharing endpoint to avoid coupling on core libraries.
+      - Owned the integration delivery — design, implementation, demos — within a small cross-functional team.
+    tech:
+      - backend:
+          - name: C#
+          - name: .NET Framework
+          - name: ASP.NET MVC
+          - name: Entity Framework
+          - name: MS Test
+      - frontend:
+          - name: HTML
+          - name: CSS
+          - name: JavaScript
+      - data:
+          - name: MS-SQL
+      - devops:
+          - name: IIS
+          - name: Azure DevOps
+          - name: Git
+
+  - name: ePayment Solution
+    company: lightpoint
+    position: Middle .NET Software Engineer
+    start: 2022-11
+    end: 2024-02
+    areas: 
+      - Fintech
+    description: >
+      Non-card payment platform used by 100+ authorized banks worldwide,
+      allowing consumers to pay in local currencies without exposing personal
+      or financial data. Integrates with bank APIs, SAP, internal databases,
+      and third-party services for fast, secure, cost-efficient transactions.
+    contributions:
+      - Integrated 7 bank APIs on a 100+ integration payment platform — HTTP, SOAP, webhooks, with per-bank encryption and signature schemes.
+      - Owned end-to-end integration patterns — idempotency, retries via cron workers, and async reconciliation alongside real-time webhook processing.
+      - Replaced Enterprise Architect with Mermaid for sequence diagrams — cut licensing cost, simplified source control, eased adoption.
+      - Standardized logging and exception handling in a shared library — fixed latent bugs across integrations beyond my own.
+      - Built bank integration backends and payment-page frontends within a team of 13 engineers.
+    tech:
+      - backend:
+          - name: C#
+          - name: .NET Framework
+          - name: .NET
+          - name: ASP.NET Core
+          - name: WCF
+          - name: Dapper
+          - name: xUnit
+          - name: Moq
+      - frontend:
+          - name: HTML
+          - name: CSS
+      - data:
+          - name: MS-SQL
+          - name: Redis
+      - cloud:
+          - name: Sumo Logic
+      - devops:
+          - name: SVN
+          - name: k6
+          - name: IIS
+          - name: Azure DevOps
+          - name: PowerShell
+
+  - name: Customer Engagement Platform
+    company: lightpoint
+    position: Junior .NET Software Engineer
+    start: 2020-02
+    end: 2022-10
+    areas: 
+      - Publishing
+      - Martech
+    description: >
+      Customizable multi-module engagement platform for leading publishers
+      (NYT, Chicago Tribune, USA Today), covering the full subscription
+      lifecycle from acquisition and conversion to retention, churn prevention,
+      and analytics. Extensive integrations with billing/payment providers and
+      Google Analytics.
+    contributions:
+      - Built an Azure DevOps extension to cascade pipeline updates across 20 customers and 70+ services — UI for overriding, cloning, and comparing pipelines.
+      - Built a public-facing import/export system for migrating from the legacy product — entity selection, progress tracking, live logs, and per-entity mapping.
+      - Owned production releases — preparation, monitoring, post-deploy investigation, and SQL DACPAC management.
+    tech:
+      - backend:
+          - name: C#
+          - name: ASP.NET
+          - name: ASP.NET Core
+          - name: Entity Framework
+          - name: .NET Framework
+          - name: .NET
+          - name: Node.js
+            end: 2021-01
+          - name: xUnit
+      - frontend:
+          - name: React
+          - name: Angular
+            end: 2020-07
+          - name: TypeScript
+          - name: SCSS
+          - name: HTML
+      - data:
+          - name: MS-SQL
+          - name: Redis
+          - name: SSAS
+            end: 2022-01
+      - cloud:
+          - name: Google BigQuery
+            end: 2020-07
+      - devops:
+          - name: TfVC
+          - name: IIS
+          - name: Azure DevOps
+
+  - name: Rental Accounting System
+    company: caspel
+    position: Junior .NET Full-Stack Developer
+    start: 2019-08
+    end: 2020-01
+    areas: 
+      - Rent
+      - Management
+      - Reporting
+    description: >
+      Tailored for management and reporting of workspace rentals. Integrates a
+      designer for accounting rental space, CRM, cash register, reporting
+      module, warehouse, and logistics. Streamlines rental processes, enhances
+      reporting accuracy, improves operational efficiency.
+    contributions:
+      - Built features across the workspace rental platform — backend services, reporting, and database design.
+      - Worked across the stack on CRM and reporting modules within a small team.
+      - Reused architectural patterns and shared utilities from previous projects on the same platform stack.
+    tech:
+      - backend:
+          - name: C#
+          - name: ASP.NET MVC
+          - name: .NET Framework
+          - name: NUnit
+      - frontend:
+          - name: HTML
+          - name: CSS
+      - data:
+          - name: MS-SQL
+          - name: SSRS
+      - devops:
+          - name: Git
+          - name: Azure DevOps
+
+  - name: Customer Manufacturing Platform
+    company: caspel
+    position: Junior .NET Full-Stack Developer
+    start: 2019-02
+    end: 2019-07
+    areas: 
+      - Manufacture
+      - Reporting
+    description: >
+      Furniture manufacturing organization platform with assembly services and
+      material supplies. Sophisticated system for material cutting dimensions,
+      material usage, work performance, and salary computations. Includes CRM,
+      cash register, reporting, warehouse, and logistics.
+    contributions:
+      - Built the material cutting designer end-to-end — visual SVG editor with curve calculations, line operations, and dimension management.
+      - Implemented SVG-to-PDF rendering with material-specific offset calculations for production-ready cut plans.
+      - Built a fluent builder for PDF generation, replacing scattered ad-hoc PDF code across the platform.
+      - Worked with clients to refine functionality based on production-floor feedback.
+    tech:
+      - backend:
+          - name: C#
+          - name: ASP.NET MVC
+          - name: .NET Framework
+          - name: Entity Framework
+          - name: NUnit
+      - frontend:
+          - name: JavaScript
+          - name: HTML
+          - name: CSS
+      - data:
+          - name: MySQL
+      - devops:
+          - name: Git
+          - name: Azure DevOps
+
+certifications:
+  - name: "Microsoft Certified: Azure Developer Associate"
+    code: AZ-204
+    issuer: microsoft
+    about: "Build end-to-end solutions in Microsoft Azure: Azure Functions, web apps, storage solutions, and more."
+    issued: 2025-11
+    expires: 2026-11
+    credentialId: D47FFA664405C85C
+    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/D47FFA664405C85C
+
+  - name: "Microsoft Certified: Azure Fundamentals"
+    code: AZ-900
+    issuer: microsoft
+    about: Understanding of Azure fundamentals.
+    issued: 2023-11
+    credentialId: C4BD0FCD8D69A8C1
+    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1
+
+  - name: "Microsoft Certified: Azure AI Fundamentals"
+    code: AI-900
+    issuer: microsoft
+    about: Understanding of Azure AI solutions.
+    issued: 2023-09
+    credentialId: E2CBCF6AEE7B238E
+    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E
+
+education:
+  - school: bntu
+    degree: Bachelor's degree
+    field: Information Technology
+    start: 2017-09
+    end: 2021-08
+
+softSkills:
+  - name: Initiatives beyond scope
+    description: >
+      Proposed and architected an end-to-end overhaul of our analytics
+      delivery — events streamed to ADX through dynamic routing, real-time
+      dashboards via managed SignalR, per-tenant Fabric shortcuts for direct
+      customer access. Demoed to a customer who said they're hard to impress;
+      this one impressed them.
+
+  - name: Anticipated problems early
+    description: >
+      Saw a deployment-management problem coming weeks before it surfaced —
+      built the Azure DevOps extension on my own initiative. By the time
+      senior engineers raised the issue formally, the tool was already in use.
+      Later adopted by another team facing the same pattern.
+
+  - name: Mapped intent vs reality
+    description: >
+      Hit a data-stream loss issue critical to the project's analytics layer.
+      Combined log statistics, time-correlated charts, and code investigation —
+      then drew two diagrams: the algorithm as-coded and the algorithm
+      as-intended. The gap between them showed where the loss was happening.
