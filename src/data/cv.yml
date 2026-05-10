@@ -13,6 +13,16 @@ linkedIn: linkedin.com/in/dmitry-zhukovsky
 github: github.com/dzhukovsky
 portfolio: cv.dzhukovsky.me
 
+photo: /me.jpg
+availability: Open to Senior .NET roles
+
+# Hero subtitle. `{years}` is replaced at render time with the value computed
+# from the earliest project start.
+tagline: >
+  {years}+ years engineering .NET systems — distributed architectures,
+  multi-tenant SaaS, and platform engineering. Pragmatic over clever, written
+  down over discussed. Currently focused on cloud-native data platforms.
+
 summary: |
   I build production .NET systems on Azure — across telecom, fintech, publishing, and martech. Strong on backend, reach across the stack.
   I'm invested in the systems I build, not just in the tickets I close — what holds up under load, what's painful to maintain, what the next engineer will curse me for.

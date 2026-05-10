@@ -47,6 +47,7 @@ import {
 	formatYearMonth,
 	formatYears,
 	pickLogo,
+	yearsOfExperience,
 } from "@/data/cv";
 
 const ALL_TECHNOLOGIES = cv.allSkills;
@@ -105,7 +106,9 @@ function Hero() {
 		[now],
 	);
 
-	const yearsTotal = 9;
+	const yearsTotal = yearsOfExperience();
+	const tagline = cv.tagline.replace("{years}", String(yearsTotal));
+	const certCodes = cv.certifications.map((c) => c.code).join(" · ");
 
 	return (
 		// Pull the hero up under the sticky header (h-14 = 56px) so its mica
@@ -121,7 +124,7 @@ function Hero() {
 								className="h-1.5 w-1.5 rounded-full fl-pulse-dot"
 								style={{ background: "var(--fl-success)" }}
 							/>
-							Open to Senior .NET roles · {cv.contractTypes.join(" / ")}
+							{cv.availability} · {cv.contractTypes.join(", ")}
 						</Pill>
 						<h1
 							className="text-[44px] md:text-[68px] font-semibold tracking-tight leading-[1.02]"
@@ -150,10 +153,7 @@ function Hero() {
 							className="mt-5 max-w-[640px] text-[15px] leading-[1.7]"
 							style={{ color: "var(--fl-fg-muted)" }}
 						>
-							{yearsTotal}+ years engineering .NET systems — distributed
-							architectures, multi-tenant SaaS, and platform engineering.
-							Pragmatic over clever, written down over discussed. Currently
-							focused on cloud-native data platforms.
+							{tagline}
 						</p>
 
 						<div className="mt-6 flex flex-wrap items-center gap-2">
@@ -181,7 +181,7 @@ function Hero() {
 							<SubtleButton
 								icon={Download}
 								size="lg"
-								href="/Dmitry Zhukovsky - .NET Software Engineer.pdf"
+								href={cv.resumePdf}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -202,7 +202,7 @@ function Hero() {
 							/>
 							<div className="relative fl-photo-frame">
 								<img
-									src="/me.jpg"
+									src={cv.photo}
 									alt={cv.fullName}
 									className="block h-44 w-44 md:h-64 md:w-64 rounded-full object-cover"
 									style={{ background: "var(--fl-card)" }}
@@ -253,7 +253,7 @@ function Hero() {
 						icon={Award}
 						label="Microsoft certs"
 						value={String(cv.certifications.length)}
-						caption="AZ-204 · AZ-900 · AI-900"
+						caption={certCodes}
 					/>
 				</Card>
 			</div>
@@ -364,7 +364,7 @@ function About() {
 					<div className="flex items-center gap-3 mb-3">
 						<Persona
 							name={cv.fullName}
-							src="/me.jpg"
+							src={cv.photo}
 							size={44}
 							presence="available"
 						/>
@@ -495,9 +495,7 @@ function ExperienceRow({
 					style={{
 						width: isCurrent ? 10 : 6,
 						height: isCurrent ? 10 : 6,
-						background: isCurrent
-							? "var(--fl-brand)"
-							: "var(--fl-fg-disabled)",
+						background: isCurrent ? "var(--fl-brand)" : "var(--fl-fg-disabled)",
 						boxShadow: isCurrent
 							? "0 0 0 4px var(--fl-brand-subtle)"
 							: undefined,
@@ -1300,7 +1298,8 @@ function Certifications() {
 										>
 											<span>{valid ? "Validity" : "Expired"}</span>
 											<span className="tabular-nums">
-												{formatYearMonth(c.issued)} → {formatYearMonth(c.expires)}
+												{formatYearMonth(c.issued)} →{" "}
+												{formatYearMonth(c.expires)}
 											</span>
 										</div>
 										<ProgressBar

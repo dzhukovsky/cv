@@ -95,6 +95,11 @@ export type CV = {
 	linkedIn: string;
 	github: string;
 	portfolio: string;
+	careerStart: Date;
+	photo: string;
+	resumePdf: string;
+	availability: string;
+	tagline: string;
 	summary: string[];
 	languages: Language[];
 	orgs: Org[];
@@ -160,6 +165,9 @@ type RawCV = {
 	linkedIn: string;
 	github: string;
 	portfolio: string;
+	photo: string;
+	availability: string;
+	tagline: string;
 	summary: string;
 	languages: Language[];
 	orgs: Org[];
@@ -364,6 +372,17 @@ const buildAggregatedSkills = (
 const projects: Project[] = raw.projects.map(normalizeProject);
 const selfTaughtSkills: Skill[] = normalizeSelfTaughtSkills(raw.skills);
 
+// Earliest start across all skills (production + self-taught) — single source
+// for total years-of-experience. Project-skills inherit project start, so
+// they're covered by `projects[].start`; self-taught skills can predate the
+// earliest project (e.g. WPF in 2018 vs first project in 2019).
+const careerStart = new Date(
+	Math.min(
+		...projects.map((p) => p.start.getTime()),
+		...selfTaughtSkills.map((s) => s.start.getTime()),
+	),
+);
+
 export const cv: CV = {
 	fullName: raw.fullName,
 	initials: initialsOf(raw.fullName),
@@ -374,6 +393,11 @@ export const cv: CV = {
 	linkedIn: raw.linkedIn,
 	github: raw.github,
 	portfolio: raw.portfolio,
+	careerStart,
+	photo: raw.photo,
+	resumePdf: `/${raw.fullName} - ${raw.position}.pdf`,
+	availability: raw.availability,
+	tagline: raw.tagline.trim(),
 	summary: raw.summary
 		.split("\n")
 		.map((s) => s.trim())
@@ -419,8 +443,7 @@ export const pickLogo = (logo: LogoSrc, theme: "light" | "dark"): string =>
 	typeof logo === "string" ? logo : logo[theme];
 
 export const yearsOfExperience = (): number => {
-	const start = new Date("2016-01-01");
-	const ms = Date.now() - start.getTime();
+	const ms = Date.now() - cv.careerStart.getTime();
 	return Math.floor(ms / (1000 * 60 * 60 * 24 * 365.25));
 };
 

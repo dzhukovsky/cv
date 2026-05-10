@@ -113,7 +113,7 @@ export function SiteHeader() {
           />
           <SubtleButton
             icon={Download}
-            href="/Dmitry Zhukovsky - .NET Software Engineer.pdf"
+            href={cv.resumePdf}
             target="_blank"
             rel="noreferrer"
             className="hidden sm:inline-flex"
