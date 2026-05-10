@@ -3,7 +3,6 @@ import {
 	ArrowUpRight,
 	Award,
 	Briefcase,
-	Check,
 	ChevronDown,
 	Clock,
 	Cloud,
@@ -454,10 +453,10 @@ function Experience() {
 			<div className="relative">
 				<div
 					aria-hidden
-					className="absolute left-[15px] md:left-[19px] top-2 bottom-2 w-px"
+					className="absolute left-[15px] md:left-[19px] top-[30px] md:top-[34px] bottom-2 w-px"
 					style={{
 						background:
-							"linear-gradient(to bottom, var(--fl-stroke) 0%, var(--fl-stroke) 80%, transparent 100%)",
+							"linear-gradient(to bottom, var(--fl-stroke) 0%, var(--fl-stroke) 70%, transparent 100%)",
 					}}
 				/>
 				<div className="space-y-3">
@@ -491,17 +490,21 @@ function ExperienceRow({
 	const isCurrent = !p.end;
 
 	return (
-		<div className="relative pl-12 md:pl-14">
-			<div
-				className="absolute left-0 top-5 grid place-items-center h-[30px] w-[30px] md:h-[38px] md:w-[38px] rounded-full"
-				style={{
-					background: isCurrent ? "var(--fl-brand)" : "var(--fl-card)",
-					color: isCurrent ? "white" : "var(--fl-fg-muted)",
-					border: `1px solid ${isCurrent ? "var(--fl-brand)" : "var(--fl-stroke)"}`,
-					boxShadow: "var(--fl-elev-2)",
-				}}
-			>
-				{isCurrent ? <Briefcase size={14} /> : <Check size={16} strokeWidth={2.5} />}
+		<div className="relative pl-9 md:pl-11">
+			<div className="absolute left-0 top-[15px] grid place-items-center h-[30px] w-[30px] md:h-[38px] md:w-[38px]">
+				<span
+					className="rounded-full"
+					style={{
+						width: isCurrent ? 10 : 6,
+						height: isCurrent ? 10 : 6,
+						background: isCurrent
+							? "var(--fl-brand)"
+							: "var(--fl-fg-disabled)",
+						boxShadow: isCurrent
+							? "0 0 0 4px var(--fl-brand-subtle)"
+							: undefined,
+					}}
+				/>
 			</div>
 
 			<Card hoverable reveal className="overflow-hidden">
