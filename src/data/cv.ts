@@ -97,6 +97,47 @@ export type ExperienceSection = {
 	description: string;
 };
 
+export type PreferredStackEntry = {
+	/** Tech-group id (matches `cv.techGroups` keys). */
+	group: string;
+	items: string[];
+};
+
+export type PreferredStack = {
+	title: string;
+	description: string;
+	stack: PreferredStackEntry[];
+};
+
+export type TechnologiesSection = {
+	title: string;
+	description: string;
+	preferred: PreferredStack;
+};
+
+export type CertificationsSection = {
+	title: string;
+	description: string;
+	items: Certification[];
+};
+
+export type EducationSection = {
+	title: string;
+	schools: Education[];
+};
+
+export type StrengthsSection = {
+	title: string;
+	description: string;
+	items: Strength[];
+};
+
+export type CtaSection = {
+	eyebrow: string;
+	title: string;
+	description: string;
+};
+
 export type AggregatedSkill = {
 	name: string;
 	group: string;
@@ -125,15 +166,17 @@ export type CV = {
 	summary: string[];
 	about: AboutSection;
 	experience: ExperienceSection;
+	technologies: TechnologiesSection;
 	languages: Language[];
 	orgs: Org[];
 	/** Lookup: tech-group id (e.g. `"backend"`) → display name (e.g. `"Backend"`). */
 	techGroups: Record<string, string>;
 	selfTaughtSkills: Skill[];
 	projects: Project[];
-	certifications: Certification[];
-	education: Education[];
-	strengths: Strength[];
+	certifications: CertificationsSection;
+	education: EducationSection;
+	strengths: StrengthsSection;
+	cta: CtaSection;
 	allSkills: AggregatedSkill[];
 };
 
@@ -196,14 +239,27 @@ type RawCV = {
 	summary: string;
 	about: AboutSection;
 	experience: ExperienceSection;
+	technologies: TechnologiesSection;
 	languages: Language[];
 	orgs: Org[];
 	techGroups: Record<string, string>;
 	skills: RawSkillsByGroup;
 	projects: RawProject[];
-	certifications: RawCertification[];
-	education: RawEducation[];
-	strengths: Strength[];
+	certifications: {
+		title: string;
+		description: string;
+		items: RawCertification[];
+	};
+	education: {
+		title: string;
+		schools: RawEducation[];
+	};
+	strengths: {
+		title: string;
+		description: string;
+		items: Strength[];
+	};
+	cta: CtaSection;
 };
 
 const raw = rawData as RawCV;
@@ -432,34 +488,43 @@ export const cv: CV = {
 		.filter(Boolean),
 	about: raw.about,
 	experience: raw.experience,
+	technologies: raw.technologies,
 	languages: raw.languages,
 	orgs: raw.orgs,
 	techGroups: raw.techGroups,
 	selfTaughtSkills,
 	projects,
-	certifications: raw.certifications.map((c) => ({
-		name: c.name,
-		code: c.code,
-		issuer: c.issuer,
-		about: c.about,
-		issued: parseYM(c.issued),
-		expires: c.expires ? parseYM(c.expires) : null,
-		credentialId: c.credentialId,
-		credentialUrl: c.credentialUrl,
-	})),
-	education: raw.education.map((e) => {
-		const start = parseYM(e.start);
-		const end = e.end ? parseYM(e.end) : null;
-		return {
-			school: e.school,
-			degree: e.degree,
-			field: e.field,
-			start,
-			end,
-			months: monthsBetween(start, end),
-		};
-	}),
+	certifications: {
+		title: raw.certifications.title,
+		description: raw.certifications.description,
+		items: raw.certifications.items.map((c) => ({
+			name: c.name,
+			code: c.code,
+			issuer: c.issuer,
+			about: c.about,
+			issued: parseYM(c.issued),
+			expires: c.expires ? parseYM(c.expires) : null,
+			credentialId: c.credentialId,
+			credentialUrl: c.credentialUrl,
+		})),
+	},
+	education: {
+		title: raw.education.title,
+		schools: raw.education.schools.map((e) => {
+			const start = parseYM(e.start);
+			const end = e.end ? parseYM(e.end) : null;
+			return {
+				school: e.school,
+				degree: e.degree,
+				field: e.field,
+				start,
+				end,
+				months: monthsBetween(start, end),
+			};
+		}),
+	},
 	strengths: raw.strengths,
+	cta: { ...raw.cta, title: raw.cta.title.trim() },
 	allSkills: buildAggregatedSkills(projects, selfTaughtSkills),
 };
 

@@ -52,6 +52,43 @@ experience:
   title: A timeline of platforms
   description: "{count} production projects across telecom, fintech, digital publishing, and martech. Click any role to expand the contributions and stack."
 
+# Technologies section — header copy + the "Preferred stack" subsection.
+# `preferred.stack[].group` must match a tech-group id (see `techGroups`).
+technologies:
+  title: The toolkit
+  description: Density, balance, and current preferences. Filled = production, striped = self-taught.
+  preferred:
+    title: Preferred stack
+    description: What I reach for when I get to choose.
+    stack:
+      - group: backend
+        items:
+          - .NET
+          - ASP.NET Core
+          - Aspire
+      - group: cloud
+        items:
+          - Azure-native
+          - Microsoft Fabric
+      - group: data
+        items:
+          - MS-SQL
+          - Cosmos DB
+          - Redis
+          - Kusto
+      - group: devops
+        items:
+          - Azure DevOps
+          - GitHub
+          - Helm
+          - Bicep
+      - group: frontend
+        items:
+          - React
+          - TypeScript
+          - Vite
+          - Bun
+
 languages:
   - name: English
     level: B2
@@ -426,57 +463,74 @@ projects:
         - Azure DevOps
 
 certifications:
-  - name: "Microsoft Certified: Azure Developer Associate"
-    code: AZ-204
-    issuer: *microsoft
-    about: "Build end-to-end solutions in Microsoft Azure: Azure Functions, web apps, storage solutions, and more."
-    issued: 2025-11
-    expires: 2026-11
-    credentialId: D47FFA664405C85C
-    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/D47FFA664405C85C
+  title: Verified by Microsoft
+  description: Active and historical Microsoft credentials. Each card links to the official credential record.
+  items:
+    - name: "Microsoft Certified: Azure Developer Associate"
+      code: AZ-204
+      issuer: *microsoft
+      about: "Build end-to-end solutions in Microsoft Azure: Azure Functions, web apps, storage solutions, and more."
+      issued: 2025-11
+      expires: 2026-11
+      credentialId: D47FFA664405C85C
+      credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/D47FFA664405C85C
 
-  - name: "Microsoft Certified: Azure Fundamentals"
-    code: AZ-900
-    issuer: *microsoft
-    about: Understanding of Azure fundamentals.
-    issued: 2023-11
-    credentialId: C4BD0FCD8D69A8C1
-    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1
+    - name: "Microsoft Certified: Azure Fundamentals"
+      code: AZ-900
+      issuer: *microsoft
+      about: Understanding of Azure fundamentals.
+      issued: 2023-11
+      credentialId: C4BD0FCD8D69A8C1
+      credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1
 
-  - name: "Microsoft Certified: Azure AI Fundamentals"
-    code: AI-900
-    issuer: *microsoft
-    about: Understanding of Azure AI solutions.
-    issued: 2023-09
-    credentialId: E2CBCF6AEE7B238E
-    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E
+    - name: "Microsoft Certified: Azure AI Fundamentals"
+      code: AI-900
+      issuer: *microsoft
+      about: Understanding of Azure AI solutions.
+      issued: 2023-09
+      credentialId: E2CBCF6AEE7B238E
+      credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E
 
 education:
-  - school: *bntu
-    degree: Bachelor's degree
-    field: Information Technology
-    start: 2017-09
-    end: 2021-08
+  title: Schooling, plus three languages
+  schools:
+    - school: *bntu
+      degree: Bachelor's degree
+      field: Information Technology
+      start: 2017-09
+      end: 2021-08
 
 strengths:
-  - name: Initiatives beyond scope
-    description: >
-      Proposed and architected an end-to-end overhaul of our analytics
-      delivery — events streamed to ADX through dynamic routing, real-time
-      dashboards via managed SignalR, per-tenant Fabric shortcuts for direct
-      customer access. Demoed to a customer who said they're hard to impress;
-      this one impressed them.
+  title: Patterns from real projects
+  description: Three habits that keep showing up.
+  items:
+    - name: Initiatives beyond scope
+      description: >
+        Proposed and architected an end-to-end overhaul of our analytics
+        delivery — events streamed to ADX through dynamic routing, real-time
+        dashboards via managed SignalR, per-tenant Fabric shortcuts for direct
+        customer access. Demoed to a customer who said they're hard to impress;
+        this one impressed them.
 
-  - name: Anticipated problems early
-    description: >
-      Saw a deployment-management problem coming weeks before it surfaced —
-      built the Azure DevOps extension on my own initiative. By the time
-      senior engineers raised the issue formally, the tool was already in use.
-      Later adopted by another team facing the same pattern.
+    - name: Anticipated problems early
+      description: >
+        Saw a deployment-management problem coming weeks before it surfaced —
+        built the Azure DevOps extension on my own initiative. By the time
+        senior engineers raised the issue formally, the tool was already in use.
+        Later adopted by another team facing the same pattern.
 
-  - name: Mapped intent vs reality
-    description: >
-      Hit a data-stream loss issue critical to the project's analytics layer.
-      Combined log statistics, time-correlated charts, and code investigation —
-      then drew two diagrams: the algorithm as-coded and the algorithm
-      as-intended. The gap between them showed where the loss was happening.
+    - name: Mapped intent vs reality
+      description: >
+        Hit a data-stream loss issue critical to the project's analytics layer.
+        Combined log statistics, time-correlated charts, and code investigation —
+        then drew two diagrams: the algorithm as-coded and the algorithm
+        as-intended. The gap between them showed where the loss was happening.
+
+# CTA at the bottom of the page. `title` may contain a literal newline (use a
+# `|` block scalar) to control where the line breaks visually.
+cta:
+  eyebrow: Let's talk
+  title: |
+    Looking for someone
+    who'll own outcomes?
+  description: Available for senior backend and platform engineering partnerships. B2B, fully remote. Drop a line if you've got something interesting.

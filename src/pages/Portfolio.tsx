@@ -117,7 +117,7 @@ function Hero() {
 
 	const yearsTotal = yearsOfExperience();
 	const tagline = cv.tagline.replace("{years}", String(yearsTotal));
-	const certCodes = cv.certifications.map((c) => c.code).join(" · ");
+	const certCodes = cv.certifications.items.map((c) => c.code).join(" · ");
 
 	return (
 		// Pull the hero up under the sticky header (h-14 = 56px) so its mica
@@ -261,7 +261,7 @@ function Hero() {
 					<Stat
 						icon={Award}
 						label="Microsoft certs"
-						value={String(cv.certifications.length)}
+						value={String(cv.certifications.items.length)}
 						caption={certCodes}
 					/>
 				</Card>
@@ -637,8 +637,8 @@ function Skills() {
 		<Section id="skills">
 			<SectionHeader
 				eyebrow="03 — Technologies"
-				title="The toolkit"
-				description="Density, balance, and current preferences. Filled = production, striped = self-taught."
+				title={cv.technologies.title}
+				description={cv.technologies.description}
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -761,32 +761,24 @@ function Skills() {
 	);
 }
 
-// Group key matches the tech-group id; display name comes from `cv.techGroups[id]`.
-const PREFERRED_STACK: { group: string; items: string[] }[] = [
-	{ group: "backend", items: [".NET", "ASP.NET Core", "Aspire"] },
-	{ group: "cloud", items: ["Azure-native", "Microsoft Fabric"] },
-	{ group: "data", items: ["MS-SQL", "Cosmos DB", "Redis", "Kusto"] },
-	{ group: "devops", items: ["Azure DevOps", "GitHub", "Helm", "Bicep"] },
-	{ group: "frontend", items: ["React", "TypeScript", "Vite", "Bun"] },
-];
-
 function PreferredStack() {
+	const { title, description, stack } = cv.technologies.preferred;
 	return (
 		<Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
 			<div className="mb-4">
 				<h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
 					<Sparkles size={15} style={{ color: "var(--fl-brand)" }} />
-					Preferred stack
+					{title}
 				</h3>
 				<p
 					className="mt-1 text-[12.5px] leading-relaxed"
 					style={{ color: "var(--fl-fg-muted)" }}
 				>
-					What I reach for when I get to choose.
+					{description}
 				</p>
 			</div>
 			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-5">
-				{PREFERRED_STACK.map(({ group, items }) => {
+				{stack.map(({ group, items }) => {
 					const Icon = groupMeta[group]?.icon ?? Cpu;
 					return (
 						<div key={group}>
@@ -1207,15 +1199,16 @@ function RadarChart({
 function Certifications() {
 	const today = new Date();
 	const theme = useThemeMode();
+	const { title, description, items } = cv.certifications;
 	return (
 		<Section id="certifications">
 			<SectionHeader
 				eyebrow="04 — Certifications"
-				title="Verified by Microsoft"
-				description="Active and historical Microsoft credentials. Each card links to the official credential record."
+				title={title}
+				description={description}
 			/>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-				{cv.certifications.map((c) => {
+				{items.map((c) => {
 					const valid = !c.expires || c.expires >= today;
 					let pct = 100;
 					if (c.expires) {
@@ -1319,7 +1312,7 @@ function EducationLanguages() {
 		<Section id="education">
 			<SectionHeader
 				eyebrow="05 — Education & Languages"
-				title="Schooling, plus three languages"
+				title={cv.education.title}
 			/>
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 				<Card className="lg:col-span-2 p-5 md:p-6" reveal>
@@ -1327,36 +1320,40 @@ function EducationLanguages() {
 						<GraduationCap size={15} style={{ color: "var(--fl-brand)" }} />
 						Education
 					</h3>
-					{cv.education.map((e) => (
-						<div key={e.school.name} className="flex items-start gap-4">
-							<img
-								src={pickLogo(e.school.logo, theme)}
-								alt={e.school.name}
-								className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
-							/>
-							<div className="flex-1 min-w-0 flex flex-col items-start">
-								<a
-									href={e.school.url}
-									target="_blank"
-									rel="noreferrer"
-									className="text-[15px] font-semibold tracking-tight hover:underline"
-								>
-									{e.school.name}
-								</a>
-								<div
-									className="text-[13px] mt-0.5"
-									style={{ color: "var(--fl-fg-muted)" }}
-								>
-									{e.degree} · {e.field}
-								</div>
-								<div className="mt-2 flex items-center flex-wrap gap-2">
-									<Tag variant="outline">{formatPeriod(e.start, e.end)}</Tag>
-									<Tag variant="outline">{formatDuration(e.start, e.end)}</Tag>
-									<Tag variant="brand">Bachelor</Tag>
+					{cv.education.schools.map((e) => {
+						// "Bachelor's degree" → "Bachelor"; "PhD" → "PhD".
+						const level = e.degree.split(/\s+/)[0].replace(/['']s$/, "");
+						return (
+							<div key={e.school.name} className="flex items-start gap-4">
+								<img
+									src={pickLogo(e.school.logo, theme)}
+									alt={e.school.name}
+									className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
+								/>
+								<div className="flex-1 min-w-0 flex flex-col items-start">
+									<a
+										href={e.school.url}
+										target="_blank"
+										rel="noreferrer"
+										className="text-[15px] font-semibold tracking-tight hover:underline"
+									>
+										{e.school.name}
+									</a>
+									<div
+										className="text-[13px] mt-0.5"
+										style={{ color: "var(--fl-fg-muted)" }}
+									>
+										{e.degree} · {e.field}
+									</div>
+									<div className="mt-2 flex items-center flex-wrap gap-2">
+										<Tag variant="outline">{formatPeriod(e.start, e.end)}</Tag>
+										<Tag variant="outline">{formatDuration(e.start, e.end)}</Tag>
+										<Tag variant="brand">{level}</Tag>
+									</div>
 								</div>
 							</div>
-						</div>
-					))}
+						);
+					})}
 				</Card>
 
 				<Card className="p-5 md:p-6" reveal>
@@ -1408,15 +1405,16 @@ function levelPct(level: string): number {
 /* ============================== Soft Skills ============================== */
 
 function SoftSkills() {
+	const { title, description, items } = cv.strengths;
 	return (
 		<Section id="soft">
 			<SectionHeader
 				eyebrow="06 — Strengths"
-				title="Patterns from real projects"
-				description="Three habits that keep showing up."
+				title={title}
+				description={description}
 			/>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-				{cv.strengths.map((s, i) => (
+				{items.map((s, i) => (
 					<Card key={s.name} className="p-6 h-full" reveal hoverable>
 						<div
 							className="text-[11px] font-semibold tracking-[0.18em] uppercase tabular-nums"
@@ -1444,6 +1442,8 @@ function SoftSkills() {
 
 function CTA() {
 	const ref = useRef<HTMLDivElement>(null);
+	const { eyebrow, title, description } = cv.cta;
+	const titleLines = title.split("\n");
 	return (
 		<Section id="cta" className="!pt-14 md:!pt-20">
 			<Card
@@ -1460,21 +1460,24 @@ function CTA() {
 							className="text-[11px] font-semibold tracking-[0.18em] uppercase mb-3"
 							style={{ color: "var(--fl-brand-hover)" }}
 						>
-							Let's talk
+							{eyebrow}
 						</div>
 						<h2
 							className="text-[34px] md:text-[48px] font-semibold tracking-tight leading-[1.05]"
 							style={{ letterSpacing: "-0.025em" }}
 						>
-							Looking for someone <br /> who'll own outcomes?
+							{titleLines.map((line, i) => (
+								<span key={line}>
+									{line}
+									{i < titleLines.length - 1 && <br />}
+								</span>
+							))}
 						</h2>
 						<p
 							className="mt-3 max-w-xl text-[14px] leading-relaxed"
 							style={{ color: "var(--fl-fg-muted)" }}
 						>
-							Available for senior backend and platform engineering
-							partnerships. B2B, fully remote. Drop a line if you've got
-							something interesting.
+							{description}
 						</p>
 					</div>
 					<div className="col-span-12 lg:col-span-4 flex flex-col gap-2">

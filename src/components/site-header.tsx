@@ -58,7 +58,7 @@ export function SiteHeader() {
               boxShadow: 'var(--fl-elev-2)',
             }}
           >
-            DZ
+            {cv.initials}
           </div>
           <div className="leading-tight hidden sm:block">
             <div className="text-[13px] font-semibold tracking-tight">{cv.fullName}</div>
