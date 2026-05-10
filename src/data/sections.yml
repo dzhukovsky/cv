@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=./sections.schema.json
+#
+# UI text for portfolio page sections — titles, descriptions, CTA copy.
+# Lives separately from cv.yml (which holds the actual CV data).
+#
+# Tokens like `{projects.count}` and `{projects.areas}` are replaced at render
+# time via applyTemplate() (see sections.ts). Available tokens:
+#   {projects.count} — number of projects in cv.yml
+#   {projects.areas} — naturally-joined list of unique `areas` across projects
+
+hero:
+  availableTooltip: Available
+  stats:
+    experience: { label: Experience, suffix: "+ yrs" }
+    platforms: { label: Platforms shipped }
+    technologies: { label: Technologies }
+    certifications: { label: Microsoft certs }
+
+about:
+  title: Built quietly. Ships loudly.
+  description: Engineer for the kind of backend that runs on a Sunday morning.
+  # Four expertise-area highlights. `icon` is a string key resolved to a
+  # lucide-react icon in the React layer (see ABOUT_EXPERTISE_ICONS in
+  # Portfolio.tsx).
+  expertise:
+    - title: Backend architecture
+      description: C#, ASP.NET Core, EF Core. Modular monoliths and microservices that survive production.
+      icon: cpu
+    - title: Cloud & DevOps
+      description: AKS, Service Bus, Azure App Service, Application Insights. Azure DevOps, Helm.
+      icon: cloud
+    - title: Data & integrations
+      description: MS-SQL, Redis, Kusto, Microsoft Fabric. Banks and payment providers.
+      icon: database
+    - title: CI/CD & deployment ownership
+      description: Pipelines, automation, production-deployment ownership.
+      icon: workflow
+
+experience:
+  title: A timeline of platforms
+  description: "{projects.count} production projects across {projects.areas}. Click any role to expand the contributions and stack."
+
+technologies:
+  title: The toolkit
+  description: Density, balance, and current preferences. Filled = production, striped = self-taught.
+  preferred:
+    title: Preferred stack
+    description: What I reach for when I get to choose.
+
+certifications:
+  title: Verified by Microsoft
+  description: Active and historical Microsoft credentials. Each card links to the official credential record.
+
+education:
+  title: Schooling, plus three languages
+
+strengths:
+  title: Patterns from real projects
+  description: Three habits that keep showing up.
+
+# `title` may use a YAML literal block (`|`) for an explicit line break.
+cta:
+  eyebrow: Let's talk
+  title: |
+    Looking for someone
+    who'll own outcomes?
+  description: Available for senior backend and platform engineering partnerships. B2B, fully remote. Drop a line if you've got something interesting.

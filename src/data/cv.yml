@@ -5,9 +5,7 @@ position: .NET Software Engineer
 location:
   city: Warsaw
   country: Poland
-contractTypes:
-  - Remote
-  - B2B
+contractType: Remote
 email: dmitry.zhukovsky@outlook.com
 linkedIn: linkedin.com/in/dmitry-zhukovsky
 github: github.com/dzhukovsky
@@ -27,67 +25,36 @@ summary: |
   I build production .NET systems on Azure — across telecom, fintech, publishing, and martech. Strong on backend, reach across the stack.
   I'm invested in the systems I build, not just in the tickets I close — what holds up under load, what's painful to maintain, what the next engineer will curse me for.
 
-# About section — heading copy + the four expertise-area highlights.
-# `icon` is a string key resolved to a lucide-react icon in the React layer
-# (see ABOUT_EXPERTISE_ICONS in Portfolio.tsx).
-about:
-  title: Built quietly. Ships loudly.
-  description: Engineer for the kind of backend that runs on a Sunday morning.
-  expertise:
-    - title: Backend architecture
-      description: C#, ASP.NET Core, EF Core. Modular monoliths and microservices that survive production.
-      icon: cpu
-    - title: Cloud & DevOps
-      description: AKS, Service Bus, Azure App Service, Application Insights. Azure DevOps, Helm.
-      icon: cloud
-    - title: Data & integrations
-      description: MS-SQL, Redis, Kusto, Microsoft Fabric. Banks and payment providers.
-      icon: database
-    - title: CI/CD & deployment ownership
-      description: Pipelines, automation, production-deployment ownership.
-      icon: workflow
-
-# Experience section header. `{count}` is replaced with the number of projects.
-experience:
-  title: A timeline of platforms
-  description: "{count} production projects across telecom, fintech, digital publishing, and martech. Click any role to expand the contributions and stack."
-
-# Technologies section — header copy + the "Preferred stack" subsection.
-# `preferred.stack[].group` must match a tech-group id (see `techGroups`).
-technologies:
-  title: The toolkit
-  description: Density, balance, and current preferences. Filled = production, striped = self-taught.
-  preferred:
-    title: Preferred stack
-    description: What I reach for when I get to choose.
-    stack:
-      - group: backend
-        items:
-          - .NET
-          - ASP.NET Core
-          - Aspire
-      - group: cloud
-        items:
-          - Azure-native
-          - Microsoft Fabric
-      - group: data
-        items:
-          - MS-SQL
-          - Cosmos DB
-          - Redis
-          - Kusto
-      - group: devops
-        items:
-          - Azure DevOps
-          - GitHub
-          - Helm
-          - Bicep
-      - group: frontend
-        items:
-          - React
-          - TypeScript
-          - Vite
-          - Bun
+# The curated "Preferred stack" — `group` must match a tech-group id
+# (see `techGroups`).
+preferredStack:
+  - group: backend
+    items:
+      - .NET
+      - ASP.NET Core
+      - Aspire
+  - group: cloud
+    items:
+      - Azure-native
+      - Microsoft Fabric
+  - group: data
+    items:
+      - MS-SQL
+      - Cosmos DB
+      - Redis
+      - Kusto
+  - group: devops
+    items:
+      - Azure DevOps
+      - GitHub
+      - Helm
+      - Bicep
+  - group: frontend
+    items:
+      - React
+      - TypeScript
+      - Vite
+      - Bun
 
 languages:
   - name: English
@@ -182,7 +149,7 @@ skills:
 projects:
   - name: Cloud Contact-Center & Communications Platform
     company: *fotando
-    position: Senior .NET Backend Engineer
+    position: .NET Backend Engineer
     seniority: Senior
     start: 2024-11
     areas:
@@ -227,7 +194,7 @@ projects:
 
   - name: Enterprise Tax Allocation Platform
     company: *exadel
-    position: Senior .NET Backend Engineer
+    position: .NET Backend Engineer
     seniority: Senior
     start: 2024-11
     areas:
@@ -267,7 +234,7 @@ projects:
 
   - name: Software Solutions for Media & Subscription Businesses
     company: *lightpoint
-    position: Middle .NET Software Engineer
+    position: .NET Software Engineer
     seniority: Middle
     start: 2024-03
     end: 2024-07
@@ -303,7 +270,7 @@ projects:
 
   - name: ePayment Solution
     company: *lightpoint
-    position: Middle .NET Software Engineer
+    position: .NET Software Engineer
     seniority: Middle
     start: 2022-11
     end: 2024-02
@@ -347,7 +314,7 @@ projects:
 
   - name: Customer Engagement Platform
     company: *lightpoint
-    position: Junior .NET Software Engineer
+    position: .NET Software Engineer
     seniority: Junior
     start: 2020-02
     end: 2022-10
@@ -393,7 +360,7 @@ projects:
 
   - name: Rental Accounting System
     company: *caspel
-    position: Junior .NET Full-Stack Developer
+    position: .NET Full-Stack Developer
     seniority: Junior
     start: 2019-08
     end: 2020-01
@@ -428,7 +395,7 @@ projects:
 
   - name: Customer Manufacturing Platform
     company: *caspel
-    position: Junior .NET Full-Stack Developer
+    position: .NET Full-Stack Developer
     seniority: Junior
     start: 2019-02
     end: 2019-07
@@ -463,74 +430,57 @@ projects:
         - Azure DevOps
 
 certifications:
-  title: Verified by Microsoft
-  description: Active and historical Microsoft credentials. Each card links to the official credential record.
-  items:
-    - name: "Microsoft Certified: Azure Developer Associate"
-      code: AZ-204
-      issuer: *microsoft
-      about: "Build end-to-end solutions in Microsoft Azure: Azure Functions, web apps, storage solutions, and more."
-      issued: 2025-11
-      expires: 2026-11
-      credentialId: D47FFA664405C85C
-      credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/D47FFA664405C85C
+  - name: "Microsoft Certified: Azure Developer Associate"
+    code: AZ-204
+    issuer: *microsoft
+    about: "Build end-to-end solutions in Microsoft Azure: Azure Functions, web apps, storage solutions, and more."
+    issued: 2025-11
+    expires: 2026-11
+    credentialId: D47FFA664405C85C
+    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/D47FFA664405C85C
 
-    - name: "Microsoft Certified: Azure Fundamentals"
-      code: AZ-900
-      issuer: *microsoft
-      about: Understanding of Azure fundamentals.
-      issued: 2023-11
-      credentialId: C4BD0FCD8D69A8C1
-      credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1
+  - name: "Microsoft Certified: Azure Fundamentals"
+    code: AZ-900
+    issuer: *microsoft
+    about: Understanding of Azure fundamentals.
+    issued: 2023-11
+    credentialId: C4BD0FCD8D69A8C1
+    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/C4BD0FCD8D69A8C1
 
-    - name: "Microsoft Certified: Azure AI Fundamentals"
-      code: AI-900
-      issuer: *microsoft
-      about: Understanding of Azure AI solutions.
-      issued: 2023-09
-      credentialId: E2CBCF6AEE7B238E
-      credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E
+  - name: "Microsoft Certified: Azure AI Fundamentals"
+    code: AI-900
+    issuer: *microsoft
+    about: Understanding of Azure AI solutions.
+    issued: 2023-09
+    credentialId: E2CBCF6AEE7B238E
+    credentialUrl: https://learn.microsoft.com/api/credentials/share/en-us/dzhukovsky/E2CBCF6AEE7B238E
 
 education:
-  title: Schooling, plus three languages
-  schools:
-    - school: *bntu
-      degree: Bachelor's degree
-      field: Information Technology
-      start: 2017-09
-      end: 2021-08
+  - school: *bntu
+    degree: Bachelor's degree
+    field: Information Technology
+    start: 2017-09
+    end: 2021-08
 
 strengths:
-  title: Patterns from real projects
-  description: Three habits that keep showing up.
-  items:
-    - name: Initiatives beyond scope
-      description: >
-        Proposed and architected an end-to-end overhaul of our analytics
-        delivery — events streamed to ADX through dynamic routing, real-time
-        dashboards via managed SignalR, per-tenant Fabric shortcuts for direct
-        customer access. Demoed to a customer who said they're hard to impress;
-        this one impressed them.
+  - name: Initiatives beyond scope
+    description: >
+      Proposed and architected an end-to-end overhaul of our analytics
+      delivery — events streamed to ADX through dynamic routing, real-time
+      dashboards via managed SignalR, per-tenant Fabric shortcuts for direct
+      customer access. Demoed to a customer who said they're hard to impress;
+      this one impressed them.
 
-    - name: Anticipated problems early
-      description: >
-        Saw a deployment-management problem coming weeks before it surfaced —
-        built the Azure DevOps extension on my own initiative. By the time
-        senior engineers raised the issue formally, the tool was already in use.
-        Later adopted by another team facing the same pattern.
+  - name: Anticipated problems early
+    description: >
+      Saw a deployment-management problem coming weeks before it surfaced —
+      built the Azure DevOps extension on my own initiative. By the time
+      senior engineers raised the issue formally, the tool was already in use.
+      Later adopted by another team facing the same pattern.
 
-    - name: Mapped intent vs reality
-      description: >
-        Hit a data-stream loss issue critical to the project's analytics layer.
-        Combined log statistics, time-correlated charts, and code investigation —
-        then drew two diagrams: the algorithm as-coded and the algorithm
-        as-intended. The gap between them showed where the loss was happening.
-
-# CTA at the bottom of the page. `title` may contain a literal newline (use a
-# `|` block scalar) to control where the line breaks visually.
-cta:
-  eyebrow: Let's talk
-  title: |
-    Looking for someone
-    who'll own outcomes?
-  description: Available for senior backend and platform engineering partnerships. B2B, fully remote. Drop a line if you've got something interesting.
+  - name: Mapped intent vs reality
+    description: >
+      Hit a data-stream loss issue critical to the project's analytics layer.
+      Combined log statistics, time-correlated charts, and code investigation —
+      then drew two diagrams: the algorithm as-coded and the algorithm
+      as-intended. The gap between them showed where the loss was happening.

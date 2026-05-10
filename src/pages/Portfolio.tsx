@@ -41,7 +41,6 @@ import {
 } from "@/components/ui/fluent";
 import {
 	cv,
-	type ExpertiseIcon,
 	formatDuration,
 	formatMonths,
 	formatPeriod,
@@ -50,8 +49,13 @@ import {
 	pickLogo,
 	yearsOfExperience,
 } from "@/data/cv";
+import {
+	applyTemplate,
+	type ExpertiseIcon,
+	sections,
+} from "@/data/sections";
 
-// Icon-key (from cv.yml `about.expertise[].icon`) → lucide component.
+// Icon-key (from sections.yml `about.expertise[].icon`) → lucide component.
 const ABOUT_EXPERTISE_ICONS: Record<ExpertiseIcon, typeof Cpu> = {
 	cpu: Cpu,
 	cloud: Cloud,
@@ -116,8 +120,8 @@ function Hero() {
 	);
 
 	const yearsTotal = yearsOfExperience();
-	const tagline = cv.tagline.replace("{years}", String(yearsTotal));
-	const certCodes = cv.certifications.items.map((c) => c.code).join(" · ");
+	const tagline = applyTemplate(cv.tagline);
+	const certCodes = cv.certifications.map((c) => c.code).join(" · ");
 
 	return (
 		// Pull the hero up under the sticky header (h-14 = 56px) so its mica
@@ -133,7 +137,7 @@ function Hero() {
 								className="h-1.5 w-1.5 rounded-full fl-pulse-dot"
 								style={{ background: "var(--fl-success)" }}
 							/>
-							{cv.availability} · {cv.contractTypes.join(", ")}
+							{cv.availability} · {cv.contractType}
 						</Pill>
 						<h1
 							className="text-[44px] md:text-[68px] font-semibold tracking-tight leading-[1.02]"
@@ -223,7 +227,7 @@ function Hero() {
 									background: "var(--fl-card)",
 									boxShadow: "var(--fl-elev-4)",
 								}}
-								title="Available"
+								title={sections.hero.availableTooltip}
 							>
 								<span
 									className="h-3 w-3 rounded-full fl-pulse-dot"
@@ -241,27 +245,27 @@ function Hero() {
 				>
 					<Stat
 						icon={Briefcase}
-						label="Experience"
+						label={sections.hero.stats.experience.label}
 						value={String(yearsTotal)}
-						suffix="+ yrs"
+						suffix={sections.hero.stats.experience.suffix}
 						caption={`${MAX_PRODUCTION_YEARS}+ yrs in production`}
 					/>
 					<Stat
 						icon={Zap}
-						label="Platforms shipped"
+						label={sections.hero.stats.platforms.label}
 						value={String(cv.projects.length)}
 						caption={`${cv.projects.filter((p) => !p.end).length} active`}
 					/>
 					<Stat
 						icon={Layers}
-						label="Technologies"
+						label={sections.hero.stats.technologies.label}
 						value={String(ALL_TECHNOLOGIES.length)}
 						caption={`${ALL_TECHNOLOGIES.filter((t) => t.source === "production").length} in production`}
 					/>
 					<Stat
 						icon={Award}
-						label="Microsoft certs"
-						value={String(cv.certifications.items.length)}
+						label={sections.hero.stats.certifications.label}
+						value={String(cv.certifications.length)}
 						caption={certCodes}
 					/>
 				</Card>
@@ -333,14 +337,12 @@ function SideRail() {
 /* ============================== About ============================== */
 
 function About() {
-	const { title, description, expertise } = cv.about;
-
 	return (
 		<Section id="about">
 			<SectionHeader
 				eyebrow="01 — About"
-				title={title}
-				description={description}
+				title={sections.about.title}
+				description={sections.about.description}
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -381,7 +383,7 @@ function About() {
 							<MapPin size={13} /> {cv.location.city}
 						</span>
 						<span className="inline-flex items-center gap-1.5">
-							<Globe size={13} /> {cv.contractTypes.join(" / ")}
+							<Globe size={13} /> {cv.contractType}
 						</span>
 						<a
 							href={`mailto:${cv.email}`}
@@ -393,7 +395,7 @@ function About() {
 				</Card>
 
 				<div className="col-span-12 md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
-					{expertise.map((s) => {
+					{sections.about.expertise.map((s) => {
 						const Icon = ABOUT_EXPERTISE_ICONS[s.icon];
 						return (
 							<Card key={s.title} className="p-5" hoverable reveal>
@@ -423,13 +425,12 @@ function About() {
 /* ============================== Experience ============================== */
 
 function Experience() {
-	const { title, description } = cv.experience;
 	return (
 		<Section id="experience">
 			<SectionHeader
 				eyebrow="02 — Experience"
-				title={title}
-				description={description.replace("{count}", String(cv.projects.length))}
+				title={sections.experience.title}
+				description={applyTemplate(sections.experience.description)}
 			/>
 
 			<div className="relative">
@@ -637,8 +638,8 @@ function Skills() {
 		<Section id="skills">
 			<SectionHeader
 				eyebrow="03 — Technologies"
-				title={cv.technologies.title}
-				description={cv.technologies.description}
+				title={sections.technologies.title}
+				description={sections.technologies.description}
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -762,23 +763,22 @@ function Skills() {
 }
 
 function PreferredStack() {
-	const { title, description, stack } = cv.technologies.preferred;
 	return (
 		<Card className="col-span-12 p-5 md:p-6 mt-1" elevation={2}>
 			<div className="mb-4">
 				<h3 className="text-[14px] font-semibold tracking-tight inline-flex items-center gap-2">
 					<Sparkles size={15} style={{ color: "var(--fl-brand)" }} />
-					{title}
+					{sections.technologies.preferred.title}
 				</h3>
 				<p
 					className="mt-1 text-[12.5px] leading-relaxed"
 					style={{ color: "var(--fl-fg-muted)" }}
 				>
-					{description}
+					{sections.technologies.preferred.description}
 				</p>
 			</div>
 			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-5">
-				{stack.map(({ group, items }) => {
+				{cv.preferredStack.map(({ group, items }) => {
 					const Icon = groupMeta[group]?.icon ?? Cpu;
 					return (
 						<div key={group}>
@@ -1199,16 +1199,15 @@ function RadarChart({
 function Certifications() {
 	const today = new Date();
 	const theme = useThemeMode();
-	const { title, description, items } = cv.certifications;
 	return (
 		<Section id="certifications">
 			<SectionHeader
 				eyebrow="04 — Certifications"
-				title={title}
-				description={description}
+				title={sections.certifications.title}
+				description={sections.certifications.description}
 			/>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-				{items.map((c) => {
+				{cv.certifications.map((c) => {
 					const valid = !c.expires || c.expires >= today;
 					let pct = 100;
 					if (c.expires) {
@@ -1312,7 +1311,7 @@ function EducationLanguages() {
 		<Section id="education">
 			<SectionHeader
 				eyebrow="05 — Education & Languages"
-				title={cv.education.title}
+				title={sections.education.title}
 			/>
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 				<Card className="lg:col-span-2 p-5 md:p-6" reveal>
@@ -1320,7 +1319,7 @@ function EducationLanguages() {
 						<GraduationCap size={15} style={{ color: "var(--fl-brand)" }} />
 						Education
 					</h3>
-					{cv.education.schools.map((e) => {
+					{cv.education.map((e) => {
 						// "Bachelor's degree" → "Bachelor"; "PhD" → "PhD".
 						const level = e.degree.split(/\s+/)[0].replace(/['']s$/, "");
 						return (
@@ -1405,16 +1404,15 @@ function levelPct(level: string): number {
 /* ============================== Soft Skills ============================== */
 
 function SoftSkills() {
-	const { title, description, items } = cv.strengths;
 	return (
 		<Section id="soft">
 			<SectionHeader
 				eyebrow="06 — Strengths"
-				title={title}
-				description={description}
+				title={sections.strengths.title}
+				description={sections.strengths.description}
 			/>
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-				{items.map((s, i) => (
+				{cv.strengths.map((s, i) => (
 					<Card key={s.name} className="p-6 h-full" reveal hoverable>
 						<div
 							className="text-[11px] font-semibold tracking-[0.18em] uppercase tabular-nums"
@@ -1442,8 +1440,8 @@ function SoftSkills() {
 
 function CTA() {
 	const ref = useRef<HTMLDivElement>(null);
-	const { eyebrow, title, description } = cv.cta;
-	const titleLines = title.split("\n");
+	const { eyebrow, title, description } = sections.cta;
+	const titleLines = title.trim().split("\n");
 	return (
 		<Section id="cta" className="!pt-14 md:!pt-20">
 			<Card
