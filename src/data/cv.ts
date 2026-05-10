@@ -44,6 +44,7 @@ export type Project = {
 	name: string;
 	company: Org;
 	position: string;
+	seniority: Seniority;
 	start: Date;
 	end: Date | null;
 	months: number;
@@ -89,6 +90,13 @@ export type AboutSection = {
 	expertise: ExpertiseCard[];
 };
 
+export type Seniority = "Junior" | "Middle" | "Senior";
+
+export type ExperienceSection = {
+	title: string;
+	description: string;
+};
+
 export type AggregatedSkill = {
 	name: string;
 	group: string;
@@ -116,6 +124,7 @@ export type CV = {
 	tagline: string;
 	summary: string[];
 	about: AboutSection;
+	experience: ExperienceSection;
 	languages: Language[];
 	orgs: Org[];
 	/** Lookup: tech-group id (e.g. `"backend"`) → display name (e.g. `"Backend"`). */
@@ -144,6 +153,7 @@ type RawProject = {
 	name: string;
 	company: Org;
 	position: string;
+	seniority: Seniority;
 	start: YearMonth;
 	end?: YearMonth;
 	areas: string[];
@@ -185,6 +195,7 @@ type RawCV = {
 	tagline: string;
 	summary: string;
 	about: AboutSection;
+	experience: ExperienceSection;
 	languages: Language[];
 	orgs: Org[];
 	techGroups: Record<string, string>;
@@ -291,6 +302,7 @@ const normalizeProject = (p: RawProject): Project => {
 		name: p.name,
 		company: p.company,
 		position: p.position,
+		seniority: p.seniority,
 		start,
 		end,
 		months: monthsBetween(start, end),
@@ -419,6 +431,7 @@ export const cv: CV = {
 		.map((s) => s.trim())
 		.filter(Boolean),
 	about: raw.about,
+	experience: raw.experience,
 	languages: raw.languages,
 	orgs: raw.orgs,
 	techGroups: raw.techGroups,

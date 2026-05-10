@@ -47,6 +47,11 @@ about:
       description: Pipelines, automation, production-deployment ownership.
       icon: workflow
 
+# Experience section header. `{count}` is replaced with the number of projects.
+experience:
+  title: A timeline of platforms
+  description: "{count} production projects across telecom, fintech, digital publishing, and martech. Click any role to expand the contributions and stack."
+
 languages:
   - name: English
     level: B2
@@ -141,6 +146,7 @@ projects:
   - name: Cloud Contact-Center & Communications Platform
     company: *fotando
     position: Senior .NET Backend Engineer
+    seniority: Senior
     start: 2024-11
     areas:
       - Telecom
@@ -185,6 +191,7 @@ projects:
   - name: Enterprise Tax Allocation Platform
     company: *exadel
     position: Senior .NET Backend Engineer
+    seniority: Senior
     start: 2024-11
     areas:
       - Fintech
@@ -224,6 +231,7 @@ projects:
   - name: Software Solutions for Media & Subscription Businesses
     company: *lightpoint
     position: Middle .NET Software Engineer
+    seniority: Middle
     start: 2024-03
     end: 2024-07
     areas:
@@ -259,6 +267,7 @@ projects:
   - name: ePayment Solution
     company: *lightpoint
     position: Middle .NET Software Engineer
+    seniority: Middle
     start: 2022-11
     end: 2024-02
     areas:
@@ -302,6 +311,7 @@ projects:
   - name: Customer Engagement Platform
     company: *lightpoint
     position: Junior .NET Software Engineer
+    seniority: Junior
     start: 2020-02
     end: 2022-10
     areas:
@@ -347,6 +357,7 @@ projects:
   - name: Rental Accounting System
     company: *caspel
     position: Junior .NET Full-Stack Developer
+    seniority: Junior
     start: 2019-08
     end: 2020-01
     areas:
@@ -381,6 +392,7 @@ projects:
   - name: Customer Manufacturing Platform
     company: *caspel
     position: Junior .NET Full-Stack Developer
+    seniority: Junior
     start: 2019-02
     end: 2019-07
     areas:

@@ -423,13 +423,13 @@ function About() {
 /* ============================== Experience ============================== */
 
 function Experience() {
-	const total = cv.projects.length;
+	const { title, description } = cv.experience;
 	return (
 		<Section id="experience">
 			<SectionHeader
 				eyebrow="02 — Experience"
-				title="A timeline of platforms"
-				description={`${total} production projects across telecom, fintech, digital publishing, and martech. Click any role to expand the contributions and stack.`}
+				title={title}
+				description={description.replace("{count}", String(cv.projects.length))}
 			/>
 
 			<div className="relative">
@@ -464,11 +464,6 @@ function ExperienceRow({
 }) {
 	const [open, setOpen] = useState(index === 0);
 	const theme = useThemeMode();
-	const seniority = p.position.includes("Senior")
-		? "Senior"
-		: p.position.includes("Middle")
-			? "Middle"
-			: "Junior";
 	const isCurrent = !p.end;
 
 	return (
@@ -521,7 +516,7 @@ function ExperienceRow({
 							>
 								{p.position}
 							</span>
-							<Tag variant="brand">{seniority}</Tag>
+							<Tag variant="brand">{p.seniority}</Tag>
 							{isCurrent && <Tag variant="success">Current</Tag>}
 							{p.areas.map((a) => (
 								<Tag key={a} variant="outline">
