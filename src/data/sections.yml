@@ -31,7 +31,7 @@ experience:
 
 technologies:
   title: The toolkit
-  description: Density, balance, and current preferences. Filled = production, striped = self-taught.
+  description: Technologies touched within the last {recentYears} years — year counts are lifetime totals.
   preferred:
     title: Preferred stack
     description: What I reach for when I get to choose.

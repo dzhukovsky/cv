@@ -12,7 +12,7 @@
     "rewrite": "/index.html",
     "exclude": [
       "/assets/*",
-      "/*.{png,jpg,jpeg,svg,ico,webp,gif,css,js,map,txt,xml,json,woff,woff2,ttf,otf}"
+      "/*.{png,jpg,jpeg,svg,ico,webp,gif,css,js,map,txt,md,pdf,docx,xml,json,woff,woff2,ttf,otf}"
     ]
   },
   "globalHeaders": {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Mail, Download, Sun, Moon, Briefcase, Wand2, Sparkles } from 'lucide-react'
+import { Mail, Download, Sun, Moon, type LucideIcon } from 'lucide-react'
 import { cv } from '@/data/cv'
 import {
   PrimaryButton,
@@ -8,11 +8,7 @@ import {
 } from '@/components/ui/fluent'
 import { useTheme } from '@/lib/hooks'
 
-const NAV: { href: string; label: string; icon: typeof Briefcase }[] = [
-  { href: '/work', label: 'Work', icon: Briefcase },
-  { href: '/augmented', label: 'Augmented', icon: Sparkles },
-  { href: '/match', label: 'Match a job', icon: Wand2 },
-]
+const NAV: { href: string; label: string; icon: LucideIcon }[] = []
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false)
@@ -112,7 +108,7 @@ export function SiteHeader() {
           />
           <SubtleButton
             icon={Download}
-            href={cv.resumePdf}
+            href={cv.resume}
             target="_blank"
             rel="noreferrer"
             className="hidden sm:inline-flex"

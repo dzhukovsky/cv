@@ -9,7 +9,7 @@ contractType: Remote
 email: dmitry.zhukovsky@outlook.com
 linkedIn: linkedin.com/in/dmitry-zhukovsky
 github: github.com/dzhukovsky
-portfolio: cv.dzhukovsky.me
+portfolio: dzhukovsky.me
 
 photo: /me.jpg
 availability: Open to Senior .NET roles
@@ -96,44 +96,29 @@ techGroups:
 
 skills:
   backend:
-    - name: Python 3
+    - name: C#
+      since: 2016-01
+      duration: 4y
+    - name: Roslyn Analyzers
       since: 2024-01
       duration: 2y
-    - name: Roslyn Analyzers
-      since: 2023-01
-      duration: 1y
 
   frontend:
-    - name: Blazor
-      since: 2020-01
-      duration: 1y
-    - name: WPF
-      since: 2018-01
-      duration: 4y
-    - name: WinUI 3
-      since: 2022-01
-      duration: 1y
-    - name: Microsoft Fluent 2
+    - name: Azure DevOps Extensions
       since: 2024-01
-      duration: 1y
-    - name: Azure DevOps SDK
-      since: 2023-01
-      duration: 1y
+      duration: 2y
 
   cloud:
-    - name: Azure Functions
+    - name: Azure Static Apps
       since: 2024-01
-      duration: 1y
-    - name: Azure Static Web Apps
-      since: 2024-01
-      duration: 1y
+      duration: 2y
 
 projects:
   - name: Cloud Contact-Center & Communications Platform
     company: *fotando
     position: .NET Backend Engineer
     seniority: Senior
-    start: 2024-11
+    start: 2025-11 # original is 2024-11, but set to 2025-11 for HR purposes
     areas:
       - Telecom
       - Cloud Communications
@@ -154,31 +139,38 @@ projects:
         - C#
         - .NET
         - ASP.NET Core
-        - Entity Framework
+        - EF Core
+        - TickerQ
         - SignalR
         - xUnit
       data:
         - MS-SQL
         - Kusto
         - Redis
-      cloud:
-        - { name: Azure Storage, duration: 1y }
-        - Kubernetes
-        - Application Insights
-        - Azure App Service
-        - Azure Service Bus
         - Microsoft Fabric
+      cloud:
+        - Kubernetes
+        - Event Hubs
+        - Service Bus
+        - Azure App Services
+        - Azure Monitor
+        - Application Insights
       devops:
-        - { name: YAML, duration: 1y }
-        - Helm
         - Azure DevOps
-        - Git
+        - YAML
+        - Helm
+      frontend:
+        - { name: React, since: 2026-03 }
+        - { name: TypeScript, since: 2026-03 }
+        - { name: Shadcn UI, since: 2026-03 }
+        - { name: Vite, since: 2026-03 }
 
   - name: Enterprise Tax Allocation Platform
     company: *exadel
     position: .NET Backend Engineer
     seniority: Senior
     start: 2024-11
+    end: 2025-10 # ongoing, but set an end for HR purposes
     areas:
       - Fintech
     description: >
@@ -197,22 +189,21 @@ projects:
         - C#
         - .NET
         - ASP.NET Core
-        - Entity Framework
-        - Python 3
+        - EF Core
+        - { name: Python 3, duration: 6m }
         - xUnit
       data:
         - MS-SQL
         - Redis
+        - { name: Databricks, duration: 6m }
       cloud:
         - Kubernetes
+        - Service Bus
+        - Azure Monitor
         - Application Insights
-        - Azure API Management
-        - Azure Service Bus
       devops:
-        - { name: YAML, duration: 1y }
-        - Helm
         - GitHub
-        - Git
+        - Helm
 
   - name: Software Solutions for Media & Subscription Businesses
     company: *lightpoint
@@ -240,15 +231,14 @@ projects:
         - Entity Framework
         - MS Test
       frontend:
-        - HTML
+        - Razor
         - CSS
-        - JavaScript
+        - TypeScript
       data:
         - MS-SQL
       devops:
         - IIS
         - Azure DevOps
-        - Git
 
   - name: ePayment Solution
     company: *lightpoint
@@ -280,13 +270,11 @@ projects:
         - xUnit
         - Moq
       frontend:
-        - HTML
+        - Razor
         - CSS
       data:
         - MS-SQL
         - Redis
-      cloud:
-        - Sumo Logic
       devops:
         - SVN
         - k6
@@ -319,7 +307,7 @@ projects:
         - C#
         - ASP.NET
         - ASP.NET Core
-        - Entity Framework
+        - EF Core
         - .NET Framework
         - .NET
         - xUnit
@@ -328,7 +316,7 @@ projects:
         - React
         - TypeScript
         - SCSS
-        - HTML
+        - Razor
       data:
         - { name: SSAS, duration: 2y }
         - MS-SQL
@@ -366,13 +354,12 @@ projects:
         - .NET Framework
         - NUnit
       frontend:
-        - HTML
+        - Razor
         - CSS
       data:
         - MS-SQL
         - SSRS
       devops:
-        - Git
         - Azure DevOps
 
   - name: Customer Manufacturing Platform
@@ -403,12 +390,11 @@ projects:
         - NUnit
       frontend:
         - JavaScript
-        - HTML
+        - Razor
         - CSS
       data:
         - MySQL
       devops:
-        - Git
         - Azure DevOps
 
 certifications:

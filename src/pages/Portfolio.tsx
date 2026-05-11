@@ -47,11 +47,13 @@ import {
 	formatYearMonth,
 	formatYears,
 	pickLogo,
+	productionYearsOfExperience,
 	yearsOfExperience,
 } from "@/data/cv";
 import {
 	applyTemplate,
 	type ExpertiseIcon,
+	RECENT_YEARS,
 	sections,
 } from "@/data/sections";
 import { useNow, useScrollSpy, useThemeMode } from "@/lib/hooks";
@@ -64,13 +66,6 @@ const ABOUT_EXPERTISE_ICONS: Record<ExpertiseIcon, typeof Cpu> = {
 };
 
 const ALL_TECHNOLOGIES = cv.allSkills;
-const MAX_PRODUCTION_YEARS = Math.floor(
-	Math.max(
-		...ALL_TECHNOLOGIES.filter((t) => t.source === "production").map(
-			(t) => t.years,
-		),
-	),
-);
 
 const SECTIONS = [
 	{ id: "top", label: "Overview", icon: Sparkles },
@@ -187,7 +182,7 @@ function Hero() {
 							<SubtleButton
 								icon={Download}
 								size="lg"
-								href={cv.resumePdf}
+								href={cv.resume}
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -240,7 +235,7 @@ function Hero() {
 						label={sections.hero.stats.experience.label}
 						value={String(yearsTotal)}
 						suffix={sections.hero.stats.experience.suffix}
-						caption={`${MAX_PRODUCTION_YEARS}+ yrs in production`}
+						caption={`${productionYearsOfExperience()}+ yrs in production`}
 					/>
 					<Stat
 						icon={Zap}
@@ -609,11 +604,11 @@ const groupMeta: Record<string, { icon: typeof Cpu }> = {
 
 function Skills() {
 	const densities = useMemo(
-		() => computeCategoryDensity().sort((a, b) => b.totalYears - a.totalYears),
+		() => computeCategoryDensity().sort((a, b) => b.count - a.count),
 		[],
 	);
-	const maxYears = useMemo(
-		() => Math.max(...densities.map((c) => c.totalYears)),
+	const maxCount = useMemo(
+		() => Math.max(...densities.map((c) => c.count)),
 		[densities],
 	);
 
@@ -622,7 +617,7 @@ function Skills() {
 			<SectionHeader
 				eyebrow="03 — Technologies"
 				title={sections.technologies.title}
-				description={sections.technologies.description}
+				description={applyTemplate(sections.technologies.description)}
 			/>
 
 			<div className="grid grid-cols-12 gap-3">
@@ -639,12 +634,12 @@ function Skills() {
 								fontFamily: "var(--font-mono)",
 							}}
 						>
-							years × breadth
+							breadth
 						</span>
 					</div>
 					<div className="space-y-5">
 						{densities.map((cat) => (
-							<CategoryRow key={cat.name} cat={cat} max={maxYears} />
+							<CategoryRow key={cat.name} cat={cat} max={maxCount} />
 						))}
 					</div>
 				</Card>
@@ -732,9 +727,10 @@ type CategoryDensity = {
 	techs: {
 		name: string;
 		years: number;
+		lastUsed: number;
+		order: number;
 		source: "production" | "self-taught";
 	}[];
-	totalYears: number;
 	count: number;
 };
 
@@ -742,13 +738,20 @@ type CategoryDensity = {
 // RECENT_YEARS years count. The two charts then split angles: bars sum
 // lifetime years (breadth × depth of the toolkit), the radar weights by
 // recency (years / (gap + 1)) to show current focus. Same source data, two
-// different lenses — that's why both are kept.
-const RECENT_YEARS = 3;
+// different lenses — that's why both are kept. RECENT_YEARS lives in sections.ts
+// because the templated copy ({recentYears}) needs it too.
 
-// Shared shaping for the toolkit bars and the radar polygon: compress with the
-// caller's curve, normalize against the strongest sample, floor so weak vectors
-// stay visible, and divide by HEADROOM so the strongest never kisses the outer
-// bound. Keeping FLOOR in the data layer means callers don't need a CSS guard.
+const srcRank = (s: "production" | "self-taught") =>
+	s === "production" ? 0 : 1;
+
+// Years as they appear on screen — sub-year values stay precise (months), full
+// years round to ints. Two skills that display the same string sort as tied.
+const displayedYears = (y: number) =>
+	y < 1 ? Math.round(y * 12) / 12 : Math.round(y);
+
+// Radar polygon shaping: compress with the caller's curve, normalize against
+// the strongest sample, floor so weak vectors stay visible, and divide by
+// HEADROOM so the strongest never kisses the outer bound.
 const SHAPE_FLOOR = 0.06;
 const SHAPE_HEADROOM = 1.15;
 function shapeRatio(
@@ -773,40 +776,29 @@ function computeCategoryDensity(): CategoryDensity[] {
 			.map((t) => ({
 				name: t.name,
 				years: t.years,
+				lastUsed: t.lastUsed,
+				order: t.order,
 				source: t.source,
 			}))
-			.sort((a, b) => {
-				// Production first, self-taught after; then years desc within each group.
-				const ap = a.source === "production" ? 0 : 1;
-				const bp = b.source === "production" ? 0 : 1;
-				if (ap !== bp) return ap - bp;
-				return b.years - a.years;
-			});
-		const totalYears = techs.reduce((acc, t) => acc + t.years, 0);
+			.sort(
+				(a, b) =>
+					displayedYears(b.years) - displayedYears(a.years) ||
+					b.lastUsed - a.lastUsed ||
+					srcRank(a.source) - srcRank(b.source) ||
+					a.order - b.order,
+			);
 		return {
 			name,
 			color: CATEGORY_COLORS[name] ?? "#0F6CBD",
 			techs,
-			totalYears: +totalYears.toFixed(1),
 			count: techs.length,
 		};
 	});
 }
 
 function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
-	// Shaped via the shared helper so density bars and the radar polygon use the
-	// same floor/headroom mechanism; sqrt is gentler than the radar's pow(0.7)
-	// because bars don't carry a polygon shape that needs extra compression.
-	const barPct = shapeRatio(cat.totalYears, max, Math.sqrt) * 100;
-	// At most two segments per row: one solid block for production years, one
-	// striped block for self-taught years. Adjacent same-source techs collapse
-	// into a single segment — no internal seams.
-	const prodYears = cat.techs
-		.filter((t) => t.source === "production")
-		.reduce((acc, t) => acc + t.years, 0);
-	const selfYears = cat.totalYears - prodYears;
-	const prodPct = (prodYears / cat.totalYears) * 100;
-	const selfPct = (selfYears / cat.totalYears) * 100;
+	// Bar width is the category's tech count; the 0.9 keeps the leader off the edge.
+	const barPct = (cat.count / max) * 90;
 	return (
 		<div>
 			<div className="flex items-baseline justify-between mb-1.5">
@@ -828,27 +820,9 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 				</span>
 			</div>
 			<div
-				className="flex h-3.5 rounded-sm overflow-hidden"
-				style={{ width: `${barPct}%` }}
-			>
-				{prodPct > 0 && (
-					<div
-						title="Production"
-						style={{ width: `${prodPct}%`, background: cat.color }}
-					/>
-				)}
-				{selfPct > 0 && (
-					<div
-						title="Self-taught"
-						style={{
-							width: `${selfPct}%`,
-							background: cat.color,
-							backgroundImage:
-								"repeating-linear-gradient(45deg, rgba(255,255,255,0.5) 0 3px, transparent 3px 6px)",
-						}}
-					/>
-				)}
-			</div>
+				className="h-3.5 rounded-sm"
+				style={{ width: `${barPct}%`, background: cat.color }}
+			/>
 			<div
 				className="mt-2 text-[10.5px] leading-[1.65] flex flex-wrap gap-x-2 gap-y-0.5"
 				style={{ fontFamily: "var(--font-mono)", color: "var(--fl-fg-muted)" }}
@@ -861,9 +835,6 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 								? formatMonths(Math.max(1, Math.round(t.years * 12)), "short")
 								: formatYears(Math.round(t.years), "short")}
 						</span>
-						{!isProdSrc(t.source) && (
-							<span style={{ color: cat.color }}>*</span>
-						)}
 						{i < cat.techs.length - 1 && (
 							<span style={{ color: "var(--fl-fg-muted)" }}> ·</span>
 						)}
@@ -872,10 +843,6 @@ function CategoryRow({ cat, max }: { cat: CategoryDensity; max: number }) {
 			</div>
 		</div>
 	);
-}
-
-function isProdSrc(s: "production" | "self-taught") {
-	return s === "production";
 }
 
 type RadarPoint = {

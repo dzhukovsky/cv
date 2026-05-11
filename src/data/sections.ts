@@ -34,6 +34,9 @@ export type Sections = {
 
 export const sections: Sections = rawSections as Sections;
 
+// Recency window used by the toolkit density and tech radar.
+export const RECENT_YEARS = 3;
+
 // "a", "a and b", "a, b, and c"
 const joinNatural = (items: string[]): string => {
 	if (items.length === 0) return "";
@@ -58,6 +61,7 @@ const uniqueProjectAreas = (): string[] => {
 
 const tokens: Record<string, () => string> = {
 	years: () => String(yearsOfExperience()),
+	recentYears: () => String(RECENT_YEARS),
 	"projects.count": () => String(cv.projects.length),
 	"projects.areas": () => joinNatural(uniqueProjectAreas()),
 };

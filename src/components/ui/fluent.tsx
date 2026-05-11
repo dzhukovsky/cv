@@ -428,17 +428,20 @@ export function Persona({
           {initials}
         </div>
       )}
-      {presence && (
-        <span
-          className="absolute bottom-0 right-0 rounded-full"
-          style={{
-            width: Math.max(8, dim * 0.22),
-            height: Math.max(8, dim * 0.22),
-            background: presenceColor,
-            boxShadow: '0 0 0 2px var(--fl-card)',
-          }}
-        />
-      )}
+      {presence && (() => {
+        const dot = Math.max(8, Math.round(dim * 0.22))
+        return (
+          <span
+            className="absolute bottom-0 right-0 rounded-full"
+            style={{
+              width: dot,
+              height: dot,
+              background: presenceColor,
+              boxShadow: '0 0 0 2px var(--fl-card)',
+            }}
+          />
+        )
+      })()}
     </div>
   )
 }

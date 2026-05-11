@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cv.dzhukovsky.me/schemas/sections.schema.json",
   "title": "Sections",
-  "description": "UI text for portfolio page sections — separate from cv.yml which holds CV data. Strings may contain `{projects.count}`, `{projects.areas}`, and `{years}` tokens, replaced at render time via applyTemplate() in sections.ts.",
+  "description": "UI text for portfolio page sections — separate from cv.yml which holds CV data. Strings may contain `{projects.count}`, `{projects.areas}`, `{years}`, and `{recentYears}` tokens, replaced at render time via applyTemplate() in sections.ts.",
   "type": "object",
   "additionalProperties": false,
   "required": [

@@ -65,6 +65,7 @@ export type AggregatedSkill = {
 	source: SkillSource;
 	years: number;
 	lastUsed: number;
+	order: number;
 };
 
 export type CV = {
@@ -78,8 +79,9 @@ export type CV = {
 	github: string;
 	portfolio: string;
 	careerStart: Date;
+	productionStart: Date;
 	photo: string;
-	resumePdf: string;
+	resume: string;
 	availability: string;
 	tagline: string;
 	summary: string[];
@@ -300,6 +302,7 @@ const buildAggregatedSkills = (
 		source: SkillSource;
 		intervals: { s: number; e: number }[];
 		lastUsed: number;
+		order: number;
 	};
 	const map = new Map<string, Bucket>();
 
@@ -317,6 +320,7 @@ const buildAggregatedSkills = (
 				source: s.source,
 				intervals: [{ s: sOrd, e: eOrd }],
 				lastUsed: eOrd,
+				order: map.size,
 			});
 		}
 	};
@@ -330,17 +334,21 @@ const buildAggregatedSkills = (
 		source: b.source,
 		years: +(coverageMonths(b.intervals) / 12).toFixed(1),
 		lastUsed: Math.floor(b.lastUsed / 12),
+		order: b.order,
 	}));
 };
 
 const projects: Project[] = raw.projects.map(normalizeProject);
 const selfTaughtSkills: Skill[] = normalizeSelfTaughtSkills(raw.skills);
 
-// Self-taught skills can predate the earliest project (e.g. WPF in 2018 vs
-// first project in 2019), so they participate in careerStart.
+// productionStart = first paid project. careerStart includes self-taught time
+// that may predate the first project (e.g. WPF in 2018 vs first project in 2019).
+const productionStart = new Date(
+	Math.min(...projects.map((p) => p.start.getTime())),
+);
 const careerStart = new Date(
 	Math.min(
-		...projects.map((p) => p.start.getTime()),
+		productionStart.getTime(),
 		...selfTaughtSkills.map((s) => s.start.getTime()),
 	),
 );
@@ -356,8 +364,9 @@ export const cv: CV = {
 	github: raw.github,
 	portfolio: raw.portfolio,
 	careerStart,
+	productionStart,
 	photo: raw.photo,
-	resumePdf: `/${raw.fullName} - ${raw.position}.pdf`,
+	resume: `/${raw.fullName} - ${raw.position}.docx`,
 	availability: raw.availability,
 	tagline: raw.tagline.trim(),
 	summary: raw.summary
@@ -401,10 +410,11 @@ export type DurationFormat = "short" | "long";
 export const pickLogo = (logo: LogoSrc, theme: "light" | "dark"): string =>
 	typeof logo === "string" ? logo : logo[theme];
 
-export const yearsOfExperience = (): number => {
-	const ms = Date.now() - cv.careerStart.getTime();
-	return Math.floor(ms / (1000 * 60 * 60 * 24 * 365.25));
-};
+const yearsSince = (d: Date) =>
+	Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
+
+export const yearsOfExperience = (): number => yearsSince(cv.careerStart);
+export const productionYearsOfExperience = (): number => yearsSince(cv.productionStart);
 
 export const formatYearMonth = (d: Date): string =>
 	d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
