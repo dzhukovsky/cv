@@ -158,9 +158,11 @@ function Hero() {
 						</p>
 
 						<div className="mt-6 flex flex-wrap items-center gap-2">
-							<PrimaryButton icon={Mail} size="lg" href={`mailto:${cv.email}`}>
-								{cv.email}
-							</PrimaryButton>
+							<div className="hidden md:contents">
+								<PrimaryButton icon={Mail} size="lg" href={`mailto:${cv.email}`}>
+									{cv.email}
+								</PrimaryButton>
+							</div>
 							<SubtleButton
 								icon={Linkedin}
 								size="lg"
@@ -179,11 +181,13 @@ function Hero() {
 							>
 								GitHub
 							</SubtleButton>
-							<ResumeButton size="lg" />
+							<div className="hidden md:contents">
+								<ResumeButton size="lg" />
+							</div>
 						</div>
 					</div>
 
-					<div className="col-span-12 md:col-span-5 flex md:justify-end">
+					<div className="hidden md:col-span-5 md:flex md:justify-end">
 						<div className="relative">
 							<div
 								aria-hidden
@@ -439,6 +443,17 @@ function ExperienceRow({
 	const [open, setOpen] = useState(index === 0);
 	const theme = useThemeMode();
 	const isCurrent = !p.end;
+	const tags = (
+		<>
+			<Tag variant="brand">{p.seniority}</Tag>
+			{isCurrent && <Tag variant="success">Current</Tag>}
+			{p.areas.map((a) => (
+				<Tag key={a} variant="outline">
+					{a}
+				</Tag>
+			))}
+		</>
+	);
 
 	return (
 		<div className="relative pl-9 md:pl-11">
@@ -460,7 +475,7 @@ function ExperienceRow({
 				<button
 					type="button"
 					onClick={() => setOpen((v) => !v)}
-					className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-center gap-4 cursor-pointer"
+					className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-start md:items-center gap-4 cursor-pointer"
 				>
 					<img
 						src={pickLogo(p.company.logo, theme)}
@@ -468,7 +483,7 @@ function ExperienceRow({
 						className="h-10 w-10 md:h-11 md:w-11 rounded-md object-cover"
 					/>
 					<div className="flex-1 min-w-0 flex flex-col">
-						<div className="flex items-baseline flex-wrap gap-x-2 gap-y-1.5">
+						<div className="flex flex-col md:flex-row md:items-baseline md:flex-wrap gap-x-2 gap-y-1 md:gap-y-1.5">
 							<a
 								href={p.company.url}
 								target="_blank"
@@ -479,7 +494,7 @@ function ExperienceRow({
 								{p.company.name}
 							</a>
 							<span
-								className="text-[12.5px]"
+								className="hidden md:inline text-[12.5px]"
 								style={{ color: "var(--fl-fg-muted)" }}
 							>
 								·
@@ -490,19 +505,16 @@ function ExperienceRow({
 							>
 								{p.position}
 							</span>
-							<Tag variant="brand">{p.seniority}</Tag>
-							{isCurrent && <Tag variant="success">Current</Tag>}
-							{p.areas.map((a) => (
-								<Tag key={a} variant="outline">
-									{a}
-								</Tag>
-							))}
+							<div className="hidden md:contents">{tags}</div>
 						</div>
-						<h3 className="mt-1.5 text-[16.5px] md:text-[18px] font-semibold tracking-tight leading-snug">
+						<div className="-ml-14 md:hidden mt-2 flex flex-wrap items-baseline gap-1.5">
+							{tags}
+						</div>
+						<h3 className="-ml-14 md:ml-0 mt-2 md:mt-1.5 text-[16.5px] md:text-[18px] font-semibold tracking-tight leading-snug">
 							{p.name}
 						</h3>
 						<div
-							className="mt-1 flex items-center flex-wrap gap-x-3 gap-y-1 text-[12px] tabular-nums"
+							className="-ml-14 md:ml-0 mt-1 flex items-center flex-wrap gap-x-3 gap-y-1 text-[12px] tabular-nums"
 							style={{ color: "var(--fl-fg-muted)" }}
 						>
 							<span className="inline-flex items-center gap-1">

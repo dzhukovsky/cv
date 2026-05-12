@@ -103,7 +103,7 @@ export function SiteHeader() {
             }}
             href="#"
           />
-          <ResumeButton className="hidden sm:inline-flex" />
+          <ResumeButton />
           <PrimaryButton icon={Mail} href={`mailto:${cv.email}`}>
             Contact
           </PrimaryButton>
