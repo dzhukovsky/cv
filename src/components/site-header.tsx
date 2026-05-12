@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Mail, Download, Sun, Moon, type LucideIcon } from 'lucide-react'
+import { Mail, Sun, Moon, type LucideIcon } from 'lucide-react'
 import { cv } from '@/data/cv'
-import {
-  PrimaryButton,
-  SubtleButton,
-  IconButton,
-} from '@/components/ui/fluent'
+import { PrimaryButton, IconButton } from '@/components/ui/fluent'
+import { ResumeButton } from '@/components/resume-button'
 import { useTheme } from '@/lib/hooks'
 
 const NAV: { href: string; label: string; icon: LucideIcon }[] = []
@@ -106,15 +103,7 @@ export function SiteHeader() {
             }}
             href="#"
           />
-          <SubtleButton
-            icon={Download}
-            href={cv.resume}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden sm:inline-flex"
-          >
-            Resume
-          </SubtleButton>
+          <ResumeButton className="hidden sm:inline-flex" />
           <PrimaryButton icon={Mail} href={`mailto:${cv.email}`}>
             Contact
           </PrimaryButton>

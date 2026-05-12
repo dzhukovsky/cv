@@ -9,7 +9,6 @@ import {
 	Code2,
 	Cpu,
 	Database,
-	Download,
 	Globe,
 	GraduationCap,
 	HeartHandshake,
@@ -26,6 +25,7 @@ import {
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { Github, Linkedin } from "@/components/brand-icons";
+import { ResumeButton } from "@/components/resume-button";
 import { SiteHeader } from "@/components/site-header";
 import {
 	Card,
@@ -179,15 +179,7 @@ function Hero() {
 							>
 								GitHub
 							</SubtleButton>
-							<SubtleButton
-								icon={Download}
-								size="lg"
-								href={cv.resume}
-								target="_blank"
-								rel="noreferrer"
-							>
-								Resume
-							</SubtleButton>
+							<ResumeButton size="lg" />
 						</div>
 					</div>
 

@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import YAML from 'yaml'
-import { cvDocxPlugin } from './vite-plugins/cv-docx'
 import { cvExportPlugin } from './vite-plugins/cv-export'
 import { cvMetaPlugin } from './vite-plugins/cv-meta'
 
@@ -23,7 +22,7 @@ function yamlPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), yamlPlugin(), cvMetaPlugin(), cvExportPlugin(), cvDocxPlugin()],
+  plugins: [react(), tailwindcss(), yamlPlugin(), cvMetaPlugin(), cvExportPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

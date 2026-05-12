@@ -51,14 +51,6 @@ export function cvMetaPlugin(): Plugin {
           { tag: 'meta', attrs: { name: 'robots', content: 'index, follow' } },
           { tag: 'link', attrs: { rel: 'canonical', href: url } },
           { tag: 'link', attrs: { rel: 'alternate', type: 'text/markdown', href: '/cv.md' } },
-          {
-            tag: 'link',
-            attrs: {
-              rel: 'alternate',
-              type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-              href: `/${encodeURIComponent(`${cv.fullName} - ${cv.position}.docx`)}`,
-            },
-          },
           { tag: 'meta', attrs: { property: 'og:type', content: 'profile' } },
           { tag: 'meta', attrs: { property: 'og:url', content: url } },
           { tag: 'meta', attrs: { property: 'og:title', content: title } },

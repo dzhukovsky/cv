@@ -81,7 +81,6 @@ export type CV = {
 	careerStart: Date;
 	productionStart: Date;
 	photo: string;
-	resume: string;
 	availability: string;
 	tagline: string;
 	summary: string[];
@@ -366,7 +365,6 @@ export const cv: CV = {
 	careerStart,
 	productionStart,
 	photo: raw.photo,
-	resume: `/${raw.fullName} - ${raw.position}.docx`,
 	availability: raw.availability,
 	tagline: raw.tagline.trim(),
 	summary: raw.summary
