@@ -19,8 +19,8 @@ import {
 	yearsOfExperience,
 } from "@/data/cv";
 
-const FONT = "Segoe UI, Calibri, Arial, Tahoma, Verdana";
-const SEMIBOLD = "Segoe UI Semibold";
+const FONT = "Roboto";
+const SEMIBOLD = "Roboto Medium";
 const BULLET = "–";
 const RECENT_YEARS = 3;
 const PAGE_MARGIN = { top: 720, right: 900, bottom: 720, left: 900 };
@@ -211,10 +211,9 @@ function buildTechnologies(cv: CV): Paragraph[] {
 			new TextRun({ font: SEMIBOLD, text: `${label}: ` }),
 		];
 		techs.forEach((t, i) => {
-			children.push(new TextRun({ text: t.name }));
-			children.push(new TextRun({ text: " " }));
+			children.push(new TextRun({ text: `${t.name} · ` }));
 			children.push(
-				new TextRun({ text: `(${formatExp(t.years)})`, italics: true }),
+				new TextRun({ text: formatExp(t.years), italics: true }),
 			);
 			if (i < techs.length - 1) children.push(new TextRun({ text: ", " }));
 		});
