@@ -2,21 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import type { HtmlTagDescriptor, Plugin } from 'vite'
 import YAML from 'yaml'
-
-type SkillRef = string | { name: string; since?: string; duration?: string }
-type CV = {
-  fullName: string
-  position: string
-  email: string
-  linkedIn: string
-  github: string
-  portfolio: string
-  photo: string
-  location: { city: string; country: string }
-  tagline: string
-  projects: { start: string }[]
-  skills?: Record<string, SkillRef[]>
-}
+import { renderCvMarkdown, type CV } from './cv-export'
 
 function yearsOfExperience(cv: CV, now = Date.now()): number {
   const projectStarts = cv.projects.map((p) => Date.parse(`${p.start}-01T00:00:00Z`))
@@ -61,7 +47,13 @@ export function cvMetaPlugin(): Plugin {
           sameAs: [`https://${cv.linkedIn}`, `https://${cv.github}`],
         }
 
-        const tags: HtmlTagDescriptor[] = [
+        // SEO/LLM fallback: this site is a CSR-only React SPA (no SSR), so crawlers
+        // that don't execute JS would see an empty body. Inline the CV markdown
+        // inside <noscript> as a text-only fallback — turns out llms.txt-aware
+        // crawlers are rare in practice, so we put the content directly in HTML.
+        const noscriptBody = `\n<!-- SEO fallback for non-SSR React SPA -->\n${renderCvMarkdown(cv)}`
+
+        const headTags: HtmlTagDescriptor[] = [
           { tag: 'title', children: title },
           { tag: 'meta', attrs: { name: 'description', content: description } },
           { tag: 'meta', attrs: { name: 'robots', content: 'index, follow' } },
@@ -84,7 +76,10 @@ export function cvMetaPlugin(): Plugin {
             children: JSON.stringify(person),
           },
         ]
-        return tags.map((t) => ({ ...t, injectTo: 'head' }))
+        return [
+          ...headTags.map((t): HtmlTagDescriptor => ({ ...t, injectTo: 'head' })),
+          { tag: 'noscript', children: noscriptBody, injectTo: 'body-prepend' },
+        ]
       },
     },
   }
