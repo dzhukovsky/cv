@@ -371,11 +371,12 @@ function renderLlmsTxt(cv: CV): string {
     '## CV',
     '',
     `- [Resume (Markdown)](/cv.md): full CV in plain markdown`,
+    `- [Full content (llms-full.txt)](/llms-full.txt): same CV bundled for llms.txt-aware crawlers`,
     '',
   ].join('\n')
 }
 
-// Emits cv.md and llms.txt to the build output, derived from src/data/cv.yml.
+// Emits cv.md, llms.txt, and llms-full.txt to the build output, derived from src/data/cv.yml.
 export function cvExportPlugin(): Plugin {
   const cvPath = path.resolve(process.cwd(), 'src/data/cv.yml')
   return {
@@ -383,8 +384,10 @@ export function cvExportPlugin(): Plugin {
     apply: 'build',
     generateBundle() {
       const cv = YAML.parse(fs.readFileSync(cvPath, 'utf-8')) as CV
-      this.emitFile({ type: 'asset', fileName: 'cv.md', source: renderCvMarkdown(cv) })
+      const md = renderCvMarkdown(cv)
+      this.emitFile({ type: 'asset', fileName: 'cv.md', source: md })
       this.emitFile({ type: 'asset', fileName: 'llms.txt', source: renderLlmsTxt(cv) })
+      this.emitFile({ type: 'asset', fileName: 'llms-full.txt', source: md })
     },
   }
 }
