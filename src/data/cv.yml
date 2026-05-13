@@ -118,7 +118,7 @@ projects:
     company: *fotando
     position: .NET Backend Engineer
     seniority: Senior
-    start: 2025-11 # original is 2024-11, but set to 2025-11 for HR purposes
+    start: 2025-11
     areas:
       - Telecom
       - Cloud Communications
@@ -170,7 +170,7 @@ projects:
     position: .NET Backend Engineer
     seniority: Senior
     start: 2024-11
-    end: 2025-10 # ongoing, but set an end for HR purposes
+    end: 2025-10
     areas:
       - Fintech
     description: >
