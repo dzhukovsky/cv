@@ -1,0 +1,625 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cv.dzhukovsky.me/schemas/cv.schema.json",
+  "title": "CV",
+  "description": "Schema for Dmitry Zhukovsky's CV data file (cv.yml). Org/group enums and related properties are auto-synced from cv.yml by scripts/sync-cv-schema.mjs (bun run gen:schema, also auto-runs on dev/build).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "fullName",
+    "position",
+    "location",
+    "contractType",
+    "email",
+    "linkedIn",
+    "github",
+    "portfolio",
+    "photo",
+    "availability",
+    "tagline",
+    "summary",
+    "preferredStack",
+    "languages",
+    "orgs",
+    "techGroups",
+    "skills",
+    "projects",
+    "certifications",
+    "education",
+    "strengths"
+  ],
+  "properties": {
+    "fullName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "position": {
+      "type": "string",
+      "minLength": 1
+    },
+    "location": {
+      "$ref": "#/$defs/Location"
+    },
+    "contractType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "linkedIn": {
+      "type": "string",
+      "minLength": 1
+    },
+    "github": {
+      "type": "string",
+      "minLength": 1
+    },
+    "portfolio": {
+      "type": "string",
+      "minLength": 1
+    },
+    "photo": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Path to the hero/about portrait image."
+    },
+    "availability": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Short availability pill shown in the hero (e.g. 'Open to Senior .NET roles')."
+    },
+    "tagline": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Hero subtitle. The literal token `{years}` is replaced at render time with the value computed from `careerStart`."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Multi-paragraph intro text. Use a YAML literal block (`|`) — each line becomes a paragraph."
+    },
+    "preferredStack": {
+      "$ref": "#/$defs/PreferredStackGroup",
+      "description": "Curated preferred stack, keyed by tech-group id."
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Language"
+      },
+      "minItems": 1
+    },
+    "orgs": {
+      "type": "array",
+      "description": "Single source of truth for organizations (companies, universities, cert issuers). Each entry has one id-key whose value is the display name, plus a `logo` and optional `url`. Referenced by id from `projects[].company`, `education[].school`, `certifications[].issuer`.",
+      "items": {
+        "$ref": "#/$defs/OrgDef"
+      },
+      "minItems": 1
+    },
+    "techGroups": {
+      "type": "object",
+      "description": "Single source of truth for tech-group id → display name. Referenced by id-key in `technologies[]` and project `tech[]`. Properties auto-synced from cv.yml.",
+      "additionalProperties": false,
+      "required": [
+        "backend",
+        "frontend",
+        "data",
+        "cloud",
+        "devops"
+      ],
+      "properties": {
+        "backend": {
+          "const": "Backend"
+        },
+        "frontend": {
+          "const": "Frontend"
+        },
+        "data": {
+          "const": "Data"
+        },
+        "cloud": {
+          "const": "Cloud"
+        },
+        "devops": {
+          "const": "DevOps"
+        }
+      }
+    },
+    "skills": {
+      "$ref": "#/$defs/SelfTaughtTechGroup",
+      "description": "Top-level self-taught skills, grouped by tech-group id."
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Project"
+      },
+      "minItems": 1
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Certification"
+      }
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Education"
+      },
+      "minItems": 1
+    },
+    "strengths": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Strength"
+      }
+    }
+  },
+  "$defs": {
+    "YearMonth": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+      "description": "Year-month in YYYY-MM format (month-granular)."
+    },
+    "Duration": {
+      "type": "string",
+      "pattern": "^\\s*(\\d+\\s*y\\s*\\d+\\s*m|\\d+\\s*y|\\d+\\s*m)\\s*$",
+      "description": "Duration in `Ny` and/or `Nm` format. Whitespace ignored. Examples: `1y`, `6m`, `1y6m`, `2y 3m`."
+    },
+    "TechGroupId": {
+      "type": "string",
+      "enum": [
+        "backend",
+        "frontend",
+        "data",
+        "cloud",
+        "devops"
+      ],
+      "description": "Id of a tech group defined in `techGroups`. Enum auto-synced from cv.yml."
+    },
+    "LanguageLevel": {
+      "type": "string",
+      "enum": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "Native"
+      ]
+    },
+    "LogoSrc": {
+      "description": "Either a single image path, or per-theme paths for light/dark.",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "light",
+            "dark"
+          ],
+          "properties": {
+            "light": {
+              "type": "string",
+              "minLength": 1
+            },
+            "dark": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "Location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "city",
+        "country"
+      ],
+      "properties": {
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
+        "country": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "Language": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "level"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "$ref": "#/$defs/LanguageLevel"
+        }
+      }
+    },
+    "OrgDef": {
+      "type": "object",
+      "description": "Organization definition — display name, logo, optional url. In `orgs[]` each entry carries a YAML anchor (`&id`); fields that reference an org use aliases (`*id`) and the parser inlines this object.",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "logo"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "logo": {
+          "$ref": "#/$defs/LogoSrc"
+        }
+      }
+    },
+    "ProjectTechItem": {
+      "description": "A technology used inside a project. Group is implied by the parent entry. Missing start/end inherit from the project's start/end. Shorthand: a plain string is treated as `{ name: <string> }`.",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "since": {
+              "$ref": "#/$defs/YearMonth",
+              "description": "Optional override of the project's `start` for this skill. Must be within the project's bounds (validated at load time)."
+            },
+            "duration": {
+              "$ref": "#/$defs/Duration",
+              "description": "Optional override of the project's `end` for this skill — how long it was used. Must keep the resulting period within the project's bounds (validated at load time)."
+            }
+          }
+        }
+      ]
+    },
+    "SelfTaughtTechItem": {
+      "type": "object",
+      "description": "A self-taught skill inside a top-level tech-group entry. `since` is required; missing `duration` means ongoing. Group is implied by the parent entry; source is implicitly `self-taught`.",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "since"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "since": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "duration": {
+          "$ref": "#/$defs/Duration"
+        }
+      }
+    },
+    "ProjectTechGroup": {
+      "type": "object",
+      "description": "Project techs keyed by tech-group id; each value is the list of techs in that group. id-key slots auto-synced from cv.yml.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "backend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "frontend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "cloud": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        },
+        "devops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProjectTechItem"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "SelfTaughtTechGroup": {
+      "type": "object",
+      "description": "Self-taught techs keyed by tech-group id; each value is the list of techs in that group. id-key slots auto-synced from cv.yml.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "backend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "frontend": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "cloud": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        },
+        "devops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SelfTaughtTechItem"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "Project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "company",
+        "position",
+        "seniority",
+        "start",
+        "areas",
+        "description",
+        "contributions",
+        "skills"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company": {
+          "$ref": "#/$defs/OrgDef"
+        },
+        "position": {
+          "type": "string",
+          "minLength": 1
+        },
+        "seniority": {
+          "$ref": "#/$defs/Seniority"
+        },
+        "start": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "end": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "areas": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contributions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "skills": {
+          "$ref": "#/$defs/ProjectTechGroup"
+        }
+      }
+    },
+    "Certification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "code",
+        "issuer",
+        "about",
+        "issued",
+        "credentialId",
+        "credentialUrl"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issuer": {
+          "$ref": "#/$defs/OrgDef"
+        },
+        "about": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issued": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "expires": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "credentialId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "credentialUrl": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "Education": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "school",
+        "degree",
+        "field",
+        "start"
+      ],
+      "properties": {
+        "school": {
+          "$ref": "#/$defs/OrgDef"
+        },
+        "degree": {
+          "type": "string",
+          "minLength": 1
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "$ref": "#/$defs/YearMonth"
+        },
+        "end": {
+          "$ref": "#/$defs/YearMonth"
+        }
+      }
+    },
+    "PreferredStackGroup": {
+      "type": "object",
+      "description": "Preferred-stack picks keyed by tech-group id; each value is the curated list. id-key slots auto-synced from cv.yml.",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "backend": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "frontend": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "cloud": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "devops": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "Seniority": {
+      "type": "string",
+      "enum": [
+        "Junior",
+        "Middle",
+        "Senior"
+      ]
+    },
+    "Strength": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "description"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

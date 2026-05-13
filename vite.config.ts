@@ -1,25 +1,31 @@
-import react from '@vitejs/plugin-react-swc';
-import path from 'path';
-import vike from 'vike/plugin';
-import { UserConfig } from 'vite';
-import { cjsInterop } from 'vite-plugin-cjs-interop';
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
+import { defineConfig, type Plugin } from 'vite'
+import YAML from 'yaml'
+import { cvExportPlugin } from './vite-plugins/cv-export'
+import { cvMetaPlugin } from './vite-plugins/cv-meta'
 
-const config: UserConfig = {
-  plugins: [
-    react(),
-    vike({ prerender: true }),
-    cjsInterop({
-      dependencies: ['@fluentui/react-components', 'file-saver'],
-    }),
-  ],
+// `import data from './foo.yml'` → parsed object, anchors/aliases resolved at build time.
+function yamlPlugin(): Plugin {
+  return {
+    name: 'yaml-loader',
+    transform(code, id) {
+      if (!/\.ya?ml$/.test(id)) return null
+      const data = YAML.parse(code)
+      return {
+        code: `export default ${JSON.stringify(data)}`,
+        map: { mappings: '' },
+      }
+    },
+  }
+}
+
+export default defineConfig({
+  plugins: [react(), tailwindcss(), yamlPlugin(), cvMetaPlugin(), cvExportPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-  ssr: {
-    noExternal: ['@fluentui/react-icons'],
-  },
-};
-
-export default config;
+})

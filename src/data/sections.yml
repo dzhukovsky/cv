@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=./sections.schema.json
+
+hero:
+  availableTooltip: Available
+  stats:
+    experience: { label: Experience, suffix: "+ yrs" }
+    platforms: { label: Platforms shipped }
+    technologies: { label: Technologies }
+    certifications: { label: Microsoft certs }
+
+about:
+  title: Built quietly. Ships loudly.
+  description: Engineer for the kind of backend that runs on a Sunday morning.
+  expertise:
+    - title: Backend architecture
+      description: C#, ASP.NET Core, EF Core. Modular monoliths and microservices that survive production.
+      icon: cpu
+    - title: Cloud & DevOps
+      description: AKS, Service Bus, Azure App Service, Application Insights. Azure DevOps, Helm.
+      icon: cloud
+    - title: Data & integrations
+      description: MS-SQL, Redis, Kusto, Microsoft Fabric. Banks and payment providers.
+      icon: database
+    - title: CI/CD & deployment ownership
+      description: Pipelines, automation, production-deployment ownership.
+      icon: workflow
+
+experience:
+  title: A timeline of platforms
+  description: "{projects.count} production projects across {projects.areas}. Click any role to expand the contributions and stack."
+
+technologies:
+  title: The toolkit
+  description: Technologies touched within the last {recentYears} years — year counts are lifetime totals.
+  preferred:
+    title: Preferred stack
+    description: What I reach for when I get to choose.
+
+certifications:
+  title: Verified by Microsoft
+  description: Active and historical Microsoft credentials. Each card links to the official credential record.
+
+education:
+  title: Schooling, plus three languages
+
+strengths:
+  title: Patterns from real projects
+  description: Three habits that keep showing up.
+
+cta:
+  eyebrow: Let's talk
+  title: |
+    Looking for someone
+    who'll own outcomes?
+  description: Available for senior backend and platform engineering partnerships. B2B, fully remote. Drop a line if you've got something interesting.
