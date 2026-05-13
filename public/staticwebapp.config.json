@@ -2,10 +2,7 @@
   "routes": [
     {
       "route": "/match",
-      "rewrite": "/index.html",
-      "headers": {
-        "X-Robots-Tag": "noindex, noarchive, nofollow"
-      }
+      "rewrite": "/index.html"
     },
     {
       "route": "/*.md",
@@ -23,8 +20,5 @@
       "/assets/*",
       "/*.{png,jpg,jpeg,svg,ico,webp,gif,css,js,map,txt,md,pdf,docx,xml,json,woff,woff2,ttf,otf}"
     ]
-  },
-  "globalHeaders": {
-    "X-Robots-Tag": "index, follow, noarchive"
   }
 }
