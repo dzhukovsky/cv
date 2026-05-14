@@ -18,13 +18,6 @@ export function useTheme(): [Theme, (next: Theme) => void, () => void] {
     root.classList.toggle('dark', theme === 'dark')
     root.style.colorScheme = theme
     window.localStorage.setItem(THEME_KEY, theme)
-
-    const color = theme === 'dark' ? '#1c1c1c' : '#faf9f8'
-    document
-      .querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')
-      .forEach((m) => {
-        m.setAttribute('content', color)
-      })
   }, [theme])
 
   const toggle = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
