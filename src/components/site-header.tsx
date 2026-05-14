@@ -38,6 +38,7 @@ export function SiteHeader() {
       className={`fl-acrylic sticky top-0 z-40 transition-all no-print ${
         scrolled ? 'shadow-[0_1px_0_var(--fl-stroke)]' : ''
       }`}
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       <div className="mx-auto max-w-[1180px] px-5 md:px-8 h-14 flex items-center justify-between gap-4">
         <a href="/" data-route className="flex items-center gap-2.5">
