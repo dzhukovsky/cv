@@ -197,7 +197,6 @@
 .fl-acrylic {
     background: color-mix(in oklab, var(--fl-canvas) 72%, transparent);
     backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
 
 /* === Fluent reveal — subtle gradient ring on hover === */
