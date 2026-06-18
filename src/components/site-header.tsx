@@ -35,11 +35,16 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fl-acrylic sticky top-0 z-40 transition-all no-print ${
-        scrolled ? 'shadow-[0_1px_0_var(--fl-stroke)]' : ''
-      }`}
+      className="sticky top-0 z-40 no-print"
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
-      <div className="mx-auto max-w-[1180px] px-5 md:px-8 h-14 flex items-center justify-between gap-4">
+      <div
+        aria-hidden
+        className={`fl-acrylic absolute inset-0 pointer-events-none transition-shadow ${
+          scrolled ? 'shadow-[0_1px_0_var(--fl-stroke)]' : ''
+        }`}
+      />
+      <div className="relative mx-auto max-w-[1180px] px-5 md:px-8 h-14 flex items-center justify-between gap-4">
         <a href="/" data-route className="flex items-center gap-2.5">
           <div
             className="grid h-8 w-8 place-items-center rounded-md text-[12px] font-semibold tracking-tight"
